@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error - Modpack Changelog Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 2rem;
+    }
+    .error-container {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .error-icon {
+      font-size: 5rem;
+      color: #dc3545;
+      margin-bottom: 1rem;
+    }
+    .btn-primary {
+      background-color: #0066cc;
+      border-color: #0066cc;
+    }
+    .btn-primary:hover {
+      background-color: #0052a3;
+      border-color: #0052a3;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h1 class="mb-4">Oops! Something went wrong</h1>
+    <p class="lead mb-4" id="errorMessage">There was an error processing your request.</p>
+    <a href="/" class="btn btn-primary">Return to Home</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get error from query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const error = urlParams.get('error');
+      
+      if (error) {
+        // Update error message
+        document.getElementById('errorMessage').textContent = error;
+        // Also set title dynamically
+        document.title = `Error: ${error.length > 30 ? error.substring(0, 30) + '...' : error}`;
+      }
+      
+      // Add button to clear session and retry
+      const retryButton = document.createElement('button');
+      retryButton.className = 'btn btn-outline-secondary ms-2';
+      retryButton.textContent = 'Clear Session & Retry';
+      retryButton.addEventListener('click', async () => {
+        try {
+          // Try to logout/clear session
+          await fetch('/api/auth/logout', { method: 'POST' });
+        } catch (e) {
+          console.error('Failed to logout:', e);
+        }
+        // Redirect to homepage
+        window.location.href = '/';
+      });
+      
+      // Add button after the home button
+      document.querySelector('.btn-primary').after(retryButton);
+      
+      // Add debug info section for administrators
+      const debugSection = document.createElement('div');
+      debugSection.className = 'mt-5 pt-4 border-top text-start';
+      debugSection.innerHTML = `
+        <h5 class="mb-3">Debug Information</h5>
+        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+        <p><strong>URL:</strong> ${window.location.href}</p>
+        <p><strong>Error:</strong> ${error || 'No specific error message'}</p>
+        <p><strong>Browser:</strong> ${navigator.userAgent}</p>
+      `;
+      
+      document.querySelector('.error-container').appendChild(debugSection);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Test</title>
+</head>
+<body>
+  <h1>Login Test</h1>
+  <button onclick="testLogin()">Test Login</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function testLogin() {
+      try {
+        const result = document.getElementById('result');
+        result.textContent = 'Sending request...';
+        
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ adminKey: 'cranium-admin-login' })
+        });
+        
+        const status = response.status;
+        const data = await response.json();
+        
+        result.textContent = `Status: ${status}\nResponse: ${JSON.stringify(data, null, 2)}`;
+      } catch (error) {
+        document.getElementById('result').textContent = `Error: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
