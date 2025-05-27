@@ -8,6 +8,7 @@ class ModpackManager {
         this.enrichedMods = [];
         this.filteredMods = [];
         this.currentView = 'list'; // Changed default to list
+        this.currentChangelog = null;
         
         this.init();
     }
@@ -18,6 +19,9 @@ class ModpackManager {
         this.updateStatistics();
         this.setView('list'); // Set list view as default
         this.renderMods();
+        
+        // Update auth-dependent UI
+        this.updateAuthUI();
     }
 
     setupEventListeners() {
@@ -74,6 +78,10 @@ class ModpackManager {
             this.saveCurrentChangelog();
         });
 
+        document.getElementById('submitChangelog').addEventListener('click', () => {
+            this.submitChangelogToGitHub();
+        });
+
         document.getElementById('exportChangelog').addEventListener('click', () => {
             this.exportCurrentChangelog();
         });
@@ -94,6 +102,11 @@ class ModpackManager {
             if (e.target === modModal) {
                 modModal.style.display = 'none';
             }
+        });
+
+        // Listen for auth state changes
+        document.addEventListener('authStateChanged', () => {
+            this.updateAuthUI();
         });
     }
 
@@ -380,6 +393,7 @@ class ModpackManager {
             // Create changelog if there are changes
             if (changes.added.length > 0 || changes.removed.length > 0 || changes.updated.length > 0) {
                 const changelog = this.changelogManager.createChangelog(changes);
+                this.currentChangelog = changelog;
                 this.showChangelogEditor(changelog);
             }
             
@@ -500,38 +514,80 @@ class ModpackManager {
         changelogContent.innerHTML = html;
         changelogSection.style.display = 'block';
         changelogSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Update auth-dependent UI
+        this.updateAuthUI();
     }
 
     saveCurrentChangelog() {
-        const currentChangelog = this.changelogManager.currentChanges;
-        if (!currentChangelog) return;
+        if (!this.currentChangelog) return;
 
-        // Save overall changelog
+        // Collect all changelog notes
         const overallText = document.getElementById('overall-changelog')?.value || '';
-        this.changelogManager.updateChangelogEntry(currentChangelog.id, 'overall', null, overallText);
+        this.currentChangelog.overallDescription = overallText;
 
         // Save individual mod entries
-        currentChangelog.changes.added.forEach(mod => {
+        this.currentChangelog.changes.added.forEach(mod => {
             const text = document.getElementById(`added-${mod.name}`)?.value || '';
-            this.changelogManager.updateChangelogEntry(currentChangelog.id, 'added', mod.name, text);
+            mod.changelogNote = text;
         });
 
-        currentChangelog.changes.updated.forEach(change => {
+        this.currentChangelog.changes.updated.forEach(change => {
             const text = document.getElementById(`updated-${change.name}`)?.value || '';
-            this.changelogManager.updateChangelogEntry(currentChangelog.id, 'updated', change.name, text);
+            change.changelogNote = text;
         });
 
-        currentChangelog.changes.removed.forEach(mod => {
+        this.currentChangelog.changes.removed.forEach(mod => {
             const text = document.getElementById(`removed-${mod.name}`)?.value || '';
-            this.changelogManager.updateChangelogEntry(currentChangelog.id, 'removed', mod.name, text);
+            mod.changelogNote = text;
         });
 
-        this.showSuccess('Changelog saved successfully!');
+        // Save to localStorage
+        const savedChangelogs = JSON.parse(localStorage.getItem('savedChangelogs') || '[]');
+        const existingIndex = savedChangelogs.findIndex(c => c.id === this.currentChangelog.id);
+        
+        if (existingIndex >= 0) {
+            savedChangelogs[existingIndex] = this.currentChangelog;
+        } else {
+            savedChangelogs.push(this.currentChangelog);
+        }
+        
+        localStorage.setItem('savedChangelogs', JSON.stringify(savedChangelogs));
+        this.showSuccess('Changelog saved locally!');
+    }
+
+    async submitChangelogToGitHub() {
+        if (!this.currentChangelog) return;
+        
+        if (!window.githubAuth || !window.githubAuth.canSubmitChangelogs()) {
+            this.showError('Please sign in with GitHub to submit changelogs');
+            return;
+        }
+
+        // Save current changelog first
+        this.saveCurrentChangelog();
+        
+        // Submit to GitHub
+        const success = await window.githubAuth.submitChangelog(this.currentChangelog);
+        
+        if (success) {
+            // Hide the changelog section
+            document.getElementById('changelogSection').style.display = 'none';
+        }
+    }
+
+    updateAuthUI() {
+        const submitButton = document.getElementById('submitChangelog');
+        
+        if (window.githubAuth && window.githubAuth.canSubmitChangelogs()) {
+            submitButton.style.display = 'inline-flex';
+        } else {
+            submitButton.style.display = 'none';
+        }
     }
 
     exportCurrentChangelog() {
-        const currentChangelog = this.changelogManager.currentChanges;
-        if (!currentChangelog) return;
+        if (!this.currentChangelog) return;
 
         const format = prompt('Export format (markdown/html/json):', 'markdown');
         if (!format) return;
@@ -540,18 +596,18 @@ class ModpackManager {
 
         switch (format.toLowerCase()) {
             case 'markdown':
-                content = this.changelogManager.exportAsMarkdown(currentChangelog.id);
-                filename = `changelog-v${currentChangelog.version}.md`;
+                content = this.changelogManager.exportAsMarkdown(this.currentChangelog.id);
+                filename = `changelog-v${this.currentChangelog.version}.md`;
                 mimeType = 'text/markdown';
                 break;
             case 'html':
-                content = this.changelogManager.exportAsHtml(currentChangelog.id);
-                filename = `changelog-v${currentChangelog.version}.html`;
+                content = this.changelogManager.exportAsHtml(this.currentChangelog.id);
+                filename = `changelog-v${this.currentChangelog.version}.html`;
                 mimeType = 'text/html';
                 break;
             case 'json':
-                content = JSON.stringify(currentChangelog, null, 2);
-                filename = `changelog-v${currentChangelog.version}.json`;
+                content = JSON.stringify(this.currentChangelog, null, 2);
+                filename = `changelog-v${this.currentChangelog.version}.json`;
                 mimeType = 'application/json';
                 break;
             default:
@@ -680,11 +736,19 @@ class ModpackManager {
     }
 
     showError(message) {
-        alert('Error: ' + message);
+        const alert = document.createElement('div');
+        alert.className = 'error-message';
+        alert.innerHTML = message;
+        document.body.appendChild(alert);
+        setTimeout(() => alert.remove(), 5000);
     }
 
     showSuccess(message) {
-        alert('Success: ' + message);
+        const alert = document.createElement('div');
+        alert.className = 'success-message';
+        alert.innerHTML = message;
+        document.body.appendChild(alert);
+        setTimeout(() => alert.remove(), 5000);
     }
 }
 
