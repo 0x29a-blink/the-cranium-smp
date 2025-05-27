@@ -538,6 +538,8 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
       for (const mod of changelog.modChanges.added) {
         const authors = mod.authors && mod.authors.length > 0 ? mod.authors.join(', ') : 'Unknown';
         const comment = changelog.modChanges.comments?.[mod.name] || '';
+        // Clean version string to remove any line breaks
+        const cleanVersion = String(mod.version).replace(/[\r\n]+/g, '');
         
         html += `
       <div class="col-md-6">
@@ -547,7 +549,7 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
             ${mod.url ? `<a href="${mod.url}" target="_blank" class="text-success" title="View mod page"><i class="fas fa-external-link-alt"></i></a>` : ''}
           </div>
           <div class="card-body">
-            <p><strong>Version:</strong> ${mod.version}</p>
+            <p><strong>Version:</strong> ${cleanVersion}</p>
             <p><strong>Authors:</strong> ${authors}</p>
             ${comment ? `<p><strong>Change Notes:</strong> ${comment}</p>` : ''}
             <div class="d-flex gap-2">
@@ -555,7 +557,7 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
                 `<a href="${mod.url}" target="_blank" class="btn btn-sm btn-outline-success"><i class="fas fa-external-link-alt me-1"></i> View Mod</a>` : 
                 `<div class="alert alert-warning py-1 px-2 mb-2"><i class="fas fa-exclamation-triangle me-1"></i> No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</div>`
               }
-              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${escapeJsString(mod.name)} (${mod.version})'); alert('Copied to clipboard!');"><i class="fas fa-clipboard me-1"></i> Copy</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${escapeJsString(mod.name)} (${cleanVersion})'); alert('Copied to clipboard!');"><i class="fas fa-clipboard me-1"></i> Copy</button>
             </div>
           </div>
         </div>
@@ -576,6 +578,8 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
     if (changelog.modChanges?.removed?.length > 0) {
       for (const mod of changelog.modChanges.removed) {
         const comment = changelog.modChanges.comments?.[mod.name] || '';
+        // Clean version string to remove any line breaks
+        const cleanVersion = String(mod.version).replace(/[\r\n]+/g, '');
         
         html += `
       <div class="col-md-6">
@@ -585,7 +589,7 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
             ${mod.url ? `<a href="${mod.url}" target="_blank" class="text-danger" title="View mod page"><i class="fas fa-external-link-alt"></i></a>` : ''}
           </div>
           <div class="card-body">
-            <p><strong>Version:</strong> ${mod.version}</p>
+            <p><strong>Version:</strong> ${cleanVersion}</p>
             ${comment ? `<p><strong>Change Notes:</strong> ${comment}</p>` : ''}
             
             <div class="d-flex gap-2">
@@ -593,7 +597,7 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
                 `<a href="${mod.url}" target="_blank" class="btn btn-sm btn-outline-danger"><i class="fas fa-external-link-alt me-1"></i> View Mod</a>` : 
                 `<div class="alert alert-warning py-1 px-2 mb-2"><i class="fas fa-exclamation-triangle me-1"></i> No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</div>`
               }
-              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${escapeJsString(mod.name)} (${mod.version})'); alert('Copied to clipboard!');"><i class="fas fa-clipboard me-1"></i> Copy</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${escapeJsString(mod.name)} (${cleanVersion})'); alert('Copied to clipboard!');"><i class="fas fa-clipboard me-1"></i> Copy</button>
             </div>
           </div>
         </div>
@@ -616,6 +620,9 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
         const oldMod = update.oldMod;
         const newMod = update.newMod;
         const comment = changelog.modChanges.comments?.[newMod.name] || '';
+        // Clean version strings to remove any line breaks
+        const cleanOldVersion = String(oldMod.version).replace(/[\r\n]+/g, '');
+        const cleanNewVersion = String(newMod.version).replace(/[\r\n]+/g, '');
         
         html += `
       <div class="col-md-6">
@@ -625,7 +632,7 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
             ${newMod.url ? `<a href="${newMod.url}" target="_blank" class="text-primary" title="View mod page"><i class="fas fa-external-link-alt"></i></a>` : ''}
           </div>
           <div class="card-body">
-            <p><strong>Version:</strong> ${oldMod.version} → ${newMod.version}</p>
+            <p><strong>Version:</strong> ${cleanOldVersion} → ${cleanNewVersion}</p>
             ${comment ? `<p><strong>Change Notes:</strong> ${comment}</p>` : ''}
             
             <div class="d-flex gap-2">
@@ -633,7 +640,7 @@ async function generateHtml(project, changelog, baseVersion, targetVersion, base
                 `<a href="${newMod.url}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fas fa-external-link-alt me-1"></i> View Mod</a>` : 
                 `<div class="alert alert-warning py-1 px-2 mb-2"><i class="fas fa-exclamation-triangle me-1"></i> No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</div>`
               }
-              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${escapeJsString(newMod.name)} (${oldMod.version} → ${newMod.version})'); alert('Copied to clipboard!');"><i class="fas fa-clipboard me-1"></i> Copy</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText('${escapeJsString(newMod.name)} (${cleanOldVersion} → ${cleanNewVersion})'); alert('Copied to clipboard!');"><i class="fas fa-clipboard me-1"></i> Copy</button>
             </div>
           </div>
         </div>
