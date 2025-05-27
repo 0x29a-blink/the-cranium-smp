@@ -9,6 +9,8 @@ class ModAPI {
 
     // Extract project ID from URL
     extractProjectId(url) {
+        if (!url) return null;
+        
         if (url.includes('curseforge.com/projects/')) {
             const match = url.match(/projects\/(\d+)/);
             return match ? match[1] : null;
@@ -26,6 +28,8 @@ class ModAPI {
 
     // Determine platform from URL
     getPlatform(url) {
+        if (!url) return 'other';
+        
         if (url.includes('curseforge.com')) return 'curseforge';
         if (url.includes('modrinth.com')) return 'modrinth';
         if (url.includes('github.com')) return 'github';
@@ -272,6 +276,8 @@ class DataProcessor {
     }
 
     static getPlatformFromUrl(url) {
+        if (!url) return 'other';
+        
         if (url.includes('curseforge.com')) return 'curseforge';
         if (url.includes('modrinth.com')) return 'modrinth';
         if (url.includes('github.com')) return 'github';
