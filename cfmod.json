@@ -1,0 +1,2126 @@
+[
+    {
+        "authors": [
+            "Blodhgarm, chyzman, Dr.Zeal"
+        ],
+        "filename": "accessories-neoforge-1.0.0-beta.46+1.20.1.jar",
+        "name": "Accessories",
+        "url": "https://www.curseforge.com/projects/938917",
+        "version": "1.0.0-beta46+1.20.1"
+    },
+    {
+        "authors": [
+            "Cadentem"
+        ],
+        "filename": "additional_attributes-1.20.1-1.3.5-all.jar",
+        "name": "Additional Attributes",
+        "url": "https://www.curseforge.com/projects/986624",
+        "version": "1.3.5"
+    },
+    {
+        "authors": [
+            "Samlegamer"
+        ],
+        "filename": "addonslib-1.20.1-1.4.jar",
+        "name": "Addons Lib",
+        "url": "https://www.curseforge.com/projects/1090999",
+        "version": "1.20.1-1.4"
+    },
+    {
+        "authors": [
+            "RazorDevs"
+        ],
+        "filename": "aeroblender-1.20.1-1.0.1-neoforge.jar",
+        "name": "AeroBlender",
+        "url": "https://www.curseforge.com/projects/879879",
+        "version": "1.20.1-1.0.1-neoforge"
+    },
+    {
+        "authors": [
+            "Alexthe668, Noonyeyz"
+        ],
+        "filename": "alexscaves-2.0.2.jar",
+        "name": "Alex's Caves",
+        "url": "https://www.curseforge.com/projects/924854",
+        "version": "2.0.2"
+    },
+    {
+        "authors": [
+            "Uncandango"
+        ],
+        "filename": "alltheleaks-0.1.4-beta+1.20.1-forge.jar",
+        "name": "All The Leaks",
+        "url": "https://www.curseforge.com/projects/1091339",
+        "version": "0.1.4-beta+1.20.1-forge"
+    },
+    {
+        "authors": [
+            "Bawnorton"
+        ],
+        "filename": "allthetrims-3.4.3-forge+1.20.1.jar",
+        "name": "AllTheTrims",
+        "url": "https://www.curseforge.com/projects/876154",
+        "version": "3.4.3"
+    },
+    {
+        "authors": [
+            "MehVahdJukaar"
+        ],
+        "filename": "amendments-1.20-1.2.19.jar",
+        "name": "Amendments",
+        "url": "https://www.curseforge.com/projects/896746",
+        "version": "1.20-1.2.19"
+    },
+    {
+        "authors": [
+            "Starfish Studios"
+        ],
+        "filename": "another_furniture-forge-1.20.1-3.0.2.jar",
+        "name": "Another Furniture",
+        "url": "https://www.curseforge.com/projects/610492",
+        "version": "1.20.1-3.0.2"
+    },
+    {
+        "authors": [
+            "Shadows_of_Fire"
+        ],
+        "filename": "Apotheosis-1.20.1-7.4.8.jar",
+        "name": "Apotheosis",
+        "url": "https://www.curseforge.com/projects/313970",
+        "version": "7.4.8"
+    },
+    {
+        "authors": [
+            "Me! Also Ace."
+        ],
+        "filename": "apotheosis-ascended-1.4.0.jar",
+        "name": "Apotheosis Ascended",
+        "url": "https://github.com/meeprdib/Apotheosis-Ascended",
+        "version": "1.20-1.0"
+    },
+    {
+        "authors": [
+            "Shadows_of_Fire"
+        ],
+        "filename": "ApothicAttributes-1.20.1-1.3.7.jar",
+        "name": "Apothic Attributes",
+        "url": "https://www.curseforge.com/projects/898963",
+        "version": "1.3.7"
+    },
+    {
+        "authors": [
+            "Obscuria, Pluvia"
+        ],
+        "filename": "aquamirae-6.API15.jar",
+        "name": "Aquamirae",
+        "url": "https://www.curseforge.com/projects/536254",
+        "version": "6.API15"
+    },
+    {
+        "authors": [
+            "shedaniel"
+        ],
+        "filename": "architectury-9.2.14-forge.jar",
+        "name": "Architectury",
+        "url": "https://www.curseforge.com/projects/419699",
+        "version": "9.2.14"
+    },
+    {
+        "authors": [
+            "shedaniel"
+        ],
+        "filename": "architectury-9.1.12-forge.jar",
+        "name": "Architectury",
+        "url": "https://modrinth.com/mod/lhGA9TYQ",
+        "version": "9.1.12"
+    },
+    {
+        "authors": [
+            "Poulpinou"
+        ],
+        "filename": "Armor of the Ages-forge-1.20.1-1.5.6.jar",
+        "name": "Armor of the Ages",
+        "url": "https://www.curseforge.com/projects/975288",
+        "version": "1.5.6"
+    },
+    {
+        "authors": [
+            "Cheos"
+        ],
+        "filename": "armorpointspp-forge-1.20-3.1.1.jar",
+        "name": "ArmorPoints++",
+        "url": "https://www.curseforge.com/projects/396094",
+        "version": "1.20-3.1.1"
+    },
+    {
+        "filename": "ars_creo-1.20.1-4.3.0.jar",
+        "name": "Ars Creo",
+        "url": "https://www.curseforge.com/projects/575698",
+        "version": "4.3.0"
+    },
+    {
+        "authors": [
+            "Bailey Hollingsworth"
+        ],
+        "filename": "ars_nouveau-1.20.1-4.12.6-all.jar",
+        "name": "Ars Nouveau",
+        "url": "https://www.curseforge.com/projects/401955",
+        "version": "4.12.6"
+    },
+    {
+        "authors": [
+            "mystchonky"
+        ],
+        "filename": "ars_ocultas-1.20.1-1.2.2-all.jar",
+        "name": "Ars Ocultas",
+        "url": "https://www.curseforge.com/projects/907843",
+        "version": "1.2.2"
+    },
+    {
+        "authors": [
+            "ochotonida"
+        ],
+        "filename": "artifacts-forge-9.5.16.jar",
+        "name": "Artifacts",
+        "url": "https://www.curseforge.com/projects/312353",
+        "version": "9.5.16"
+    },
+    {
+        "authors": [
+            "ThatGravyBoat"
+        ],
+        "filename": "athena-forge-1.20.1-3.1.2.jar",
+        "name": "Athena",
+        "url": "https://www.curseforge.com/projects/841890",
+        "version": "3.1.2"
+    },
+    {
+        "authors": [
+            "Darkhax"
+        ],
+        "filename": "AttributeFix-Forge-1.20.1-21.0.4.jar",
+        "name": "AttributeFix",
+        "url": "https://www.curseforge.com/projects/280510",
+        "version": "21.0.4"
+    },
+    {
+        "authors": [
+            "Keksuccino"
+        ],
+        "filename": "auudio_forge_1.0.3_MC_1.19.3.jar",
+        "name": "Auudio",
+        "url": "https://www.curseforge.com/projects/606159",
+        "version": "1.0.3"
+    },
+    {
+        "authors": [
+            "Thosea"
+        ],
+        "filename": "BadOptimizations-2.2.2-1.20.1.jar",
+        "name": "BadOptimizations",
+        "url": "https://www.curseforge.com/projects/949555",
+        "version": "2.2.2"
+    },
+    {
+        "authors": [
+            "BlayTheNinth"
+        ],
+        "filename": "balm-forge-1.20.1-7.3.30-all.jar",
+        "name": "Balm",
+        "url": "https://mods.twelveiterations.com/",
+        "version": "7.3.30"
+    },
+    {
+        "authors": [
+            "Traverse_Joe"
+        ],
+        "filename": "baubley-heart-canisters-1.20.1-1.1.0.jar",
+        "name": "Baubley Heart Canisters",
+        "url": "https://www.curseforge.com/projects/282947",
+        "version": "1.20.1-1.1.0"
+    },
+    {
+        "authors": [
+            "Daedelus"
+        ],
+        "filename": "bettercombat-forge-1.8.6+1.20.1.jar",
+        "name": "Better Combat",
+        "url": "https://www.curseforge.com/projects/639842",
+        "version": "1.8.6+1.20.1"
+    },
+    {
+        "authors": [
+            "Gaz"
+        ],
+        "filename": "BetterCompatibilityChecker-3.0.1-build.58+mc1.20.jar",
+        "name": "Better Compatibility Checker",
+        "url": "https://www.curseforge.com/projects/551894",
+        "version": "3.0.1-build.58+mc1.20"
+    },
+    {
+        "authors": [
+            "TreyRuffy and cominixo"
+        ],
+        "filename": "BetterF3-7.0.2-Forge-1.20.1.jar",
+        "name": "BetterF3",
+        "url": "https://www.curseforge.com/projects/401648",
+        "version": "7.0.2"
+    },
+    {
+        "authors": [
+            "KingPhygieBoo, Silver_David, Lachney"
+        ],
+        "filename": "blue_skies-1.20.1-1.3.31.jar",
+        "name": "Blue Skies",
+        "url": "https://www.curseforge.com/projects/312918",
+        "version": "1.3.31"
+    },
+    {
+        "authors": [
+            "50ap5ud5"
+        ],
+        "filename": "Boat-Item-View-Forge-1.20.1-0.0.5.jar",
+        "name": "Boat Item View",
+        "url": "https://www.curseforge.com/projects/482444",
+        "version": "0.0.5"
+    },
+    {
+        "authors": [
+            "Darkhax"
+        ],
+        "filename": "Bookshelf-Forge-1.20.1-20.2.13.jar",
+        "name": "Bookshelf",
+        "url": "https://www.curseforge.com/projects/228525",
+        "version": "20.2.13"
+    },
+    {
+        "authors": [
+            "Mongoose_artist, MCreator"
+        ],
+        "filename": "born_in_chaos_[Forge]1.20.1_1.7.jar",
+        "name": "Born in Chaos ",
+        "url": "https://www.curseforge.com/projects/686437",
+        "version": "1.7"
+    },
+    {
+        "authors": [
+            "Vazkii, wiiv, williewillus, dylan4ever, Hubry, Alwinfy, artemisSystem, Falkory220"
+        ],
+        "filename": "Botania-1.20.1-448-FORGE.jar",
+        "name": "Botania",
+        "url": "https://www.curseforge.com/projects/225643",
+        "version": "1.20.1-448-FORGE"
+    },
+    {
+        "authors": [
+            "CodexAdrian"
+        ],
+        "filename": "botarium-forge-1.20.1-2.3.4.jar",
+        "name": "Botarium",
+        "url": "https://www.curseforge.com/projects/704113",
+        "version": "2.3.4"
+    },
+    {
+        "authors": [
+            "izofar"
+        ],
+        "filename": "bygonenether-1.3.2-1.20.x.jar",
+        "name": "Bygone Nether",
+        "url": "https://www.curseforge.com/projects/576124",
+        "version": "1.3.2"
+    },
+    {
+        "authors": [
+            "C4"
+        ],
+        "filename": "caelus-forge-3.2.0+1.20.1.jar",
+        "name": "Caelus API",
+        "url": "https://github.com/TheIllusiveC4/Caelus",
+        "version": "3.2.0+1.20.1"
+    },
+    {
+        "authors": [
+            "Tschipp, Purplicious_Cow, cy4n"
+        ],
+        "filename": "carryon-forge-1.20.1-2.1.2.7.jar",
+        "name": "Carry On",
+        "url": "https://www.curseforge.com/projects/274259",
+        "version": "2.1.2.7"
+    },
+    {
+        "authors": [
+            "Pufferfish"
+        ],
+        "filename": "castle_dungeons-4.0.0-1.20-forge.jar",
+        "name": "Castle Dungeons",
+        "url": "https://www.curseforge.com/projects/399213",
+        "version": "4.0.0"
+    },
+    {
+        "authors": [
+            "til.griebel, MCreator"
+        ],
+        "filename": "cataclysm_tools-1.0.0-forge-1.20.1.jar",
+        "name": "Cataclysm Tools",
+        "url": "https://www.curseforge.com/projects/1037520",
+        "version": "1.0.0"
+    },
+    {
+        "authors": [
+            "EyezLeVrai"
+        ],
+        "filename": "CataclysmWeaponery2.0-1.20.1.jar",
+        "name": "Cataclysm Weaponery",
+        "url": "https://www.curseforge.com/projects/792975",
+        "version": "2.0"
+    },
+    {
+        "authors": [
+            "Alex Nijjar, Grimbop, Kekie6, ThatGravyBoat"
+        ],
+        "filename": "chipped-forge-1.20.1-3.0.7.jar",
+        "name": "Chipped",
+        "url": "https://www.curseforge.com/projects/456956",
+        "version": "3.0.7"
+    },
+    {
+        "authors": [
+            "SrRapero720"
+        ],
+        "filename": "chloride-FORGE-mc1.20.1-v1.7.1.jar",
+        "name": "Chloride",
+        "url": "https://www.curseforge.com/projects/931925",
+        "version": "1.7.1"
+    },
+    {
+        "authors": [
+            "Alexthe666"
+        ],
+        "filename": "citadel-2.6.1-1.20.1.jar",
+        "name": "Citadel",
+        "url": "https://www.curseforge.com/projects/331936",
+        "version": "2.6.1"
+    },
+    {
+        "authors": [
+            "shedaniel"
+        ],
+        "filename": "cloth-config-11.1.136-forge.jar",
+        "name": "Cloth Config v10 API",
+        "url": "https://www.curseforge.com/projects/348521",
+        "version": "11.1.136"
+    },
+    {
+        "authors": [
+            "Jaredlll08"
+        ],
+        "filename": "Clumps-forge-1.20.1-12.0.0.4.jar",
+        "name": "Clumps",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/clumps",
+        "version": "12.0.0.4"
+    },
+    {
+        "authors": [
+            "Mysticdrew"
+        ],
+        "filename": "common-networking-forge-1.0.5-1.20.1.jar",
+        "name": "Common Networking",
+        "version": "1.0.5-1.20.1"
+    },
+    {
+        "authors": [
+            "tterrag, Drullkus, minecreatr"
+        ],
+        "filename": "CTM-1.20.1-1.1.10.jar",
+        "name": "ConnectedTexturesMod",
+        "url": "https://www.curseforge.com/projects/267602",
+        "version": "1.20.1-1.1.10"
+    },
+    {
+        "authors": [
+            "Jaredlll08"
+        ],
+        "filename": "Controlling-forge-1.20.1-12.0.2.jar",
+        "name": "Controlling",
+        "url": "https://minecraft.curseforge.com/projects/controlling",
+        "version": "12.0.2"
+    },
+    {
+        "authors": [
+            "Corail31"
+        ],
+        "filename": "tombstone-1.20.1-8.9.5.jar",
+        "name": "Corail Tombstone",
+        "url": "https://www.curseforge.com/projects/243707",
+        "version": "8.9.5"
+    },
+    {
+        "authors": [
+            "Corgi Taco"
+        ],
+        "filename": "Corgilib-Forge-1.20.1-4.0.3.3.jar",
+        "name": "CorgiLib",
+        "url": "https://www.curseforge.com/projects/693313",
+        "version": "4.0.3.3"
+    },
+    {
+        "authors": [
+            "Corosus"
+        ],
+        "filename": "coroutil-forge-1.20.1-1.3.7.jar",
+        "name": "CoroUtil",
+        "url": "https://www.curseforge.com/projects/237749",
+        "version": "1.20.1-1.3.7"
+    },
+    {
+        "authors": [
+            "simibubi"
+        ],
+        "filename": "create-1.20.1-6.0.4.jar",
+        "name": "Create",
+        "url": "https://www.curseforge.com/projects/328085",
+        "version": "6.0.4"
+    },
+    {
+        "authors": [
+            "MRH0"
+        ],
+        "filename": "createaddition-1.20.1-1.3.1.jar",
+        "name": "Create Crafts & Additions",
+        "url": "https://www.curseforge.com/projects/439890",
+        "version": "1.20.1-1.3.1"
+    },
+    {
+        "authors": [
+            "Kayla, Talrey, Ordana, Cassian"
+        ],
+        "filename": "createdeco-2.0.3-1.20.1-forge.jar",
+        "name": "Create Deco",
+        "url": "https://www.curseforge.com/projects/509285",
+        "version": "2.0.3-1.20.1-forge"
+    },
+    {
+        "authors": [
+            "MarbleGateKeeper & LimonBlaze"
+        ],
+        "filename": "create_enchantment_industry-1.3.2-for-create-6.0.4.jar",
+        "name": "Create Enchantment Industry",
+        "url": "https://www.curseforge.com/projects/688768",
+        "version": "1.3.2-for-create-6.0.4"
+    },
+    {
+        "authors": [
+            "Robocraft999"
+        ],
+        "filename": "creategoggles-1.20.1-6.0.0-[FORGE].jar",
+        "name": "Create Goggles",
+        "url": "https://www.curseforge.com/projects/377835",
+        "version": "6.0.0"
+    },
+    {
+        "authors": [
+            "possible_triangle"
+        ],
+        "filename": "create_jetpack-forge-4.4.1.jar.disabled",
+        "name": "Create Jetpack",
+        "url": "https://www.curseforge.com/projects/655608",
+        "version": "4.4.1"
+    },
+    {
+        "authors": [
+            "tom5454"
+        ],
+        "filename": "createoreexcavation-1.20-1.6.3.jar",
+        "name": "Create Ore Excavation",
+        "url": "https://www.curseforge.com/projects/649832",
+        "version": "1.6.3"
+    },
+    {
+        "authors": [
+            "possible_triangle"
+        ],
+        "filename": "sliceanddice-forge-3.4.0.jar",
+        "name": "Create Slice & Dice",
+        "url": "https://www.curseforge.com/projects/659674",
+        "version": "3.4.0"
+    },
+    {
+        "authors": [
+            "Duquee_"
+        ],
+        "filename": "createutilities-0.3.1+1.20.1.jar",
+        "name": "Create Utilities",
+        "url": "https://www.curseforge.com/projects/881586",
+        "version": "0.3.1+1.20.1"
+    },
+    {
+        "authors": [
+            "lev"
+        ],
+        "filename": "bellsandwhistles-0.4.5-1.20.x-Create6.0+.jar",
+        "name": "Create: Bells & Whistles",
+        "url": "https://www.curseforge.com/projects/905040",
+        "version": "0.4.3-1.20.x"
+    },
+    {
+        "authors": [
+            "Lysine, Bennyboy1695, Redcat_XVIII"
+        ],
+        "filename": "copycats-3.0.0+mc.1.20.1-forge.jar",
+        "name": "Create: Copycats+",
+        "url": "https://www.curseforge.com/projects/968398",
+        "version": "3.0.0+mc.1.20.1-forge"
+    },
+    {
+        "authors": [
+            "sudolev"
+        ],
+        "filename": "interiors-0.5.6+forge-mc1.20.1-local.jar",
+        "name": "Create: Interiors",
+        "url": "https://www.curseforge.com/projects/906239",
+        "version": "0.5.6"
+    },
+    {
+        "authors": [
+            "Antarctic Gardens"
+        ],
+        "filename": "create-new-age-forge-1.20.1-1.1.4.jar",
+        "name": "Create: New Age",
+        "url": "https://www.curseforge.com/projects/905861",
+        "version": "1.1.4"
+    },
+    {
+        "authors": [
+            "irishgreencitrus"
+        ],
+        "filename": "occultengineering-1.20.1-0.7.0.jar",
+        "name": "Create: Occult Engineering",
+        "url": "https://www.curseforge.com/projects/1206040",
+        "version": "0.7.0"
+    },
+    {
+        "authors": [
+            "FusionSwarly"
+        ],
+        "filename": "create-structures-0.1.1-1.20.1-FORGE.jar",
+        "name": "Create: Structures",
+        "url": "https://modrinth.com/mod/create-structures",
+        "version": "0.1.1"
+    },
+    {
+        "authors": [
+            "Cristelknight999"
+        ],
+        "filename": "cristellib-1.1.6-forge.jar",
+        "name": "Cristel Lib",
+        "url": "https://www.curseforge.com/projects/856996",
+        "version": "1.1.6"
+    },
+    {
+        "authors": [
+            "Someaddon"
+        ],
+        "filename": "cupboard-1.20.1-2.7.jar",
+        "name": "Cupboard utilities",
+        "url": "https://www.curseforge.com/projects/326652",
+        "version": "1.20.1-2.7"
+    },
+    {
+        "authors": [
+            "C4"
+        ],
+        "filename": "curios-forge-5.14.1+1.20.1.jar",
+        "name": "Curios API",
+        "url": "https://www.curseforge.com/projects/309927",
+        "version": "5.14.1+1.20.1"
+    },
+    {
+        "authors": [
+            "Sparkless101"
+        ],
+        "filename": "custom-crosshair-mod-v1.5.4-forge-mc1.20.1.jar",
+        "name": "Custom Crosshair Mod",
+        "url": "https://www.curseforge.com/projects/242995",
+        "version": "1.5.4-forge"
+    },
+    {
+        "authors": [
+            "Mars"
+        ],
+        "filename": "deimos-1.20.1-forge-2.2.jar",
+        "name": "Deimos",
+        "url": "https://www.curseforge.com/projects/1158094",
+        "version": "2.2"
+    },
+    {
+        "authors": [
+            "PieKing1215"
+        ],
+        "filename": "Drip Sounds-0.5.1+1.20.4-Forge.jar",
+        "name": "Drip Sounds",
+        "version": "0.5.1"
+    },
+    {
+        "authors": [
+            "juliand665 & LostLuma"
+        ],
+        "filename": "dynamic-fps-3.9.4+minecraft-1.20.0-forge.jar",
+        "name": "Dynamic FPS",
+        "url": "https://www.curseforge.com/projects/335493",
+        "version": "3.9.4"
+    },
+    {
+        "authors": [
+            "Emi"
+        ],
+        "filename": "emi-1.1.22+1.20.1+forge.jar",
+        "name": "EMI",
+        "url": "https://www.curseforge.com/projects/580555",
+        "version": "1.1.22+1.20.1+forge"
+    },
+    {
+        "authors": [
+            "fzzyhmstrs"
+        ],
+        "filename": "emi_enchanting-0.1.2+1.20.1+forge.jar",
+        "name": "EMI Enchanting",
+        "url": "https://www.curseforge.com/projects/936713",
+        "version": "0.1.2+1.20.1+forge"
+    },
+    {
+        "authors": [
+            "fzzyhmstrs, lxly9 (art), unilock (ports)"
+        ],
+        "filename": "emi_loot-0.7.6+1.20.1+forge.jar",
+        "name": "EMI Loot",
+        "url": "https://www.curseforge.com/projects/681783",
+        "version": "0.7.6+1.20.1+forge"
+    },
+    {
+        "authors": [
+            "Abbie"
+        ],
+        "filename": "emi_ores-1.2+1.20.1+forge.jar",
+        "name": "EMI Ores",
+        "url": "https://www.curseforge.com/projects/974009",
+        "version": "1.2+1.20.1+forge"
+    },
+    {
+        "authors": [
+            "Prismwork, Flamarine"
+        ],
+        "filename": "emitrades-forge-1.2.1+mc1.20.1.jar",
+        "name": "EMI Trades",
+        "url": "https://www.curseforge.com/projects/735523",
+        "version": "1.2.1+mc1.20.1"
+    },
+    {
+        "authors": [
+            "Prismwork, Flamarine"
+        ],
+        "filename": "emiffect-forge-1.1.2+mc1.20.1.jar",
+        "name": "EMIffect",
+        "url": "https://www.curseforge.com/projects/735528",
+        "version": "1.1.2+mc1.20.1"
+    },
+    {
+        "authors": [
+            "unascribed"
+        ],
+        "filename": "ears-forge-1.19.4-1.4.7.jar",
+        "name": "Ears",
+        "url": "https://www.curseforge.com/projects/412013",
+        "version": "1.4.7"
+    },
+    {
+        "authors": [
+            "embeddedt"
+        ],
+        "filename": "embeddium-0.3.31+mc1.20.1.jar",
+        "name": "Embeddium",
+        "url": "https://www.curseforge.com/projects/908741",
+        "version": "0.3.31+mc1.20.1"
+    },
+    {
+        "authors": [
+            "dima_dencep, FlashyReese"
+        ],
+        "filename": "rubidium-extra-0.5.4.4+mc1.20.1-build.131.jar",
+        "name": "Embeddium Extra",
+        "url": "https://www.curseforge.com/projects/654373",
+        "version": "0.5.4.4+mc1.20.1-build.131"
+    },
+    {
+        "authors": [
+            "Cyborgcabbage,Norbiros"
+        ],
+        "filename": "emoji-type-2.2.3+1.20.4-forge.jar",
+        "name": "Emoji Type",
+        "url": "https://www.curseforge.com/projects/574752",
+        "version": "2.2.3+1.20.4"
+    },
+    {
+        "authors": [
+            "Darkhax"
+        ],
+        "filename": "EnchantmentDescriptions-Forge-1.20.1-17.1.19.jar",
+        "name": "EnchantmentDescriptions",
+        "url": "https://www.curseforge.com/projects/250419",
+        "version": "17.1.19"
+    },
+    {
+        "authors": [
+            "Alex Nijjar, Joosh"
+        ],
+        "filename": "endermanoverhaul-forge-1.20.1-1.0.4.jar",
+        "name": "Enderman Overhaul",
+        "url": "https://www.curseforge.com/projects/574409",
+        "version": "1.0.4"
+    },
+    {
+        "authors": [
+            "tr7zw"
+        ],
+        "filename": "entityculling-forge-1.7.4-mc1.20.1.jar",
+        "name": "EntityCulling",
+        "url": "https://www.curseforge.com/projects/448233",
+        "version": "1.7.4"
+    },
+    {
+        "authors": [
+            "LeoBeliik"
+        ],
+        "filename": "ExtremeSoundMuffler-3.49.1-forge-1.20.1.jar",
+        "name": "Extreme Sound Muffler",
+        "url": "https://www.curseforge.com/projects/363363",
+        "version": "3.48"
+    },
+    {
+        "authors": [
+            "Cheaterpaul, Fourmisain, BrekiTomasson and RandomMcSomethin"
+        ],
+        "filename": "fallingleaves-1.20.1-2.1.2.jar",
+        "name": "Fallingleaves",
+        "url": "https://www.curseforge.com/projects/463155",
+        "version": "2.1.2"
+    },
+    {
+        "authors": [
+            "Haizor"
+        ],
+        "filename": "fancydyes-2.2.1.jar",
+        "name": "Fancy Dyes",
+        "url": "https://modrinth.com/mod/weDXQCzq",
+        "version": "2.2.1"
+    },
+    {
+        "authors": [
+            "Keksuccino"
+        ],
+        "filename": "fancymenu_forge_3.5.2_MC_1.20.1.jar",
+        "name": "FancyMenu",
+        "url": "https://www.curseforge.com/projects/367706",
+        "version": "3.5.2"
+    },
+    {
+        "authors": [
+            "Kenddie, mon1tor"
+        ],
+        "filename": "fantasy_armor-forge-0.9-1.20.1.jar",
+        "name": "Fantasy Armor",
+        "url": "https://www.curseforge.com/projects/1083998",
+        "version": "0.9-1.20.1"
+    },
+    {
+        "authors": [
+            "Kenddie, mon1tor"
+        ],
+        "filename": "fantasy_weapons-forge-0.3-1.20.1.jar",
+        "name": "Fantasy Weapons",
+        "url": "https://www.curseforge.com/projects/1090102",
+        "version": "0.3-1.20.1"
+    },
+    {
+        "authors": [
+            "vectorwing"
+        ],
+        "filename": "FarmersDelight-1.20.1-1.2.7.jar",
+        "name": "Farmer's Delight",
+        "url": "https://www.curseforge.com/projects/398521",
+        "version": "1.20.1-1.2.7"
+    },
+    {
+        "authors": [
+            "malte0811"
+        ],
+        "filename": "ferritecore-6.0.1-forge.jar",
+        "name": "Ferrite Core",
+        "url": "https://www.curseforge.com/projects/429235",
+        "version": "6.0.1"
+    },
+    {
+        "authors": [
+            "tr7zw"
+        ],
+        "filename": "firstperson-forge-2.4.9-mc1.20.1.jar",
+        "name": "FirstPerson",
+        "url": "https://www.curseforge.com/projects/333287",
+        "version": "2.4.9"
+    },
+    {
+        "authors": [
+            "fzzyhmstrs"
+        ],
+        "filename": "fzzy_config-0.6.9+1.20.1+forge.jar",
+        "name": "Fzzy Config",
+        "url": "https://www.curseforge.com/projects/1005914",
+        "version": "0.6.9+1.20.1+forge"
+    },
+    {
+        "authors": [
+            "Orcinus"
+        ],
+        "filename": "Galosphere-1.20.1-1.4.1-Forge.jar",
+        "name": "Galosphere",
+        "url": "https://www.curseforge.com/projects/631098",
+        "version": "1.20.1-1.4.1"
+    },
+    {
+        "authors": [
+            "Gecko, Eliot, AzureDoom, DerToaster, Tslat, Witixin"
+        ],
+        "filename": "geckolib-forge-1.20.1-4.7.1.2.jar",
+        "name": "GeckoLib 4",
+        "url": "http://geckolib.com/",
+        "version": "4.7.1.2"
+    },
+    {
+        "authors": [
+            "Alex Nijjar, Kekie6"
+        ],
+        "filename": "handcrafted-forge-1.20.1-3.0.6.jar",
+        "name": "Handcrafted",
+        "url": "https://www.curseforge.com/projects/538214",
+        "version": "3.0.6"
+    },
+    {
+        "authors": [
+            "ThatGravyBoat"
+        ],
+        "filename": "highlight-forge-1.20-2.0.1.jar",
+        "name": "Highlight",
+        "url": "https://www.curseforge.com/projects/667245",
+        "version": "2.0.1"
+    },
+    {
+        "authors": [
+            "Cammie, Up"
+        ],
+        "filename": "Icarus-Forge-2.12.0.jar",
+        "name": "Icarus",
+        "url": "https://www.curseforge.com/projects/428151",
+        "version": "2.12.0"
+    },
+    {
+        "authors": [
+            "Alexthe666, TheBv"
+        ],
+        "filename": "iceandfire-2.1.13-1.20.1-beta-5.jar",
+        "name": "Ice and Fire",
+        "url": "https://www.curseforge.com/projects/264231",
+        "version": "2.1.13-1.20.1"
+    },
+    {
+        "authors": [
+            "jslament"
+        ],
+        "filename": "iceandfirebettercombat.jar",
+        "name": "Ice and Fire x Better Combat",
+        "url": "https://www.curseforge.com/projects/1105606",
+        "version": "1.0"
+    },
+    {
+        "authors": [
+            "Ace The Eldritch King"
+        ],
+        "filename": "ice_and_fire_spellbooks-2.3.1-1.20.1.jar",
+        "name": "Ice and Fire: Spellbooks",
+        "url": "https://www.curseforge.com/projects/977855",
+        "version": "2.3.1-1.20.1"
+    },
+    {
+        "authors": [
+            "Grend"
+        ],
+        "filename": "Iceberg-1.20.1-forge-1.1.25.jar",
+        "name": "Iceberg",
+        "url": "https://www.curseforge.com/projects/520110",
+        "version": "1.1.25"
+    },
+    {
+        "authors": [
+            "RK_01"
+        ],
+        "filename": "ImmediatelyFast-Forge-1.5.0+1.20.4.jar",
+        "name": "ImmediatelyFast",
+        "url": "https://www.curseforge.com/projects/686911",
+        "version": "1.5.0+1.20.4"
+    },
+    {
+        "authors": [
+            "Luke100000"
+        ],
+        "filename": "immersive_aircraft-1.2.2+1.20.1-forge.jar",
+        "name": "Immersive Aircraft",
+        "url": "https://www.curseforge.com/projects/666014",
+        "version": "1.2.2+1.20.1"
+    },
+    {
+        "authors": [
+            "Luke100000"
+        ],
+        "filename": "immersive_armors-1.7.0+1.20.1-forge.jar",
+        "name": "Immersive Armors",
+        "url": "https://www.curseforge.com/projects/580681",
+        "version": "1.7.0+1.20.1"
+    },
+    {
+        "authors": [
+            "Toni"
+        ],
+        "filename": "immersivelanterns-forge-1.0.6-1.20.1.jar",
+        "name": "Immersive Lanterns",
+        "url": "https://www.curseforge.com/projects/1116812",
+        "version": "1.0.6"
+    },
+    {
+        "authors": [
+            "Luke100000"
+        ],
+        "filename": "immersive_melodies-0.5.0+1.20.1-forge.jar",
+        "name": "Immersive Melodies",
+        "url": "https://www.curseforge.com/projects/904471",
+        "version": "0.5.0+1.20.1"
+    },
+    {
+        "authors": [
+            "Luke100000"
+        ],
+        "filename": "immersive_paintings-0.6.7+1.20.1-forge.jar",
+        "name": "Immersive Paintings",
+        "url": "https://www.curseforge.com/projects/639584",
+        "version": "0.6.7+1.20.1"
+    },
+    {
+        "authors": [
+            "Iron431, Lab3"
+        ],
+        "filename": "irons_spellbooks-1.20.1-3.4.0.7.jar",
+        "name": "Iron's Spells 'n Spellbooks",
+        "url": "https://www.curseforge.com/projects/855414",
+        "version": "1.20.1-3.4.0.7"
+    },
+    {
+        "authors": [
+            "Snownee"
+        ],
+        "filename": "Jade-1.20.1-Forge-11.13.1.jar",
+        "name": "Jade",
+        "url": "https://www.curseforge.com/projects/324717",
+        "version": "11.13.1+forge"
+    },
+    {
+        "authors": [
+            "Snownee"
+        ],
+        "filename": "JadeAddons-1.20.1-Forge-5.5.0.jar",
+        "name": "Jade Addons",
+        "url": "https://www.curseforge.com/projects/583345",
+        "version": "5.5.0+forge"
+    },
+    {
+        "authors": [
+            "Jamalam"
+        ],
+        "filename": "jamlib-forge-1.3.5+1.20.1.jar",
+        "name": "JamLib",
+        "url": "https://github.com/JamCoreModding/jamlib",
+        "version": "1.3.5+1.20.1"
+    },
+    {
+        "authors": [
+            "xerca"
+        ],
+        "filename": "xercapaint-1.20.1-1.0.1.jar",
+        "name": "Joy of Painting",
+        "url": "https://www.curseforge.com/projects/350727",
+        "version": "1.20.1-1.0.1"
+    },
+    {
+        "authors": [
+            "Keksuccino"
+        ],
+        "filename": "konkrete_forge_1.8.0_MC_1.20-1.20.1.jar",
+        "name": "Konkrete",
+        "url": "https://www.curseforge.com/projects/410295",
+        "version": "1.8.0"
+    },
+    {
+        "filename": "kotlinforforge-4.11.0-all.jar",
+        "name": "Kotlin for Forge",
+        "url": "https://www.curseforge.com/projects/351264",
+        "version": "5402061"
+    },
+    {
+        "authors": [
+            "Grend"
+        ],
+        "filename": "LegendaryTooltips-1.20.1-forge-1.4.5.jar",
+        "name": "Legendary Tooltips",
+        "url": "https://www.curseforge.com/projects/532127",
+        "version": "1.4.5"
+    },
+    {
+        "filename": "lionfishapi-2.4.jar",
+        "name": "LionfishAPI",
+        "url": "https://www.curseforge.com/projects/1001614",
+        "version": "2.4"
+    },
+    {
+        "authors": [
+            "Someaddon"
+        ],
+        "filename": "lootintegrations-1.20.1-4.4.jar",
+        "name": "Lootintegrations mod",
+        "url": "https://www.curseforge.com/projects/580689",
+        "version": "1.20.1-4.4"
+    },
+    {
+        "authors": [
+            "Samlegamer"
+        ],
+        "filename": "mcwbyg-1.20.1-1.2.1.jar",
+        "name": "Macaw's - Oh the Biomes You'll Go",
+        "url": "https://www.curseforge.com/projects/535960",
+        "version": "1.20.1-1.2.1"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Peachy Macaw"
+        ],
+        "filename": "mcw-bridges-3.1.0-mc1.20.1forge.jar",
+        "name": "Macaw's Bridges",
+        "url": "https://www.curseforge.com/projects/351725",
+        "version": "3.1.0"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Sketch Peachy"
+        ],
+        "filename": "mcw-doors-1.1.2-mc1.20.1forge.jar",
+        "name": "Macaw's Doors",
+        "url": "https://www.curseforge.com/projects/378646",
+        "version": "1.1.2"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Peachy Macaw"
+        ],
+        "filename": "mcw-fences-1.2.0-1.20.1forge.jar",
+        "name": "Macaw's Fences and Walls",
+        "url": "https://www.curseforge.com/projects/453925",
+        "version": "1.2.0"
+    },
+    {
+        "authors": [
+            "Sketch Macaw"
+        ],
+        "filename": "mcw-furniture-3.3.0-mc1.20.1forge.jar",
+        "name": "Macaw's Furniture",
+        "url": "https://www.curseforge.com/projects/359540",
+        "version": "3.3.0"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Peachy Macaw"
+        ],
+        "filename": "mcw-lights-1.1.2-mc1.20.1forge.jar",
+        "name": "Macaw's Lights and Lamps",
+        "url": "https://www.curseforge.com/projects/502372",
+        "version": "1.1.2"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Peachy Macaw"
+        ],
+        "filename": "mcw-paths-1.1.0forge-mc1.20.1.jar",
+        "name": "Macaw's Paths and Pavings",
+        "url": "https://www.curseforge.com/projects/629153",
+        "version": "1.1.0"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Sketch Peachy"
+        ],
+        "filename": "mcw-roofs-2.3.2-mc1.20.1forge.jar",
+        "name": "Macaw's Roofs",
+        "url": "https://www.curseforge.com/projects/352039",
+        "version": "2.3.2"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Sketch Peachy"
+        ],
+        "filename": "mcw-stairs-1.0.1-1.20.1forge.jar",
+        "name": "Macaw's Stairs and Balconies",
+        "url": "https://www.curseforge.com/projects/1119394",
+        "version": "1.0.1"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Peachy Macaw"
+        ],
+        "filename": "mcw-trapdoors-1.1.4-mc1.20.1forge.jar",
+        "name": "Macaw's Trapdoors",
+        "url": "https://www.curseforge.com/projects/400933",
+        "version": "1.1.4"
+    },
+    {
+        "authors": [
+            "Sketch Macaw & Peachy Macaw"
+        ],
+        "filename": "mcw-windows-2.3.0-mc1.20.1forge.jar",
+        "name": "Macaw's Windows",
+        "url": "https://www.curseforge.com/projects/363569",
+        "version": "2.3.0"
+    },
+    {
+        "authors": [
+            "Slime Knights"
+        ],
+        "filename": "Mantle-1.20.1-1.11.44.jar",
+        "name": "Mantle",
+        "url": "https://www.curseforge.com/projects/74924",
+        "version": "1.11.44"
+    },
+    {
+        "authors": [
+            "Keksuccino"
+        ],
+        "filename": "melody_forge_1.0.3_MC_1.20.1-1.20.4.jar",
+        "name": "Melody",
+        "url": "https://www.curseforge.com/projects/938643",
+        "version": "1.0.2"
+    },
+    {
+        "authors": [
+            "NAIZO"
+        ],
+        "filename": "memory_of_the_past-1.6.3-forge-1.20.1.jar.disabled",
+        "name": "Memories of the past",
+        "url": "https://www.curseforge.com/projects/1079687",
+        "version": "1.6.3"
+    },
+    {
+        "authors": [
+            "embeddedt"
+        ],
+        "filename": "modernfix-forge-5.23.0+mc1.20.1.jar",
+        "name": "ModernFix",
+        "url": "https://www.curseforge.com/projects/790626",
+        "version": "5.23.0+mc1.20.1"
+    },
+    {
+        "authors": [
+            "Kli Kli"
+        ],
+        "filename": "modonomicon-1.20.1-forge-1.77.6.jar",
+        "name": "Modonomicon",
+        "url": "https://www.curseforge.com/projects/538392",
+        "version": "1.77.6"
+    },
+    {
+        "authors": [
+            "MehVahdJukaar"
+        ],
+        "filename": "moonlight-1.20-2.14.1-forge.jar",
+        "name": "Moonlight Library",
+        "url": "https://www.curseforge.com/projects/499980",
+        "version": "1.20-2.14.1"
+    },
+    {
+        "authors": [
+            "nyuppo"
+        ],
+        "filename": "moremobvariants-forge+1.20.1-1.3.0.1.jar",
+        "name": "More Mob Variants",
+        "url": "https://www.curseforge.com/projects/695107",
+        "version": "1.3.0.1"
+    },
+    {
+        "authors": [
+            "Mars"
+        ],
+        "filename": "morediscs-1.20.1-forge-35.jar",
+        "name": "More Music Discs",
+        "url": "https://www.curseforge.com/projects/471002",
+        "version": "35"
+    },
+    {
+        "authors": [
+            "feldim2425, RiDGo8/R8420"
+        ],
+        "filename": "moreoverlays-1.22.7-mc1.20.2.jar",
+        "name": "More Overlays Updated",
+        "url": "https://www.curseforge.com/projects/391382",
+        "version": "1.22.7-mc1.20.2"
+    },
+    {
+        "authors": [
+            "Ivan Molodetskikh (YaLTeR)"
+        ],
+        "filename": "MouseTweaks-forge-mc1.20.1-2.25.1.jar",
+        "name": "Mouse Tweaks",
+        "url": "https://www.curseforge.com/projects/60089",
+        "version": "2.25.1"
+    },
+    {
+        "authors": [
+            "cyber_rat"
+        ],
+        "filename": "mowzies_cataclysm-1.2.0.jar",
+        "name": "Mowzie's Cataclysm",
+        "url": "https://www.curseforge.com/projects/1128348",
+        "version": "1.2.0"
+    },
+    {
+        "authors": [
+            "BobMowzie, Wadoo, Vakypanda, Noonyez, pau101"
+        ],
+        "filename": "mowziesmobs-1.7.2.jar",
+        "name": "Mowzie's Mobs",
+        "url": "https://www.curseforge.com/projects/250498",
+        "version": "1.7.2"
+    },
+    {
+        "authors": [
+            "Starfish Studios"
+        ],
+        "filename": "naturalist-5.0pre2+forge-1.20.1.jar",
+        "name": "Naturalist",
+        "url": "https://www.curseforge.com/projects/627986",
+        "version": "5.0pre2"
+    },
+    {
+        "authors": [
+            "ChaosTheDude"
+        ],
+        "filename": "NaturesCompass-1.20.1-1.11.2-forge.jar",
+        "name": "Nature's Compass",
+        "url": "https://www.curseforge.com/projects/252848",
+        "version": "1.20.1-1.11.2-forge"
+    },
+    {
+        "authors": [
+            "Ellpeck"
+        ],
+        "filename": "NaturesAura-39.4.jar",
+        "name": "NaturesAura",
+        "url": "https://www.curseforge.com/projects/306626",
+        "version": "39.4"
+    },
+    {
+        "authors": [
+            "Joosh and samgj15"
+        ],
+        "filename": "nightlights-1.20.1-1.1.jar",
+        "name": "Night Lights",
+        "url": "https://www.curseforge.com/projects/651876",
+        "version": "1.1"
+    },
+    {
+        "authors": [
+            "Aizistral"
+        ],
+        "filename": "NoChatReports-FORGE-1.20.1-v2.2.2.jar",
+        "name": "No Chat Reports",
+        "url": "https://www.curseforge.com/projects/634062",
+        "version": "1.20.1-v2.2.2"
+    },
+    {
+        "authors": [
+            "Steveplays28"
+        ],
+        "filename": "noisium-forge-2.3.0+mc1.20-1.20.1.jar",
+        "name": "Noisium",
+        "url": "https://www.curseforge.com/projects/930207",
+        "version": "2.3.0+mc1.20-1.20.1"
+    },
+    {
+        "authors": [
+            "OctoStudios"
+        ],
+        "filename": "Not Enough Recipe Book-FORGE-0.4.1+1.20.1.jar",
+        "name": "Not Enough Recipe Book",
+        "url": "https://www.curseforge.com/projects/738663",
+        "version": "0.4.1"
+    },
+    {
+        "authors": [
+            "tr7zw"
+        ],
+        "filename": "notenoughanimations-forge-1.9.3-mc1.20.1.jar",
+        "name": "NotEnoughAnimations",
+        "url": "https://www.curseforge.com/projects/433760",
+        "version": "1.9.3"
+    },
+    {
+        "authors": [
+            "Obscuria"
+        ],
+        "filename": "obscure_api-15.jar",
+        "name": "Obscure API",
+        "url": "https://www.curseforge.com/projects/638417",
+        "version": "15"
+    },
+    {
+        "authors": [
+            "tasgon"
+        ],
+        "filename": "observable-4.4.2.jar",
+        "name": "Observable",
+        "url": "https://www.curseforge.com/projects/509575",
+        "version": "4.4.2"
+    },
+    {
+        "authors": [
+            "Kli Kli"
+        ],
+        "filename": "occultism-1.20.1-1.141.4.jar",
+        "name": "Occultism",
+        "url": "https://www.curseforge.com/projects/361026",
+        "version": "1.141.4"
+    },
+    {
+        "authors": [
+            "OctoStudios"
+        ],
+        "filename": "OctoLib-FORGE-0.5.0.1+1.20.1.jar",
+        "name": "OctoLib",
+        "url": "https://www.curseforge.com/projects/916747",
+        "version": "0.5.0.1"
+    },
+    {
+        "authors": [
+            "NanoLive, dima_dencep, coderbot, IMS212, Justsnoopy30, FoundationGames"
+        ],
+        "filename": "oculus-mc1.20.1-1.7.0.jar",
+        "name": "Oculus",
+        "url": "https://www.curseforge.com/projects/581495",
+        "version": "1.7.0"
+    },
+    {
+        "authors": [
+            "Joseph T. McQuigg (JT122406), AOCAWOL, YaBoiChips, Corgi Taco"
+        ],
+        "filename": "Oh-The-Biomes-Weve-Gone-Forge-1.5.11.jar",
+        "name": "Oh The Biomes We've Gone",
+        "url": "https://www.curseforge.com/projects/1070751",
+        "version": "1.5.11"
+    },
+    {
+        "authors": [
+            "Corgi Taco"
+        ],
+        "filename": "Oh-The-Trees-Youll-Grow-forge-1.20.1-1.3.9.jar",
+        "name": "Oh The Trees You'll Grow",
+        "url": "https://www.curseforge.com/projects/962544",
+        "version": "1.3.9"
+    },
+    {
+        "authors": [
+            "Xaero96 and other contributors"
+        ],
+        "filename": "open-parties-and-claims-forge-1.20.1-0.24.0.jar",
+        "name": "Open Parties and Claims",
+        "url": "https://www.curseforge.com/projects/636608",
+        "version": "0.24.0"
+    },
+    {
+        "authors": [
+            "Vazkii"
+        ],
+        "filename": "Patchouli-1.20.1-84.1-FORGE.jar",
+        "name": "Patchouli",
+        "url": "https://www.curseforge.com/projects/306770",
+        "version": "1.20.1-84.1-FORGE"
+    },
+    {
+        "authors": [
+            "Shadows_of_Fire"
+        ],
+        "filename": "Placebo-1.20.1-8.6.3.jar",
+        "name": "Placebo",
+        "url": "https://www.curseforge.com/projects/283644",
+        "version": "8.6.3"
+    },
+    {
+        "authors": [
+            "KosmX"
+        ],
+        "filename": "player-animation-lib-forge-1.0.2-rc1+1.20.jar",
+        "name": "Player Animator",
+        "url": "https://www.curseforge.com/projects/658587",
+        "version": "1.0.2-rc1+1.20"
+    },
+    {
+        "authors": [
+            "Grend"
+        ],
+        "filename": "Prism-1.20.1-forge-1.0.5.jar",
+        "name": "Prism",
+        "url": "https://www.curseforge.com/projects/638111",
+        "version": "1.0.5"
+    },
+    {
+        "authors": [
+            "Octo-Studios"
+        ],
+        "filename": "rarcompat-1.20.1-0.1.7.jar",
+        "name": "RAR-Compat",
+        "url": "https://www.curseforge.com/projects/1100379",
+        "version": "0.1.7"
+    },
+    {
+        "authors": [
+            "AlexThe666, GizmoTheMoonPig"
+        ],
+        "filename": "Rats-1.20.1-8.1.3.jar",
+        "name": "Rats",
+        "url": "https://www.curseforge.com/projects/323596",
+        "version": "1.20.1-8.1.3"
+    },
+    {
+        "authors": [
+            "SSKirillSS"
+        ],
+        "filename": "relics-1.20.1-0.8.0.9.jar",
+        "name": "Relics",
+        "url": "https://www.curseforge.com/projects/445274",
+        "version": "0.8.0.9"
+    },
+    {
+        "authors": [
+            "ThatGravyBoat, Epic_Oreo"
+        ],
+        "filename": "resourcefullib-forge-1.20.1-2.1.29.jar",
+        "name": "Resourceful Lib",
+        "url": "https://www.curseforge.com/projects/570073",
+        "version": "2.1.29"
+    },
+    {
+        "filename": "resourcefulconfig-forge-1.20.1-2.1.3.jar",
+        "name": "Resourcefulconfig",
+        "url": "https://www.curseforge.com/projects/714059",
+        "version": "2.1.3"
+    },
+    {
+        "authors": [
+            "Jamalam"
+        ],
+        "filename": "rightclickharvest-forge-4.5.3+1.20.1.jar",
+        "name": "Right Click Harvest",
+        "url": "https://www.curseforge.com/projects/452834",
+        "version": "4.5.3+1.20.1"
+    },
+    {
+        "authors": [
+            "AbdElAziz"
+        ],
+        "filename": "saturn-mc1.20.1-0.1.3.jar",
+        "name": "Saturn",
+        "url": "https://www.curseforge.com/projects/670986",
+        "version": "0.1.3"
+    },
+    {
+        "authors": [
+            "Jaredlll08"
+        ],
+        "filename": "Searchables-forge-1.20.1-1.0.3.jar",
+        "name": "Searchables",
+        "url": "https://minecraft.curseforge.com/projects/searchables",
+        "version": "1.0.3"
+    },
+    {
+        "authors": [
+            "Fonnymunkey, ArtsyDy"
+        ],
+        "filename": "simplehats-forge-1.20.1-0.3.2.jar",
+        "name": "SimpleHats",
+        "url": "https://www.curseforge.com/projects/631990",
+        "version": "1.20.1-0.3.2"
+    },
+    {
+        "authors": [
+            "RosemaryThyme"
+        ],
+        "filename": "simplymore-forge-1.1.3.jar",
+        "name": "Simply More",
+        "url": "https://www.curseforge.com/projects/1095252",
+        "version": "1.1.3"
+    },
+    {
+        "authors": [
+            "Sweenus"
+        ],
+        "filename": "simplyswords-forge-1.56.0-1.20.1.jar",
+        "name": "Simply Swords",
+        "url": "https://www.curseforge.com/projects/659887",
+        "version": "1.56.0-1.20.1"
+    },
+    {
+        "authors": [
+            "Tslat"
+        ],
+        "filename": "SmartBrainLib-forge-1.20.1-1.15.jar",
+        "name": "SmartBrainLib",
+        "version": "1.15"
+    },
+    {
+        "authors": [
+            "toni, LambdAurora"
+        ],
+        "filename": "sodiumdynamiclights-forge-1.0.10-1.20.1.jar",
+        "name": "Sodium Dynamic Lights",
+        "url": "https://www.curseforge.com/projects/551736",
+        "version": "1.0.9"
+    },
+    {
+        "authors": [
+            "toni"
+        ],
+        "filename": "sodiumextras-forge-1.0.7-1.20.1.jar",
+        "name": "Sodium Extras",
+        "url": "https://www.curseforge.com/projects/558905",
+        "version": "1.0.6"
+    },
+    {
+        "authors": [
+            "toni"
+        ],
+        "filename": "sodiumoptionsapi-forge-1.0.10-1.20.1.jar",
+        "name": "Sodium Options API",
+        "url": "https://www.curseforge.com/projects/1103431",
+        "version": "1.0.10"
+    },
+    {
+        "authors": [
+            "P3pp3rF1y, Ridanisaurus"
+        ],
+        "filename": "sophisticatedbackpacks-1.20.1-3.23.17.1246.jar",
+        "name": "Sophisticated Backpacks",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/sophisticated-backpacks",
+        "version": "3.23.17.1246"
+    },
+    {
+        "authors": [
+            "P3pp3rF1y"
+        ],
+        "filename": "sophisticatedcore-1.20.1-1.2.63.993.jar",
+        "name": "Sophisticated Core",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/sophisticated-core",
+        "version": "1.2.63.993"
+    },
+    {
+        "authors": [
+            "Spottedleaf"
+        ],
+        "filename": "starlight-1.1.2+forge.1cda73c.jar",
+        "name": "Starlight",
+        "url": "https://www.curseforge.com/projects/526854",
+        "version": "1.1.2+forge.1cda73c"
+    },
+    {
+        "authors": [
+            "Silver_David, KingPhygieBoo, Jonathing"
+        ],
+        "filename": "structure_gel-1.20.1-2.16.2.jar",
+        "name": "Structure Gel API",
+        "url": "https://www.curseforge.com/projects/378802",
+        "version": "2.16.2"
+    },
+    {
+        "authors": [
+            "MehVahdJukaar, Plantkillable"
+        ],
+        "filename": "supplementaries-1.20-3.1.29.jar",
+        "name": "Supplementaries",
+        "url": "https://www.curseforge.com/projects/412082",
+        "version": "1.20-3.1.29"
+    },
+    {
+        "authors": [
+            "Apollo"
+        ],
+        "filename": "tectonic-forge-1.20.1-2.4.1.jar",
+        "name": "Tectonic",
+        "url": "https://www.curseforge.com/projects/686836",
+        "version": "2.4.1"
+    },
+    {
+        "authors": [
+            "Adubbz"
+        ],
+        "filename": "TerraBlender-forge-1.20.1-3.0.1.10.jar",
+        "name": "TerraBlender",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/terrablender",
+        "version": "3.0.1.10"
+    },
+    {
+        "authors": [
+            "Stardust Labs"
+        ],
+        "filename": "Terralith_1.20.x_v2.5.4.jar",
+        "name": "Terralith",
+        "url": "https://www.curseforge.com/projects/513688",
+        "version": "2.5.4"
+    },
+    {
+        "authors": [
+            "AlphaMode, bconlon, Blodhgarm, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam, RENREN, sunsette"
+        ],
+        "filename": "aether-1.20.1-1.5.2-neoforge.jar",
+        "name": "The Aether",
+        "url": "https://modrinth.com/mod/aether",
+        "version": "1.20.1-1.5.2-neoforge"
+    },
+    {
+        "authors": [
+            "Zepalesque"
+        ],
+        "filename": "aether-redux-2.0.18-1.20.1-neoforge.jar",
+        "name": "The Aether: Redux",
+        "url": "https://www.curseforge.com/projects/867237",
+        "version": "2.0.18"
+    },
+    {
+        "authors": [
+            "Lightning64"
+        ],
+        "filename": "tide-forge-1.20.1-1.6.0.jar",
+        "name": "Tide",
+        "url": "https://www.curseforge.com/projects/884685",
+        "version": "1.6.0"
+    },
+    {
+        "authors": [
+            "Kubek, Biban_Auriu, Cristelknight"
+        ],
+        "filename": "Towns-and-Towers-1.12-Fabric+Forge.jar",
+        "name": "Towns and Towers",
+        "url": "https://www.curseforge.com/projects/626761",
+        "version": "1.10.2"
+    },
+    {
+        "authors": [
+            "BlayTheNinth"
+        ],
+        "filename": "trashslot-forge-1.20-15.1.1.jar",
+        "name": "TrashSlot",
+        "url": "https://mods.twelveiterations.com/mc/trashslot",
+        "version": "15.1.1"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG"
+        ],
+        "filename": "TravelersTitles-1.20-Forge-4.0.2.jar",
+        "name": "Traveler's Titles",
+        "url": "https://www.curseforge.com/projects/504908",
+        "version": "1.20-Forge-4.0.2"
+    },
+    {
+        "authors": [
+            "Toni"
+        ],
+        "filename": "txnilib-forge-1.0.24-1.20.1.jar",
+        "name": "TxniLib",
+        "url": "https://www.curseforge.com/projects/1104882",
+        "version": "1.0.24"
+    },
+    {
+        "authors": [
+            "TelepathicGrunt"
+        ],
+        "filename": "wits-1.1.0+1.20.1-forge.jar",
+        "name": "WITS",
+        "url": "https://www.curseforge.com/projects/909375",
+        "version": "1.1.0+1.20.1-forge"
+    },
+    {
+        "authors": [
+            "BlayTheNinth"
+        ],
+        "filename": "waystones-forge-1.20.1-14.1.13.jar",
+        "name": "Waystones",
+        "url": "https://mods.twelveiterations.com/mc/waystones",
+        "version": "14.1.13"
+    },
+    {
+        "authors": [
+            "Corosus"
+        ],
+        "filename": "watut-forge-1.20.1-1.2.3.jar",
+        "name": "What Are They Up To",
+        "url": "https://www.curseforge.com/projects/945479",
+        "version": "1.20.1-1.2.3"
+    },
+    {
+        "authors": [
+            "Aurelj, DiamondTown and Zephyrusj"
+        ],
+        "filename": "DungeonsArise-1.20.1-2.1.57-release.jar",
+        "name": "When Dungeons Arise",
+        "url": "https://www.curseforge.com/projects/442508",
+        "version": "2.1.57-1.20.1"
+    },
+    {
+        "authors": [
+            "Zephyrusj, Aurelj"
+        ],
+        "filename": "DungeonsAriseSevenSeas-1.19.2-1.0.2-forge.jar",
+        "name": "When Dungeons Arise: Seven Seas",
+        "url": "https://www.curseforge.com/projects/953637",
+        "version": "1.0.2"
+    },
+    {
+        "authors": [
+            "precisemodpacker"
+        ],
+        "filename": "xaeros_waystones_compability-1.0.jar",
+        "name": "Xaero's Map - Waystones Compability",
+        "url": "https://www.curseforge.com/projects/887484",
+        "version": "1.0"
+    },
+    {
+        "authors": [
+            "xaero96"
+        ],
+        "filename": "Xaeros_Minimap_25.2.6_Forge_1.20.jar",
+        "name": "Xaero's Minimap",
+        "url": "https://www.curseforge.com/projects/263420",
+        "version": "25.2.6"
+    },
+    {
+        "authors": [
+            "YourDailyModder"
+        ],
+        "filename": "weaponmaster_ydm-forge-1.20.1-4.2.3.jar",
+        "name": "YDM's Weapon Master",
+        "url": "https://www.curseforge.com/projects/608235",
+        "version": "4.2.3"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG"
+        ],
+        "filename": "YungsApi-1.20-Forge-4.0.6.jar",
+        "name": "YUNG's API",
+        "url": "https://www.curseforge.com/projects/421850",
+        "version": "1.20-Forge-4.0.6"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Tera"
+        ],
+        "filename": "YungsBetterDesertTemples-1.20-Forge-3.0.3.jar",
+        "name": "YUNG's Better Desert Temples",
+        "url": "https://www.curseforge.com/projects/631016",
+        "version": "1.20-Forge-3.0.3"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Acarii"
+        ],
+        "filename": "YungsBetterDungeons-1.20-Forge-4.0.4.jar",
+        "name": "YUNG's Better Dungeons",
+        "url": "https://www.curseforge.com/projects/510089",
+        "version": "1.20-Forge-4.0.4"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Acarii"
+        ],
+        "filename": "YungsBetterEndIsland-1.20-Forge-2.0.6.jar",
+        "name": "YUNG's Better End Island",
+        "url": "https://www.curseforge.com/projects/901344",
+        "version": "1.20-Forge-2.0.6"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Tera"
+        ],
+        "filename": "YungsBetterJungleTemples-1.20-Forge-2.0.5.jar",
+        "name": "YUNG's Better Jungle Temples",
+        "url": "https://www.curseforge.com/projects/897669",
+        "version": "1.20-Forge-2.0.5"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG"
+        ],
+        "filename": "YungsBetterMineshafts-1.20-Forge-4.0.4.jar",
+        "name": "YUNG's Better Mineshafts",
+        "url": "https://www.curseforge.com/projects/389665",
+        "version": "1.20-Forge-4.0.4"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Acarii"
+        ],
+        "filename": "YungsBetterNetherFortresses-1.20-Forge-2.0.6.jar",
+        "name": "YUNG's Better Nether Fortresses",
+        "url": "https://www.curseforge.com/projects/817651",
+        "version": "1.20-Forge-2.0.6"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Tera"
+        ],
+        "filename": "YungsBetterOceanMonuments-1.20-Forge-3.0.4.jar",
+        "name": "YUNG's Better Ocean Monuments",
+        "url": "https://www.curseforge.com/projects/689238",
+        "version": "1.20-Forge-3.0.4"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Acarii"
+        ],
+        "filename": "YungsBetterStrongholds-1.20-Forge-4.0.3.jar",
+        "name": "YUNG's Better Strongholds",
+        "url": "https://www.curseforge.com/projects/465575",
+        "version": "1.20-Forge-4.0.3"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Acarii"
+        ],
+        "filename": "YungsBetterWitchHuts-1.20-Forge-3.0.3.jar",
+        "name": "YUNG's Better Witch Huts",
+        "url": "https://www.curseforge.com/projects/631401",
+        "version": "1.20-Forge-3.0.3"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG"
+        ],
+        "filename": "YungsBridges-1.20-Forge-4.0.3.jar",
+        "name": "YUNG's Bridges",
+        "url": "https://www.curseforge.com/projects/536660",
+        "version": "1.20-Forge-4.0.3"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, HellionGames, Sully, LudoCrypt, Jasmine, K.jpg, Neko, Frenderman, Refresh Studios"
+        ],
+        "filename": "YungsCaveBiomes-1.20.1-Forge-2.0.4.jar.disabled",
+        "name": "YUNG's Cave Biomes",
+        "url": "https://www.curseforge.com/projects/1111586",
+        "version": "1.20.1-Forge-2.0.4"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG, Acarii"
+        ],
+        "filename": "YungsExtras-1.20-Forge-4.0.3.jar",
+        "name": "YUNG's Extras",
+        "url": "https://www.curseforge.com/projects/480006",
+        "version": "1.20-Forge-4.0.3"
+    },
+    {
+        "authors": [
+            "YUNGNICKYOUNG"
+        ],
+        "filename": "YungsMenuTweaks-1.20.1-Forge-1.0.2.jar",
+        "name": "YUNG's Menu Tweaks",
+        "url": "https://www.curseforge.com/projects/917285",
+        "version": "1.20.1-Forge-1.0.2"
+    },
+    {
+        "authors": [
+            "Zephyrusjz, Aureljz"
+        ],
+        "filename": "YeehawTowns-1.0.2-1.20.1-forge.jar",
+        "name": "Yeehaw Towns",
+        "url": "https://www.curseforge.com/projects/1078314",
+        "version": "1.0.2"
+    },
+    {
+        "authors": [
+            "isXander"
+        ],
+        "filename": "yet_another_config_lib_v3-3.6.6+1.20.1-forge.jar",
+        "name": "YetAnotherConfigLib",
+        "url": "https://www.curseforge.com/projects/667299",
+        "version": "3.6.6+1.20.1-forge"
+    },
+    {
+        "authors": [
+            "Cristelknight, BaumeisterJO"
+        ],
+        "filename": "letsdo-API-forge-1.2.15-forge.jar",
+        "name": "[Let's Do] API",
+        "url": "https://www.curseforge.com/projects/864599",
+        "version": "1.2.15"
+    },
+    {
+        "authors": [
+            "Satisfy"
+        ],
+        "filename": "letsdo-bakery-forge-2.0.5.jar",
+        "name": "[Let's Do] Bakery",
+        "url": "https://www.curseforge.com/projects/1038130",
+        "version": "2.0.5"
+    },
+    {
+        "authors": [
+            "Satisfy, Jason13"
+        ],
+        "filename": "letsdo-beachparty-forge-2.0.2.jar",
+        "name": "[Let's Do] Beachparty",
+        "url": "https://www.curseforge.com/projects/858691",
+        "version": "2.0.2"
+    },
+    {
+        "authors": [
+            "satisfy"
+        ],
+        "filename": "letsdo-brewery-forge-2.0.5.jar",
+        "name": "[Let's Do] Brewery",
+        "url": "https://www.curseforge.com/projects/1038106",
+        "version": "2.0.5"
+    },
+    {
+        "authors": [
+            "satisfy, jason13"
+        ],
+        "filename": "letsdo-camping-forge-1.0.4.jar",
+        "name": "[Let's Do] Camping",
+        "url": "https://www.curseforge.com/projects/1072398",
+        "version": "1.0.4"
+    },
+    {
+        "authors": [
+            "satisfy"
+        ],
+        "filename": "letsdo-candlelight-forge-2.0.4.jar",
+        "name": "[Let's Do] Candlelight",
+        "url": "https://www.curseforge.com/projects/1038117",
+        "version": "2.0.4"
+    },
+    {
+        "authors": [
+            "satisfy, jason13"
+        ],
+        "filename": "letsdo-farm_and_charm-forge-1.0.8.jar",
+        "name": "[Let's Do] Farm & Charm",
+        "url": "https://www.curseforge.com/projects/1038103",
+        "version": "1.0.8"
+    },
+    {
+        "authors": [
+            "berksire, satisfy, cph101"
+        ],
+        "filename": "letsdo-furniture-forge-1.0.4.jar",
+        "name": "[Let's Do] Furniture",
+        "url": "https://www.curseforge.com/projects/1062363",
+        "version": "1.0.4"
+    },
+    {
+        "authors": [
+            "satisfy"
+        ],
+        "filename": "letsdo-herbalbrews-forge-1.0.12.jar",
+        "name": "[Let's Do] HerbalBrews",
+        "url": "https://www.curseforge.com/projects/951221",
+        "version": "1.0.12"
+    },
+    {
+        "authors": [
+            "Satisfy, MissLilitu"
+        ],
+        "filename": "letsdo-lilis_lucky_lures-forge-1.0.2.jar",
+        "name": "[Let's Do] Lilis Lucky Lures",
+        "url": "https://www.curseforge.com/projects/1197637",
+        "version": "1.0.2"
+    },
+    {
+        "authors": [
+            "satisfy, jason13official"
+        ],
+        "filename": "letsdo-meadow-forge-1.3.25.jar",
+        "name": "[Let's Do] Meadow",
+        "url": "https://www.curseforge.com/projects/821483",
+        "version": "1.3.25"
+    },
+    {
+        "authors": [
+            "satisfy"
+        ],
+        "filename": "letsdo-nethervinery-forge-1.2.17.jar",
+        "name": "[Let's Do] NetherVinery",
+        "url": "https://www.curseforge.com/projects/930072",
+        "version": "1.2.17"
+    },
+    {
+        "authors": [
+            "Jason13Official, Satisfy"
+        ],
+        "filename": "letsdo-vinery-forge-1.4.39.jar",
+        "name": "[Let's Do] Vinery",
+        "url": "https://www.curseforge.com/projects/704465",
+        "version": "1.4.39"
+    },
+    {
+        "authors": [
+            "satisfy, jason13"
+        ],
+        "filename": "letsdo-wildernature-forge-1.0.5.jar",
+        "name": "[Let's Do] Wilder Nature",
+        "url": "https://www.curseforge.com/projects/1071657",
+        "version": "1.0.5"
+    },
+    {
+        "authors": [
+            "L_Ender"
+        ],
+        "filename": "L_Enders_Cataclysm 1.20.1-2.66.jar",
+        "name": "cataclysm",
+        "url": "https://www.curseforge.com/projects/551586",
+        "version": "2.65"
+    },
+    {
+        "filename": "emi-letsdo-compat-1.5.jar",
+        "name": "emi-letsdo-compat",
+        "url": "https://www.curseforge.com/projects/1063821",
+        "version": "1.5"
+    },
+    {
+        "authors": [
+            "Someaddon"
+        ],
+        "filename": "lootintegration_wda-1.6.jar",
+        "name": "lootintegration_wda mod",
+        "url": "https://www.curseforge.com/projects/1142880",
+        "version": "1"
+    },
+    {
+        "authors": [
+            "Luck"
+        ],
+        "filename": "spark-1.10.53-forge.jar",
+        "name": "spark",
+        "url": "https://www.curseforge.com/projects/361579",
+        "version": "1.10.53"
+    }
+]
