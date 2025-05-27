@@ -7,7 +7,7 @@ class ModpackManager {
         this.mods = [];
         this.enrichedMods = [];
         this.filteredMods = [];
-        this.currentView = 'grid';
+        this.currentView = 'list'; // Changed default to list
         
         this.init();
     }
@@ -16,6 +16,7 @@ class ModpackManager {
         this.setupEventListeners();
         await this.loadModData();
         this.updateStatistics();
+        this.setView('list'); // Set list view as default
         this.renderMods();
     }
 
@@ -33,13 +34,17 @@ class ModpackManager {
             this.filterAndSort();
         });
 
-        // View toggle
+        // View toggle - now includes compact mode
         document.getElementById('gridView').addEventListener('click', () => {
             this.setView('grid');
         });
 
         document.getElementById('listView').addEventListener('click', () => {
             this.setView('list');
+        });
+
+        document.getElementById('compactView').addEventListener('click', () => {
+            this.setView('compact');
         });
 
         // Compare functionality
@@ -169,10 +174,16 @@ class ModpackManager {
         // Update button states
         document.getElementById('gridView').classList.toggle('active', view === 'grid');
         document.getElementById('listView').classList.toggle('active', view === 'list');
+        document.getElementById('compactView').classList.toggle('active', view === 'compact');
         
         // Update grid class
         const modGrid = document.getElementById('modGrid');
-        modGrid.classList.toggle('list-view', view === 'list');
+        modGrid.classList.remove('list-view', 'compact-view');
+        if (view === 'list') {
+            modGrid.classList.add('list-view');
+        } else if (view === 'compact') {
+            modGrid.classList.add('compact-view');
+        }
         
         this.renderMods();
     }
@@ -189,7 +200,7 @@ class ModpackManager {
             setTimeout(() => {
                 modCard.style.opacity = '1';
                 modCard.style.transform = 'translateY(0)';
-            }, index * 50);
+            }, index * 25); // Faster animation for list views
         });
 
         if (this.filteredMods.length === 0) {
@@ -205,7 +216,7 @@ class ModpackManager {
 
     createModCard(mod) {
         const card = document.createElement('div');
-        card.className = 'mod-card';
+        card.className = `mod-card ${this.currentView === 'compact' ? 'compact' : ''}`;
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -214,30 +225,60 @@ class ModpackManager {
         const authors = Array.isArray(mod.authors) ? mod.authors.join(', ') : (mod.authors || 'Unknown');
         const description = mod.description || 'No description available';
         
-        card.innerHTML = `
-            <div class="mod-card-header">
-                <div class="mod-name">${this.escapeHtml(mod.name)}</div>
-                <div class="mod-version">v${this.escapeHtml(mod.version)}</div>
-            </div>
-            <div class="mod-card-body">
-                <div class="mod-authors">by ${this.escapeHtml(authors)}</div>
-                <div class="mod-description">${this.escapeHtml(this.truncateText(description, 150))}</div>
-                ${mod.downloadCount ? `<div class="mod-stats"><i class="fas fa-download"></i> ${this.formatNumber(mod.downloadCount)} downloads</div>` : ''}
-            </div>
-            <div class="mod-card-footer">
-                <span class="platform-badge ${platformClass}">
-                    ${this.getPlatformIcon(mod.platform)} ${this.capitalizeFirst(mod.platform)}
-                </span>
-                <div class="mod-links">
-                    <a href="${mod.url}" target="_blank" class="mod-link" title="View on ${this.capitalizeFirst(mod.platform)}">
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                    <button class="mod-link" onclick="modpackManager.showModDetails('${mod.name}')" title="View Details">
-                        <i class="fas fa-info-circle"></i>
-                    </button>
+        // Different layouts for different views
+        if (this.currentView === 'compact') {
+            card.innerHTML = `
+                <div class="mod-compact-content">
+                    <div class="mod-main-info">
+                        <div class="mod-name">${this.escapeHtml(mod.name)}</div>
+                        <div class="mod-version">v${this.escapeHtml(mod.version)}</div>
+                        <div class="mod-authors">${this.escapeHtml(authors)}</div>
+                    </div>
+                    <div class="mod-platform-info">
+                        <span class="platform-badge ${platformClass}">
+                            ${this.getPlatformIcon(mod.platform)} ${this.capitalizeFirst(mod.platform)}
+                        </span>
+                    </div>
+                    <div class="mod-actions">
+                        ${mod.hasValidUrl ? `
+                            <a href="${mod.url}" target="_blank" class="mod-link" title="View on ${this.capitalizeFirst(mod.platform)}">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        ` : ''}
+                        <button class="mod-link" onclick="modpackManager.showModDetails('${mod.name.replace(/'/g, "\\'")}')" title="View Details">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="mod-card-header">
+                    <div class="mod-name">${this.escapeHtml(mod.name)}</div>
+                    <div class="mod-version">v${this.escapeHtml(mod.version)}</div>
+                </div>
+                <div class="mod-card-body">
+                    <div class="mod-authors">by ${this.escapeHtml(authors)}</div>
+                    ${this.currentView === 'list' ? `<div class="mod-description">${this.escapeHtml(this.truncateText(description, 150))}</div>` : ''}
+                    ${mod.downloadCount ? `<div class="mod-stats"><i class="fas fa-download"></i> ${this.formatNumber(mod.downloadCount)} downloads</div>` : ''}
+                </div>
+                <div class="mod-card-footer">
+                    <span class="platform-badge ${platformClass}">
+                        ${this.getPlatformIcon(mod.platform)} ${this.capitalizeFirst(mod.platform)}
+                    </span>
+                    <div class="mod-links">
+                        ${mod.hasValidUrl ? `
+                            <a href="${mod.url}" target="_blank" class="mod-link" title="View on ${this.capitalizeFirst(mod.platform)}">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        ` : ''}
+                        <button class="mod-link" onclick="modpackManager.showModDetails('${mod.name.replace(/'/g, "\\'")}')" title="View Details">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
 
         return card;
     }
@@ -304,9 +345,15 @@ class ModpackManager {
                 ` : ''}
                 
                 <div class="mod-actions">
-                    <a href="${mod.url}" target="_blank" class="btn btn-primary">
-                        <i class="fas fa-external-link-alt"></i> View on ${this.capitalizeFirst(mod.platform)}
-                    </a>
+                    ${mod.hasValidUrl ? `
+                        <a href="${mod.url}" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> View on ${this.capitalizeFirst(mod.platform)}
+                        </a>
+                    ` : `
+                        <span class="btn btn-disabled">
+                            <i class="fas fa-link-slash"></i> No URL available
+                        </span>
+                    `}
                 </div>
             </div>
         `;
@@ -498,17 +545,17 @@ class ModpackManager {
                 mimeType = 'text/markdown';
                 break;
             case 'html':
-                content = this.changelogManager.exportAsHTML(currentChangelog.id);
+                content = this.changelogManager.exportAsHtml(currentChangelog.id);
                 filename = `changelog-v${currentChangelog.version}.html`;
                 mimeType = 'text/html';
                 break;
             case 'json':
-                content = this.changelogManager.exportAsJSON(currentChangelog.id);
+                content = JSON.stringify(currentChangelog, null, 2);
                 filename = `changelog-v${currentChangelog.version}.json`;
                 mimeType = 'application/json';
                 break;
             default:
-                this.showError('Invalid format. Please choose markdown, html, or json.');
+                this.showError('Invalid format. Please use markdown, html, or json.');
                 return;
         }
 
@@ -523,22 +570,22 @@ class ModpackManager {
 
         switch (format.toLowerCase()) {
             case 'json':
-                content = JSON.stringify(this.enrichedMods, null, 2);
+                content = JSON.stringify(this.filteredMods, null, 2);
                 filename = 'modlist.json';
                 mimeType = 'application/json';
                 break;
             case 'csv':
-                content = this.exportAsCSV(this.enrichedMods);
+                content = this.exportAsCSV(this.filteredMods);
                 filename = 'modlist.csv';
                 mimeType = 'text/csv';
                 break;
             case 'markdown':
-                content = this.exportAsMarkdown(this.enrichedMods);
+                content = this.exportAsMarkdown(this.filteredMods);
                 filename = 'modlist.md';
                 mimeType = 'text/markdown';
                 break;
             default:
-                this.showError('Invalid format. Please choose json, csv, or markdown.');
+                this.showError('Invalid format. Please use json, csv, or markdown.');
                 return;
         }
 
@@ -550,39 +597,42 @@ class ModpackManager {
         const rows = mods.map(mod => [
             mod.name,
             mod.version,
-            Array.isArray(mod.authors) ? mod.authors.join('; ') : (mod.authors || ''),
+            Array.isArray(mod.authors) ? mod.authors.join(';') : mod.authors,
             mod.platform,
-            mod.url,
-            (mod.description || '').replace(/"/g, '""')
+            mod.url || '',
+            mod.description || ''
         ]);
 
-        return [headers, ...rows]
-            .map(row => row.map(cell => `"${cell}"`).join(','))
+        const csvContent = [headers, ...rows]
+            .map(row => row.map(field => `"${(field || '').toString().replace(/"/g, '""')}"`).join(','))
             .join('\n');
+
+        return csvContent;
     }
 
     exportAsMarkdown(mods) {
         let markdown = '# Mod List\n\n';
         markdown += `Total mods: ${mods.length}\n\n`;
-
-        // Group by platform
-        const platforms = ['curseforge', 'modrinth', 'github', 'other'];
         
-        platforms.forEach(platform => {
-            const platformMods = mods.filter(mod => mod.platform === platform);
-            if (platformMods.length === 0) return;
+        const groupedMods = mods.reduce((acc, mod) => {
+            if (!acc[mod.platform]) acc[mod.platform] = [];
+            acc[mod.platform].push(mod);
+            return acc;
+        }, {});
 
+        Object.entries(groupedMods).forEach(([platform, platformMods]) => {
             markdown += `## ${this.capitalizeFirst(platform)} (${platformMods.length})\n\n`;
-            
             platformMods.forEach(mod => {
-                const authors = Array.isArray(mod.authors) ? mod.authors.join(', ') : (mod.authors || 'Unknown');
-                markdown += `### ${mod.name}\n`;
-                markdown += `- **Version:** ${mod.version}\n`;
-                markdown += `- **Author(s):** ${authors}\n`;
-                if (mod.description) {
-                    markdown += `- **Description:** ${mod.description}\n`;
+                const authors = Array.isArray(mod.authors) ? mod.authors.join(', ') : mod.authors;
+                markdown += `- **${mod.name}** v${mod.version} by ${authors}`;
+                if (mod.hasValidUrl) {
+                    markdown += ` - [Link](${mod.url})`;
                 }
-                markdown += `- **Link:** [${mod.name}](${mod.url})\n\n`;
+                markdown += '\n';
+                if (mod.description && mod.description !== 'No description available') {
+                    markdown += `  ${mod.description}\n`;
+                }
+                markdown += '\n';
             });
         });
 
@@ -592,16 +642,15 @@ class ModpackManager {
     downloadFile(content, filename, mimeType) {
         const blob = new Blob([content], { type: mimeType });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         URL.revokeObjectURL(url);
     }
 
-    // Utility methods
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
@@ -609,16 +658,15 @@ class ModpackManager {
     }
 
     truncateText(text, maxLength) {
-        if (text.length <= maxLength) return text;
-        return text.substr(0, maxLength) + '...';
-    }
-
-    capitalizeFirst(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     }
 
     formatNumber(num) {
         return new Intl.NumberFormat().format(num);
+    }
+
+    capitalizeFirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     getPlatformIcon(platform) {
@@ -632,17 +680,15 @@ class ModpackManager {
     }
 
     showError(message) {
-        // You could implement a proper toast notification system here
         alert('Error: ' + message);
     }
 
     showSuccess(message) {
-        // You could implement a proper toast notification system here
         alert('Success: ' + message);
     }
 }
 
-// Initialize the application when the DOM is loaded
+// Initialize the modpack manager when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.modpackManager = new ModpackManager();
 });

@@ -99,11 +99,17 @@
             <div class="section-header">
                 <h2><i class="fas fa-list"></i> Mod List</h2>
                 <div class="view-toggle">
-                    <button id="gridView" class="view-btn active">
+                    <button id="gridView" class="view-btn">
                         <i class="fas fa-th-large"></i>
+                        <span>Grid</span>
                     </button>
-                    <button id="listView" class="view-btn">
+                    <button id="listView" class="view-btn active">
                         <i class="fas fa-list"></i>
+                        <span>List</span>
+                    </button>
+                    <button id="compactView" class="view-btn">
+                        <i class="fas fa-bars"></i>
+                        <span>Compact</span>
                     </button>
                 </div>
             </div>
@@ -113,7 +119,7 @@
                 <span>Loading mod information...</span>
             </div>
             
-            <div id="modGrid" class="mod-grid">
+            <div id="modGrid" class="mod-grid list-view">
                 <!-- Mods will be populated here -->
             </div>
         </section>

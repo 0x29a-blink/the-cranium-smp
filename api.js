@@ -15,6 +15,10 @@ class ModAPI {
             const match = url.match(/projects\/(\d+)/);
             return match ? match[1] : null;
         }
+        if (url.includes('curseforge.com/minecraft/mc-mods/')) {
+            const match = url.match(/mc-mods\/([^/?]+)/);
+            return match ? match[1] : null;
+        }
         if (url.includes('modrinth.com/mod/')) {
             const match = url.match(/mod\/([^/?]+)/);
             return match ? match[1] : null;
@@ -68,11 +72,85 @@ class ModAPI {
         this.isProcessing = false;
     }
 
-    // Fetch CurseForge mod data - Skip API calls and return fallback data
-    async fetchCurseForgeData(projectId) {
-        // Skip API calls for CurseForge since it requires API key
-        console.log(`Skipping CurseForge API for project ${projectId} - using fallback data`);
-        return this.getFallbackData('curseforge');
+    // Fetch CurseForge mod data by scraping (no API key required)
+    async fetchCurseForgeData(projectId, url) {
+        const cacheKey = `cf_${projectId || url}`;
+        if (this.cache.has(cacheKey)) {
+            return this.cache.get(cacheKey);
+        }
+
+        return this.queueRequest(async () => {
+            try {
+                // Try to scrape the page using a CORS proxy
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                
+                const response = await fetch(proxyUrl);
+                if (!response.ok) {
+                    throw new Error(`CurseForge scraping error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const html = data.contents;
+                
+                // Parse HTML to extract description
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Try multiple selectors for description
+                let description = 'No description available';
+                
+                // Common CurseForge description selectors
+                const descriptionSelectors = [
+                    '.project-detail__description',
+                    '.project-description',
+                    '.description-text',
+                    '.overview-description',
+                    '[data-action="description"]',
+                    '.project-detail .description',
+                    '.project-overview .description'
+                ];
+                
+                for (const selector of descriptionSelectors) {
+                    const element = doc.querySelector(selector);
+                    if (element && element.textContent.trim()) {
+                        description = element.textContent.trim();
+                        break;
+                    }
+                }
+                
+                // Try to get project name if available
+                const titleElement = doc.querySelector('.project-title, .project-name, h1');
+                const projectName = titleElement ? titleElement.textContent.trim() : '';
+                
+                // Try to get download count
+                let downloadCount = 0;
+                const downloadElement = doc.querySelector('.download-count, .downloads, [data-action="download-count"]');
+                if (downloadElement) {
+                    const downloadText = downloadElement.textContent;
+                    const downloadMatch = downloadText.match(/[\d,]+/);
+                    if (downloadMatch) {
+                        downloadCount = parseInt(downloadMatch[0].replace(/,/g, ''), 10) || 0;
+                    }
+                }
+                
+                const result = {
+                    description: description.length > 500 ? description.substring(0, 500) + '...' : description,
+                    downloadCount: downloadCount,
+                    dateModified: null,
+                    categories: [],
+                    screenshots: [],
+                    gameVersions: [],
+                    platform: 'curseforge',
+                    projectName: projectName
+                };
+                
+                this.cache.set(cacheKey, result);
+                return result;
+            } catch (error) {
+                console.warn(`Failed to scrape CurseForge data for ${projectId || url}:`, error);
+                return this.getFallbackData('curseforge');
+            }
+        });
     }
 
     // Fetch Modrinth mod data
@@ -168,7 +246,10 @@ class ModAPI {
         try {
             switch (platform) {
                 case 'curseforge':
-                    // Skip API for CurseForge, just return fallback
+                    // Try to scrape CurseForge page
+                    if (mod.url) {
+                        return await this.fetchCurseForgeData(projectId, mod.url);
+                    }
                     return this.getFallbackData('curseforge');
                 case 'modrinth':
                     if (projectId) {
@@ -241,7 +322,8 @@ class DataProcessor {
             ...mod,
             platform: this.getPlatformFromUrl(mod.url),
             authorsList: Array.isArray(mod.authors) ? mod.authors : [mod.authors || 'Unknown'],
-            searchText: `${mod.name} ${Array.isArray(mod.authors) ? mod.authors.join(' ') : (mod.authors || '')} ${mod.version}`.toLowerCase()
+            searchText: `${mod.name} ${Array.isArray(mod.authors) ? mod.authors.join(' ') : (mod.authors || '')} ${mod.version}`.toLowerCase(),
+            hasValidUrl: this.hasValidUrl(mod.url)
         }));
     }
 
@@ -252,6 +334,11 @@ class DataProcessor {
         if (url.includes('modrinth.com')) return 'modrinth';
         if (url.includes('github.com')) return 'github';
         return 'other';
+    }
+
+    static hasValidUrl(url) {
+        return url && typeof url === 'string' && url.trim() !== '' && 
+               (url.startsWith('http://') || url.startsWith('https://'));
     }
 
     static getStatistics(mods) {
