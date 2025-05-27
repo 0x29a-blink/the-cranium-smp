@@ -81,65 +81,169 @@ class ModAPI {
 
         return this.queueRequest(async () => {
             try {
-                // Try to scrape the page using a CORS proxy
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                // Try multiple CORS proxies for better reliability
+                const proxies = [
+                    `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+                    `https://corsproxy.io/?${encodeURIComponent(url)}`,
+                    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+                ];
                 
-                const response = await fetch(proxyUrl);
-                if (!response.ok) {
-                    throw new Error(`CurseForge scraping error: ${response.status}`);
+                let html = null;
+                let lastError = null;
+                
+                for (const proxyUrl of proxies) {
+                    try {
+                        const response = await fetch(proxyUrl);
+                        if (response.ok) {
+                            const data = await response.json();
+                            html = data.contents || data;
+                            if (html && typeof html === 'string') {
+                                break;
+                            }
+                        }
+                    } catch (error) {
+                        lastError = error;
+                        continue;
+                    }
                 }
                 
-                const data = await response.json();
-                const html = data.contents;
+                if (!html) {
+                    throw new Error(`All CORS proxies failed. Last error: ${lastError?.message}`);
+                }
                 
                 // Parse HTML to extract description
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 
-                // Try multiple selectors for description
+                // Try multiple selectors for description with more comprehensive list
                 let description = 'No description available';
                 
-                // Common CurseForge description selectors
+                // Updated CurseForge description selectors (modern CF layout)
                 const descriptionSelectors = [
+                    '.project-detail__description p',
                     '.project-detail__description',
+                    '.project-description p',
                     '.project-description',
                     '.description-text',
                     '.overview-description',
-                    '[data-action="description"]',
+                    '.project-summary',
+                    '[data-testid="project-description"]',
+                    '.text-gray-700 p',
+                    '.prose p',
                     '.project-detail .description',
-                    '.project-overview .description'
+                    '.project-overview .description',
+                    '.details-info .description',
+                    '.project-sidebar .description'
                 ];
                 
                 for (const selector of descriptionSelectors) {
                     const element = doc.querySelector(selector);
                     if (element && element.textContent.trim()) {
                         description = element.textContent.trim();
+                        // Clean up description
+                        description = description
+                            .replace(/\s+/g, ' ')
+                            .replace(/[\r\n]+/g, ' ')
+                            .trim();
+                        if (description.length > 50) { // Only use if substantial
+                            break;
+                        }
+                    }
+                }
+                
+                // Fallback: try to get meta description
+                if (description === 'No description available' || description.length < 50) {
+                    const metaDesc = doc.querySelector('meta[name="description"]');
+                    if (metaDesc && metaDesc.getAttribute('content')) {
+                        description = metaDesc.getAttribute('content').trim();
+                    }
+                }
+                
+                // Try to get project name with more selectors
+                let projectName = '';
+                const titleSelectors = [
+                    '.project-title',
+                    '.project-name',
+                    '[data-testid="project-name"]',
+                    '.text-xl.font-bold',
+                    '.text-2xl.font-bold',
+                    'h1.text-xl',
+                    'h1.text-2xl',
+                    'h1',
+                    '.project-header h1',
+                    '.project-info h1'
+                ];
+                
+                for (const selector of titleSelectors) {
+                    const titleElement = doc.querySelector(selector);
+                    if (titleElement && titleElement.textContent.trim()) {
+                        projectName = titleElement.textContent.trim();
                         break;
                     }
                 }
                 
-                // Try to get project name if available
-                const titleElement = doc.querySelector('.project-title, .project-name, h1');
-                const projectName = titleElement ? titleElement.textContent.trim() : '';
-                
-                // Try to get download count
+                // Try to get download count with more selectors
                 let downloadCount = 0;
-                const downloadElement = doc.querySelector('.download-count, .downloads, [data-action="download-count"]');
-                if (downloadElement) {
-                    const downloadText = downloadElement.textContent;
-                    const downloadMatch = downloadText.match(/[\d,]+/);
-                    if (downloadMatch) {
-                        downloadCount = parseInt(downloadMatch[0].replace(/,/g, ''), 10) || 0;
+                const downloadSelectors = [
+                    '.download-count',
+                    '.downloads',
+                    '[data-testid="downloads"]',
+                    '.text-gray-500:contains("downloads")',
+                    '.stat-downloads',
+                    '.project-stats .downloads',
+                    '.project-info .downloads'
+                ];
+                
+                for (const selector of downloadSelectors) {
+                    const downloadElement = doc.querySelector(selector);
+                    if (downloadElement) {
+                        const downloadText = downloadElement.textContent;
+                        // Look for patterns like "1,234,567 downloads" or "1.2M downloads"
+                        const downloadMatch = downloadText.match(/([\d,]+\.?\d*[KMB]?)\s*(downloads?|DLs?)/i);
+                        if (downloadMatch) {
+                            let count = downloadMatch[1].replace(/,/g, '');
+                            if (count.includes('K')) {
+                                count = parseFloat(count.replace('K', '')) * 1000;
+                            } else if (count.includes('M')) {
+                                count = parseFloat(count.replace('M', '')) * 1000000;
+                            } else if (count.includes('B')) {
+                                count = parseFloat(count.replace('B', '')) * 1000000000;
+                            } else {
+                                count = parseInt(count, 10);
+                            }
+                            downloadCount = count || 0;
+                            break;
+                        }
                     }
                 }
+                
+                // Try to extract additional metadata
+                let categories = [];
+                const categoryElements = doc.querySelectorAll('.category, .tag, .badge, .chip');
+                categoryElements.forEach(el => {
+                    const text = el.textContent.trim();
+                    if (text && text.length < 30) {
+                        categories.push(text);
+                    }
+                });
+                
+                // Try to get game versions
+                let gameVersions = [];
+                const versionElements = doc.querySelectorAll('.version, .minecraft-version, .game-version');
+                versionElements.forEach(el => {
+                    const text = el.textContent.trim();
+                    if (text.match(/1\.\d+(\.\d+)?/)) {
+                        gameVersions.push(text);
+                    }
+                });
                 
                 const result = {
                     description: description.length > 500 ? description.substring(0, 500) + '...' : description,
                     downloadCount: downloadCount,
                     dateModified: null,
-                    categories: [],
+                    categories: categories.slice(0, 5), // Limit to 5 categories
                     screenshots: [],
-                    gameVersions: [],
+                    gameVersions: gameVersions.slice(0, 3), // Limit to 3 versions
                     platform: 'curseforge',
                     projectName: projectName
                 };

@@ -13,9 +13,6 @@
         <div class="container">
             <h1><i class="fas fa-cube"></i> Modpack Manager</h1>
             <div class="header-controls">
-                <button id="authButton" class="btn btn-secondary">
-                    <i class="fab fa-github"></i> Sign in with GitHub
-                </button>
                 <button id="compareBtn" class="btn btn-secondary">
                     <i class="fas fa-exchange-alt"></i> Compare Versions
                 </button>
@@ -27,13 +24,6 @@
     </header>
 
     <main class="container">
-        <!-- Authentication Status -->
-        <section class="auth-section">
-            <div id="authStatus" class="auth-status">
-                <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Sign in to submit changelogs
-            </div>
-        </section>
-
         <!-- Statistics Section -->
         <section class="stats-section">
             <div class="stats-grid">
@@ -96,13 +86,10 @@
             </div>
             <div class="changelog-actions">
                 <button id="saveChangelog" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Save Locally
-                </button>
-                <button id="submitChangelog" class="btn btn-success" style="display: none;">
-                    <i class="fab fa-github"></i> Submit to GitHub
+                    <i class="fas fa-save"></i> Save Changelog
                 </button>
                 <button id="exportChangelog" class="btn btn-secondary">
-                    <i class="fas fa-download"></i> Export
+                    <i class="fas fa-download"></i> Export Changelog
                 </button>
             </div>
         </section>
@@ -170,7 +157,6 @@
         </div>
     </div>
 
-    <script src="auth.js"></script>
     <script src="api.js"></script>
     <script src="changelog.js"></script>
     <script src="app.js"></script>
