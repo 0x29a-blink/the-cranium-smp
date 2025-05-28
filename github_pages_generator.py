@@ -234,7 +234,7 @@ h2 {
 /* Mod cards */
 .mod-card {
     background-color: var(--card-bg);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: var(--card-shadow);
     overflow: hidden;
     transition: all 0.3s;
@@ -242,7 +242,8 @@ h2 {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1.25rem;
+    padding: 1.5rem;
+    position: relative;
 }
 
 .mod-card:hover {
@@ -330,9 +331,12 @@ h2 {
 }
 
 .mod-title {
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.25rem;
     color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.75rem;
 }
 
 .mod-badge {
@@ -362,13 +366,25 @@ h2 {
 }
 
 .mod-info-item {
-    margin-bottom: 4px;
-    font-size: 0.875rem;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    padding-left: 10px;
+    border-left: 3px solid var(--border-color);
 }
 
 .mod-info-label {
-    font-weight: 500;
-    color: var(--primary-color);
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.category-pill {
+    display: inline-block;
+    background-color: var(--accent-color-light);
+    color: var(--text-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    margin: 0.1rem;
 }
 
 .mod-warning {
@@ -396,17 +412,16 @@ h2 {
 }
 
 .mod-btn {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background-color: var(--light-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
+    margin-right: 0.75rem;
+    text-decoration: none;
     transition: all 0.2s;
 }
 
@@ -480,6 +495,18 @@ h2 {
     font-weight: 500;
     border-color: var(--primary-color);
     box-shadow: 0 2px 4px rgba(74, 118, 168, 0.25);
+}
+
+.versi.mod-btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.mod-btn.primary:hover {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .search-container {
@@ -560,6 +587,18 @@ h2 {
     }
 }
 
+@media (max-width: 1200px) {
+    .mod-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mod-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .changelog-cards {
     display: flex;
     flex-direction: column;
@@ -609,8 +648,9 @@ h2 {
 }
 
 .changelog-card-content {
-    padding: 1rem 0;
+    padding: 1rem 1.25rem;
     font-size: 0.9rem;
+    line-height: 1.6;
     color: var(--text-color);
     margin-top: 0.5rem;
 }
@@ -1248,14 +1288,14 @@ def generate_version_html(modpack, version, is_latest):
     
     # We're removing the large changelog text as requested
     
-    # Add mod-specific changelog comments if available
-    if mod_comments:
-        html += """
+    # Always display the changelog section
+    html += """
             <div class="changelog-cards">
 """
-        
-        # First display mods with comments
-        has_commented_mods = False
+    
+    # First display mods with comments
+    has_commented_mods = False
+    if mod_comments:
         for key, comment in mod_comments.items():
             if comment and comment.strip():
                 has_commented_mods = True
@@ -1290,8 +1330,9 @@ def generate_version_html(modpack, version, is_latest):
                 <p class="no-comments">No detailed mod change comments available for this version.</p>
 """
         
-        # Then list mods without comments in a compact format
-        compact_mods = {}
+    # Then list mods without comments in a compact format
+    compact_mods = {}
+    if mod_comments:
         for key in mod_comments.keys():
             comment = mod_comments[key]
             if not comment or not comment.strip():
@@ -1308,118 +1349,151 @@ def generate_version_html(modpack, version, is_latest):
                 
                 compact_mods[change_type].append(mod_name)
         
-        if compact_mods:
-            html += """
+    # Helper function to generate list item HTML for compact changelog
+    # Defined here to be within generate_version_html's scope, accessible by the logic below.
+    def _generate_li_content_for_compact_changelog(mod_name_str, all_mods_list_param):
+        li_html_content = ""
+        mod_details = None
+        mod_version = 'N/A'
+        authors = 'Unknown'
+        url = ''
+
+        for full_mod_obj in all_mods_list_param:
+            if isinstance(full_mod_obj, dict) and full_mod_obj.get('name', '').lower() == mod_name_str.lower():
+                mod_details = full_mod_obj
+                mod_version = mod_details.get('version', 'N/A')
+                mod_authors_list = mod_details.get('authors', [])
+                if not isinstance(mod_authors_list, list):
+                    mod_authors_list = [str(mod_authors_list)] if mod_authors_list else []
+                authors = ', '.join(mod_authors_list) if mod_authors_list else 'Unknown'
+                url = mod_details.get('url', '')
+                break
+        
+        li_html_content += f"""
+                        <div class="compact-item-header clickable">
+                            <span class="compact-item-text">{mod_name_str}</span>
+                            <span class="compact-item-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="compact-item-details">
+                            <div class="mod-info">
+                                <p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>
+                                <p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors}</p>
+                            </div>
+"""
+        if not url:
+            li_html_content += """
+                            <div class="mod-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</span>
+                            </div>
+"""
+        li_html_content += """
+                            <div class="mod-actions">
+"""
+        if url:
+            li_html_content += f"""
+                                <a href="{url}" target="_blank" class="mod-btn primary"><i class="fas fa-external-link-alt"></i> View Mod</a>
+"""
+        # Ensure data-copy attribute is properly quoted if mod_name_str contains spaces or special characters
+        escaped_mod_name = mod_name_str.replace('"', '&quot;') # Basic escaping for quotes
+        li_html_content += f"""
+                                <button class="mod-btn copy" data-copy=\"{escaped_mod_name}\"><i class="fas fa-copy"></i> Copy</button>
+                            </div>
+                        </div>"""
+        return li_html_content
+
+    # Compact changelog section using added_mods, removed_mods, updated_mods
+    if added_mods or removed_mods or updated_mods:
+        html += """
                 <div class="compact-changelog">
                     <h4>Changed Mods</h4>
                     <div class="compact-changelog-grid">
 """
-            
-            for change_type, mods in compact_mods.items():
-                # Map change types to CSS classes
-                css_class = "updated"
-                if "add" in change_type.lower():
-                    css_class = "added"
-                elif "remov" in change_type.lower() or "delet" in change_type.lower():
-                    css_class = "removed"
-                
-                html += f"""
+        if added_mods:
+            html += """
                         <div class="compact-changelog-section">
-                            <h5 class="compact-changelog-title {css_class}">{change_type.capitalize()}</h5>
+                            <h5 class="compact-changelog-title added">Added</h5>
                             <ul class="compact-changelog-list">
 """
-                
-                for mod in mods:
-                    # Find mod details from the full mod list
-                    mod_details = None
-                    mod_version = 'N/A'
-                    authors = 'Unknown'
-                    url = ''
-                    
-                    # Look for the mod in the full mod list
-                    for full_mod in all_mods:
-                        if isinstance(full_mod, dict) and full_mod.get('name', '').lower() == mod.lower():
-                            mod_details = full_mod
-                            mod_version = mod_details.get('version', 'N/A')
-                            mod_authors = mod_details.get('authors', [])
-                            if not isinstance(mod_authors, list):
-                                mod_authors = [str(mod_authors)] if mod_authors else []
-                            authors = ', '.join(mod_authors) if mod_authors else 'Unknown'
-                            url = mod_details.get('url', '')
-                            break
-                    
-                    html += f"""
+            for mod_obj in added_mods: # Iterate over mod objects
+                mod_name_str = mod_obj.get('name', 'Unknown Mod') if isinstance(mod_obj, dict) else str(mod_obj) # Extract name string
+                html += f"""
                                 <li class="compact-changelog-item">
-                                    <div class="compact-item-header clickable">
-                                        <span class="compact-item-text">{mod}</span>
-                                        <span class="compact-item-toggle"><i class="fas fa-chevron-down"></i></span>
-                                    </div>
-                                    <div class="compact-item-details">
-                                        <div class="mod-info">
-                                            <p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>
-                                            <p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors}</p>
-                                        </div>
-"""
-                    
-                    # Add warning if no URL
-                    if not url:
-                        html += """
-                                        <div class="mod-warning">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            <span>No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</span>
-                                        </div>
-"""
-                    
-                    # Add actions
-                    html += """
-                                        <div class="mod-actions">
-"""
-                    
-                    if url:
-                        html += f"""
-                                            <a href="{url}" target="_blank" class="mod-btn primary"><i class="fas fa-external-link-alt"></i> View Mod</a>
-"""
-                    
-                    html += """
-                                            <button class="mod-btn copy" data-copy=""" + mod + """><i class="fas fa-copy"></i> Copy</button>
-                                        </div>
-                                    </div>
+                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods)}
                                 </li>
 """
-                
-                html += """
+            html += """
+                            </ul>
+                        </div>
+"""
+
+        if removed_mods:
+            html += """
+                        <div class="compact-changelog-section">
+                            <h5 class="compact-changelog-title removed">Removed</h5>
+                            <ul class="compact-changelog-list">
+"""
+            for mod_obj in removed_mods: # Iterate over mod objects
+                mod_name_str = mod_obj.get('name', 'Unknown Mod') if isinstance(mod_obj, dict) else str(mod_obj) # Extract name string
+                html += f"""
+                                <li class="compact-changelog-item">
+                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods)}
+                                </li>
+"""
+            html += """
                             </ul>
                         </div>
 """
             
+        if updated_mods:
             html += """
-                    </div>
-                </div>
+                        <div class="compact-changelog-section">
+                            <h5 class="compact-changelog-title updated">Updated</h5>
+                            <ul class="compact-changelog-list">
+"""
+            for mod_obj in updated_mods: # Iterate over mod objects
+                mod_name_str = mod_obj.get('name', 'Unknown Mod') if isinstance(mod_obj, dict) else str(mod_obj) # Extract name string
+                html += f"""
+                                <li class="compact-changelog-item">
+                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods)}
+                                </li>
+"""
+            html += """
+                            </ul>
+                        </div>
 """
         
         html += """
-            </div>
-"""
-    else:
+                    </div>
+                </div>
+""" # Close compact-changelog-grid and compact-changelog
+    elif not has_commented_mods: # This 'has_commented_mods' is set earlier in the function
         html += """
-            <p class="no-comments">No mod-specific changelog information available for this version.</p>
+                <p class="no-changes">No changes for this version.</p>
 """
-    
+
+    html += """
+            </div>
+""" # Close changelog-cards (this was the original end of the TargetContent block)
+
+    # Explicitly close the notes-section here to ensure proper grouping
     html += """
         </div>
-"""
+""" # Close notes-section
     
-    # Add search input
-    html += """
+    # Generate the mod list section
+    html += f"""
+    <section id="mods">
+        <h2>Mod List</h2>
         <div class="search-container">
-            <input type="text" id="mod-search" placeholder="Search mods..." class="search-input">
+            <input type="text" id="mod-search" placeholder="Search mods..." />
         </div>
+        <div class="mod-grid">
 """
     
-    # Add Changelog section if we have mod comments
+    # All mods will be displayed in the mod grid
+    # No need for additional section wrapper
     html += """
-        <div class="mod-section" id="mod-changelog">
-            <div class="changelog">
 """
     
     # Add all mods from the current version
@@ -1448,6 +1522,33 @@ def generate_version_html(modpack, version, is_latest):
         # Get filename from mod if available
         filename = mod.get('filename', '') if isinstance(mod, dict) else ''
         
+        # Handle description which can now be a dictionary
+        mod_description = ''
+        icon_url = ''
+        categories = []
+        tags = []
+        
+        if isinstance(description, dict):
+            mod_description = description.get('description', '')
+            icon_url = description.get('iconUrl', '')
+            categories.extend(description.get('categories', []))
+            tags.extend(description.get('tags', []))
+        else:
+            mod_description = description if description else ''
+        
+        # Get additional metadata directly from mod
+        if isinstance(mod, dict):
+            if not icon_url and 'iconUrl' in mod:
+                icon_url = mod.get('iconUrl', '')
+            if 'categories' in mod and not categories:
+                categories.extend(mod.get('categories', []))
+            if 'tags' in mod and not tags:
+                tags.extend(mod.get('tags', []))
+        
+        # Create a unique list of categories
+        all_categories = list(set(categories + tags))
+        categories_str = ','.join(all_categories) if all_categories else ''
+        
         html += f"""
         <div class="mod-card expanded" data-categories="{categories_str}">
             <div class="mod-header">
@@ -1463,11 +1564,28 @@ def generate_version_html(modpack, version, is_latest):
             html += f"""
                     <p class="mod-info-item"><span class="mod-info-label">Filename:</span> {filename}</p>
 """
+        
+        # Add URL if available
+        if url:
+            html += f"""
+                    <p class="mod-info-item"><span class="mod-info-label">URL:</span> <a href="{url}" target="_blank">{url}</a></p>
+"""
+        else:
+            html += f"""
+                    <p class="mod-info-item"><span class="mod-info-label">URL:</span> <em>Check Prism Launcher for mod source</em></p>
+"""
             
         # Add description if available
-        if description and description != 'No description available.':
+        if mod_description and mod_description != 'No description available.':
             html += f"""
-                    <p class="mod-info-item"><span class="mod-info-label">Description:</span> {description}</p>
+                    <p class="mod-info-item"><span class="mod-info-label">Description:</span> {mod_description}</p>
+"""
+        
+        # Add categories if available
+        if all_categories:
+            category_pills = ' '.join([f'<span class="category-pill">{cat}</span>' for cat in all_categories])
+            html += f"""
+                    <p class="mod-info-item"><span class="mod-info-label">Categories:</span> {category_pills}</p>
 """
             
         html += """
@@ -1517,9 +1635,8 @@ def generate_version_html(modpack, version, is_latest):
 """
     
     html += """
-            </div>
         </div>
-    </div>
+    </section>
     
     <footer class="footer">
         <p>Generated by Minecraft Modpack Manager</p>

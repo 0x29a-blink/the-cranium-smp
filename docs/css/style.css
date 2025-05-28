@@ -161,7 +161,7 @@ h2 {
 /* Mod cards */
 .mod-card {
     background-color: var(--card-bg);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: var(--card-shadow);
     overflow: hidden;
     transition: all 0.3s;
@@ -169,7 +169,8 @@ h2 {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1.25rem;
+    padding: 1.5rem;
+    position: relative;
 }
 
 .mod-card:hover {
@@ -257,9 +258,12 @@ h2 {
 }
 
 .mod-title {
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.25rem;
     color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.75rem;
 }
 
 .mod-badge {
@@ -289,13 +293,25 @@ h2 {
 }
 
 .mod-info-item {
-    margin-bottom: 4px;
-    font-size: 0.875rem;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    padding-left: 10px;
+    border-left: 3px solid var(--border-color);
 }
 
 .mod-info-label {
-    font-weight: 500;
-    color: var(--primary-color);
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.category-pill {
+    display: inline-block;
+    background-color: var(--accent-color-light);
+    color: var(--text-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    margin: 0.1rem;
 }
 
 .mod-warning {
@@ -323,17 +339,16 @@ h2 {
 }
 
 .mod-btn {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background-color: var(--light-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
+    margin-right: 0.75rem;
+    text-decoration: none;
     transition: all 0.2s;
 }
 
@@ -407,6 +422,18 @@ h2 {
     font-weight: 500;
     border-color: var(--primary-color);
     box-shadow: 0 2px 4px rgba(74, 118, 168, 0.25);
+}
+
+.versi.mod-btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.mod-btn.primary:hover {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .search-container {
@@ -487,6 +514,18 @@ h2 {
     }
 }
 
+@media (max-width: 1200px) {
+    .mod-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mod-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .changelog-cards {
     display: flex;
     flex-direction: column;
@@ -536,8 +575,9 @@ h2 {
 }
 
 .changelog-card-content {
-    padding: 1rem 0;
+    padding: 1rem 1.25rem;
     font-size: 0.9rem;
+    line-height: 1.6;
     color: var(--text-color);
     margin-top: 0.5rem;
 }
