@@ -1390,15 +1390,15 @@ def generate_version_html(modpack, version, is_latest):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{name} - Version {version_number}</title>
-    <link rel="stylesheet" href="{('../' * (0 if is_latest else 2))}../../css/inter.css">
-    <link rel="stylesheet" href="{('../' * (0 if is_latest else 2))}../../css/style.css">
-    <link rel="stylesheet" href="{('../' * (0 if is_latest else 2))}../../css/fontawesome.css">
+    <link rel="stylesheet" href="/the-cranium-smp/css/inter.css">
+    <link rel="stylesheet" href="/the-cranium-smp/css/style.css">
+    <link rel="stylesheet" href="/the-cranium-smp/css/fontawesome.css">
 </head>
 <body>
     <header>
         <h1>{name}</h1>
         <p>{description}</p>
-        <p><a href="{('../' * (0 if is_latest else 2))}../../index.html">&laquo; Back to All Modpacks</a></p>
+        <p><a href="/the-cranium-smp/index.html">&laquo; Back to All Modpacks</a></p>
     </header>
     
     <div class="container">
@@ -1418,10 +1418,9 @@ def generate_version_html(modpack, version, is_latest):
             <span class="version-button current">Version {v_number}</span>
 """
         else:
-            if is_latest:
-                href = f"versions/{v_slug}.html"
-            else:
-                href = f"{v_slug}.html"
+            # Use absolute paths for GitHub Pages
+            project_slug = slugify(name)
+            href = f"/the-cranium-smp/projects/{project_slug}/versions/{v_slug}.html"
             
             html += f"""
             <a href="{href}" class="version-button">Version {v_number}</a>
@@ -1904,7 +1903,7 @@ def generate_version_html(modpack, version, is_latest):
         <p>Last updated: """ + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + """</p>
     </footer>
     
-    <script src=""" + f'"{("../" * (0 if is_latest else 2))}../../js/main.js"' + """></script>
+    <script src="/the-cranium-smp/js/main.js"></script>
 </body>
 </html>
 """
