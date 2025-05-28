@@ -549,7 +549,7 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-top: 12px;
+    margin-bottom: 1rem;
 }
 
 .mod-category {
@@ -558,8 +558,9 @@ h2 {
     color: var(--text-color);
     padding: 2px 8px;
     border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    margin-right: 6px;
+    margin-bottom: 6px;
 }
 
 .version-nav {

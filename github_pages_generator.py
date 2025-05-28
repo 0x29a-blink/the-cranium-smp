@@ -618,7 +618,7 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-top: 12px;
+    margin-bottom: 1rem;
 }
 
 .mod-category {
@@ -627,8 +627,9 @@ h2 {
     color: var(--text-color);
     padding: 2px 8px;
     border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    margin-right: 6px;
+    margin-bottom: 6px;
 }
 
 .version-nav {
@@ -1836,6 +1837,20 @@ def generate_version_html(modpack, version, is_latest):
             
         html += """
                 </div>
+                
+                <!-- Categories as pills above action buttons -->
+"""                
+        # Add categories as pills above action buttons
+        if all_categories:
+            html += """
+                <div class="mod-categories">
+"""
+            for category in all_categories:
+                html += f"""
+                    <span class="category-pill">{category}</span>
+"""
+            html += """
+                </div>
 """
         
         # Add warning if no URL
@@ -1862,20 +1877,7 @@ def generate_version_html(modpack, version, is_latest):
             </div>
 """
         
-        # Add categories to the footer
-        if all_categories:
-            html += """
-            <div class="mod-footer">
-                <div class="mod-categories">
-"""
-            for category in all_categories:
-                html += f"""
-                <span class="category-pill">{category}</span>
-"""
-            html += """
-                </div>
-            </div>
-"""
+        # Categories are now above action buttons
         
         html += """
             </div>
