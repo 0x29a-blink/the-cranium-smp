@@ -15,6 +15,11 @@ def save_modpack(modpack_data, filename=None):
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = f"{name}_{timestamp}.json"
     path = os.path.join(MODPACKS_DIR, filename)
+    
+    # Ensure the public flag exists
+    if 'public' not in modpack_data:
+        modpack_data['public'] = False
+        
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(modpack_data, f, indent=2, ensure_ascii=False)
     return path

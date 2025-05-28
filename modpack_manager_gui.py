@@ -3,6 +3,7 @@ import json
 import os
 import requests
 import threading
+import webbrowser
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QDialog, QLineEdit,
     QTextEdit, QFileDialog, QTableWidget, QTableWidgetItem, QHBoxLayout, QMessageBox, QMenuBar, QAction, QListWidget, QInputDialog,
@@ -11,6 +12,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QUrl, QTimer
 from PyQt5.QtGui import QDesktopServices
 from modpack_utils import save_modpack, list_modpacks, load_modpack
+from github_pages_generator import generate_github_pages
 
 CONFIG_FILE = 'config.json'
 
@@ -168,6 +170,7 @@ class CreateModpackDialog(QDialog):
         self.modpack_name = ''
         self.modpack_desc = ''
         self.modlist_path = ''
+        self.is_public = False
         self.init_ui()
 
     def init_ui(self):
@@ -188,6 +191,18 @@ class CreateModpackDialog(QDialog):
         hlayout.addWidget(browse_btn)
         layout.addWidget(QLabel('Upload Modlist (.json):'))
         layout.addLayout(hlayout)
+        
+        # Add public checkbox
+        self.public_checkbox = QCheckBox('Make this modpack public (will appear on GitHub Pages)')
+        self.public_checkbox.setChecked(False)
+        layout.addWidget(self.public_checkbox)
+        
+        # Add help text for public checkbox
+        help_label = QLabel('Note: Public modpacks will be displayed on the GitHub Pages site. Once made public, a modpack cannot be made private again.')
+        help_label.setWordWrap(True)
+        help_label.setStyleSheet('color: #666; font-style: italic; font-size: 10px;')
+        layout.addWidget(help_label)
+        
         btn_layout = QHBoxLayout()
         create_btn = QPushButton('Create')
         create_btn.clicked.connect(self.accept)
@@ -199,16 +214,21 @@ class CreateModpackDialog(QDialog):
         self.setLayout(layout)
 
     def browse_modlist(self):
-        path, _ = QFileDialog.getOpenFileName(self, 'Open Modlist', '', 'JSON Files (*.json)')
-        if path:
-            self.modlist_edit.setText(path)
+        filepath, _ = QFileDialog.getOpenFileName(self, "Select Modlist", "", "JSON Files (*.json)")
+        if filepath:
+            self.modlist_edit.setText(filepath)
+            self.modlist_path = filepath
 
     def accept(self):
         self.modpack_name = self.name_edit.text().strip()
         self.modpack_desc = self.desc_edit.toPlainText().strip()
-        self.modlist_path = self.modlist_edit.text().strip()
-        if not self.modpack_name or not self.modlist_path or not os.path.exists(self.modlist_path):
-            QMessageBox.critical(self, 'Error', 'Please provide a modpack name and a valid modlist file.')
+        self.is_public = self.public_checkbox.isChecked()
+        
+        if not self.modpack_name:
+            QMessageBox.critical(self, 'Error', 'Modpack name cannot be empty!')
+            return
+        if not self.modlist_path:
+            QMessageBox.critical(self, 'Error', 'Please select a modlist file!')
             return
         super().accept()
 
@@ -389,6 +409,24 @@ class ModsTableDialog(QDialog):
             layout.addWidget(self.name_edit)
             layout.addWidget(QLabel('Description:'))
             layout.addWidget(self.desc_edit)
+            
+            # Add public checkbox
+            public_layout = QHBoxLayout()
+            self.public_checkbox = QCheckBox('Public Modpack (will appear on GitHub Pages)')
+            self.public_checkbox.setChecked(self.modpack_data.get('public', False))
+            
+            # If already public, disable the checkbox to prevent making it private again
+            if self.modpack_data.get('public', False):
+                self.public_checkbox.setEnabled(False)
+                self.public_checkbox.setChecked(True)  # Ensure it's checked
+                public_layout.addWidget(QLabel('This modpack is public and cannot be made private.'))
+            
+            # Connect to state changed to enforce the one-way toggle
+            self.public_checkbox.stateChanged.connect(self._enforce_public_toggle)
+            
+            public_layout.addWidget(self.public_checkbox)
+            public_layout.addStretch()
+            layout.addLayout(public_layout)
         # Version history display
         self.versions = self.modpack_data.get('versions', [])
         # Create an initial version entry if none exists but we have mods
@@ -524,6 +562,8 @@ class ModsTableDialog(QDialog):
             restore_btn = QPushButton('Restore Backup')
             restore_btn.clicked.connect(self.restore_backup)
             self.btn_layout.addWidget(restore_btn)
+            
+            # GitHub Pages button moved to main menu
         close_btn = QPushButton('Close')
         close_btn.clicked.connect(self.accept)
         self.btn_layout.addWidget(close_btn)
@@ -1104,6 +1144,71 @@ class ModsTableDialog(QDialog):
         except Exception as e:
             QMessageBox.critical(self, 'Error', f'Failed to save modpack: {e}')
             return
+            
+    def _enforce_public_toggle(self, state):
+        """Enforce the one-way toggle for public flag - can only go from private to public, not back"""
+        # If the modpack was already public, force the checkbox to stay checked
+        if self.modpack_data.get('public', False) and not self.public_checkbox.isChecked():
+            # Block signals to prevent recursion
+            self.public_checkbox.blockSignals(True)
+            self.public_checkbox.setChecked(True)
+            self.public_checkbox.blockSignals(False)
+            QMessageBox.warning(self, 'Public Status', 'Once a modpack is made public, it cannot be made private again.')
+    
+    def save_changes(self):
+        """Save changes to the modpack"""
+        if not self.editable:
+            return
+            
+        # Update modpack name and description
+        if hasattr(self, 'name_edit') and hasattr(self, 'desc_edit'):
+            self.modpack_data['name'] = self.name_edit.text().strip()
+            self.modpack_data['description'] = self.desc_edit.toPlainText().strip()
+            
+        # Update public flag if checkbox exists
+        if hasattr(self, 'public_checkbox'):
+            # Only allow changing from false to true, never from true to false
+            if self.public_checkbox.isChecked():
+                self.modpack_data['public'] = True
+                # Once set to public, disable the checkbox to prevent toggling
+                self.public_checkbox.setEnabled(False)
+            
+        # Save to file
+        try:
+            from modpack_utils import save_modpack
+            modpack_name = self.modpack_data.get('name', 'modpack')
+            filename = f"{modpack_name}.json"
+            save_modpack(self.modpack_data, filename)
+            QMessageBox.information(self, 'Saved', f'Modpack saved as {filename}')
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'Failed to save modpack: {e}')
+            
+    def generate_github_pages(self):
+        """Generate GitHub Pages for all public modpacks"""
+        try:
+            # Save any pending changes first
+            self.save_changes()
+            
+            # Generate GitHub Pages
+            count = generate_github_pages()
+            
+            # Show success message with link to open the pages
+            msg_box = QMessageBox(self)
+            msg_box.setWindowTitle('GitHub Pages Generated')
+            msg_box.setText(f'Successfully generated GitHub Pages for {count} public modpacks.')
+            msg_box.setInformativeText('The pages have been created in the /docs directory. Would you like to open the index page in your browser?')
+            msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            msg_box.setDefaultButton(QMessageBox.Yes)
+            
+            if msg_box.exec_() == QMessageBox.Yes:
+                # Open the index page in the default browser
+                index_path = os.path.abspath(os.path.join('docs', 'index.html'))
+                webbrowser.open(f'file:///{index_path}')
+                
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'Failed to generate GitHub Pages: {e}')
+            import traceback
+            traceback.print_exc()
 
 class ChangelogHistoryDialog(QDialog):
     def __init__(self, version_entry, parent=None, editable=False):
@@ -1488,6 +1593,12 @@ class MainWindow(QMainWindow):
         manage_btn = QPushButton('Manage Modpacks')
         manage_btn.clicked.connect(self.manage_modpacks)
         layout.addWidget(manage_btn)
+        
+        # Add GitHub Pages generation button
+        github_pages_btn = QPushButton('Generate GitHub Pages')
+        github_pages_btn.clicked.connect(self.generate_github_pages)
+        layout.addWidget(github_pages_btn)
+        
         exit_btn = QPushButton('Exit')
         exit_btn.clicked.connect(self.close)
         layout.addWidget(exit_btn)
@@ -1637,6 +1748,30 @@ class MainWindow(QMainWindow):
         close_btn.clicked.connect(dlg.accept)
         dlg.exec_()
 
+    def generate_github_pages(self):
+        """Generate GitHub Pages for all public modpacks"""
+        try:
+            # Generate GitHub Pages
+            count = generate_github_pages()
+            
+            # Show success message with link to open the pages
+            msg_box = QMessageBox(self)
+            msg_box.setWindowTitle('GitHub Pages Generated')
+            msg_box.setText(f'Successfully generated GitHub Pages for {count} public modpacks.')
+            msg_box.setInformativeText('The pages have been created in the /docs directory. Would you like to open the index page in your browser?')
+            msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            msg_box.setDefaultButton(QMessageBox.Yes)
+            
+            if msg_box.exec_() == QMessageBox.Yes:
+                # Open the index page in the default browser
+                index_path = os.path.abspath(os.path.join('docs', 'index.html'))
+                webbrowser.open(f'file:///{index_path}')
+                
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', f'Failed to generate GitHub Pages: {e}')
+            import traceback
+            traceback.print_exc()
+    
     def create_modpack(self):
         dialog = CreateModpackDialog(self)
         if dialog.exec_() == QDialog.Accepted:
@@ -1657,7 +1792,8 @@ class MainWindow(QMainWindow):
             modpack_data = {
                 'name': dialog.modpack_name,
                 'description': dialog.modpack_desc,
-                'mods': mods
+                'mods': mods,
+                'public': dialog.is_public  # Add the public flag
             }
             save_modpack(modpack_data, fname.strip() + '.json')
             QMessageBox.information(self, 'Saved', f'Modpack saved as {fname.strip()}.json')

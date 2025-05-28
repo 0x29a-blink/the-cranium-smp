@@ -1,0 +1,1489 @@
+import os
+import json
+import shutil
+from datetime import datetime
+import re
+import markdown
+from markdown.extensions.fenced_code import FencedCodeExtension
+from markdown.extensions.tables import TableExtension
+from modpack_utils import list_modpacks, load_modpack
+
+# Constants
+DOCS_DIR = 'docs'
+PROJECTS_DIR = os.path.join(DOCS_DIR, 'projects')
+CSS_DIR = os.path.join(DOCS_DIR, 'css')
+JS_DIR = os.path.join(DOCS_DIR, 'js')
+ASSETS_DIR = os.path.join(DOCS_DIR, 'assets')
+
+# Helper functions
+def ensure_directory(directory):
+    """Ensure a directory exists, create it if it doesn't"""
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+def slugify(text):
+    """Convert text to URL-friendly slug"""
+    text = text.lower()
+    text = re.sub(r'[^a-z0-9]+', '-', text)
+    text = re.sub(r'-+', '-', text)
+    return text.strip('-')
+
+def markdown_to_html(text):
+    """Convert markdown text to HTML"""
+    if not text:
+        return ''
+    
+    # Use Python's markdown library with extensions for code blocks and tables
+    extensions = [
+        FencedCodeExtension(),
+        TableExtension(),
+        'nl2br',  # Convert newlines to <br>
+        'sane_lists'  # Better list handling
+    ]
+    
+    # Convert markdown to HTML
+    html = markdown.markdown(text, extensions=extensions)
+    return html
+
+def create_css():
+    """Create CSS files for the GitHub Pages site"""
+    ensure_directory(CSS_DIR)
+    
+    # Create Inter font CSS file
+    with open(os.path.join(CSS_DIR, 'inter.css'), 'w', encoding='utf-8') as f:
+        f.write("""
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        """)
+    
+    # Create FontAwesome CSS file - using a direct embed approach to avoid external dependency issues
+    with open(os.path.join(CSS_DIR, 'fontawesome.css'), 'w', encoding='utf-8') as f:
+        f.write("""
+/* Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com */
+@font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:block;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.eot);src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff) format("woff"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.ttf) format("truetype"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.svg#fontawesome) format("svg")}
+.fa,.fas{font-family:"Font Awesome 5 Free";font-weight:900}
+
+.fa-check:before{content:"\f00c"}
+.fa-copy:before{content:"\f0c5"}
+.fa-exclamation-triangle:before{content:"\f071"}
+.fa-external-link-alt:before{content:"\f35d"}
+.fa-eye:before{content:"\f06e"}
+        """)
+    
+    # Main CSS file
+    with open(os.path.join(CSS_DIR, 'style.css'), 'w', encoding='utf-8') as f:
+        f.write("""
+:root {
+    --primary-color: #4a76a8;
+    --primary-rgb: 74, 118, 168;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --hover-color: #e9ecef;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    
+    /* Status colors */
+    --added-color: #28a745;   /* Green for newly added */
+    --removed-color: #dc3545; /* Red for removed */
+    --updated-color: #3b82f6; /* Blue for updated */
+    
+    /* Card colors */
+    --card-bg: #ffffff;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+header p {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+header a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+h2, h3 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
+/* Grid layout for cards */
+.mod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Project card styling */
+.project-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 1.5rem;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.project-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Stats cards */
+.stats-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 100px;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-card.added {
+    background-color: var(--added-color);
+}
+
+.stat-card.removed {
+    background-color: var(--removed-color);
+}
+
+.stat-card.updated {
+    background-color: var(--updated-color);
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Mod cards */
+.mod-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 1.25rem;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.mod-card:hover {
+    box-shadow: var(--card-hover-shadow);
+}
+
+/* Compact mod cards */
+.mod-card.compact {
+    padding: 0;
+    overflow: hidden;
+}
+
+.mod-card.compact .mod-header {
+    padding: 0.75rem 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mod-card .mod-details {
+    padding: 1rem;
+    display: block;
+}
+
+.mod-expand-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    transition: all 0.2s;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mod-expand-btn:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.mod-card.compact.expanded .mod-expand-btn i {
+    transform: rotate(180deg);
+}
+
+.version-button:hover {
+    background-color: var(--border-color);
+    text-decoration: none;
+}
+
+.version-button.current {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.mod-section {
+    margin-bottom: 32px;
+}
+
+.mod-section-title {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* This section was moved up in the file */
+
+.mod-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.mod-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.mod-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: white;
+}
+
+.mod-badge.added {
+    background-color: var(--added-color);
+}
+
+.mod-badge.removed {
+    background-color: var(--removed-color);
+}
+
+.mod-badge.updated {
+    background-color: var(--updated-color);
+}
+
+.mod-info {
+    margin-bottom: 12px;
+}
+
+.mod-info-item {
+    margin-bottom: 4px;
+    font-size: 0.875rem;
+}
+
+.mod-info-label {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.mod-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin: 0.5rem 0 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 1.4;
+}
+
+.mod-warning i {
+    margin-right: 6px;
+    color: var(--warning-color);
+}
+
+.mod-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.mod-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mod-btn:hover {
+    background-color: var(--border-color);
+}
+
+.mod-btn i {
+    margin-right: 4px;
+}
+
+.mod-btn.primary {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.mod-btn.primary:hover {
+    background-color: #1d4ed8;
+}
+
+.mod-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.mod-category {
+    display: inline-block;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.search-container {
+    margin-bottom: 1.5rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 1px 3px rgba(74, 118, 168, 0.25);
+}
+
+.mod-highlight {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 10px var(--primary-color) !important;
+    animation: pulse-highlight 3s ease-out;
+}
+
+@keyframes pulse-highlight {
+    0% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0); }
+}
+
+/* Notes section */
+.notes-section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--card-shadow);
+}
+
+.notes-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.changelog-content {
+    white-space: pre-line;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.no-comments {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+/* Changelog cards */
+.changelog-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.changelog-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.2s;
+    border-left: 4px solid var(--updated-color);
+    margin-bottom: 1rem;
+}
+
+.changelog-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.changelog-card.added {
+    border-left-color: var(--added-color);
+}
+
+.changelog-card.removed {
+    border-left-color: var(--removed-color);
+}
+
+.changelog-card.updated {
+    border-left-color: var(--updated-color);
+}
+
+.changelog-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.changelog-card-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.changelog-card-content {
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* Markdown styling */
+.changelog-description, .changelog-card-content {
+    line-height: 1.6;
+}
+
+.changelog-description {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+/* Code blocks and inline code */
+.changelog-description pre, .changelog-card-content pre {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 0.8rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.changelog-description code, .changelog-card-content code {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    padding: 0.1rem 0.3rem;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+/* Lists */
+.changelog-description ul, .changelog-description ol,
+.changelog-card-content ul, .changelog-card-content ol {
+    padding-left: 2rem;
+    margin: 0.5rem 0;
+}
+
+.changelog-description li, .changelog-card-content li {
+    margin-bottom: 0.3rem;
+}
+
+.changelog-card-actions {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mod-highlight {
+    animation: highlight-pulse 2s ease-in-out;
+}
+
+@keyframes highlight-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 118, 168, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(74, 118, 168, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 118, 168, 0); }
+}
+
+/* Compact changelog */
+.compact-changelog {
+    margin-top: 2rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.compact-changelog h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.compact-changelog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.compact-changelog-title {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--updated-color);
+}
+
+.compact-changelog-title.added {
+    color: var(--added-color);
+}
+
+.compact-changelog-title.removed {
+    color: var(--removed-color);
+}
+
+.compact-changelog-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.compact-changelog-item {
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+}
+
+.compact-changelog-item:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.compact-item-header {
+    padding: 0.6rem 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+.compact-item-header.clickable {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.compact-item-header.clickable:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.compact-item-text {
+    font-weight: 500;
+}
+
+.compact-item-toggle {
+    color: var(--text-color);
+    opacity: 0.5;
+    transition: all 0.2s;
+}
+
+.compact-item-header:hover .compact-item-toggle {
+    opacity: 1;
+}
+
+.compact-item-details {
+    padding: 0.8rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: none;
+    background-color: white;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 0.5rem;
+}
+
+.compact-changelog-item.expanded .compact-item-details {
+    display: block;
+}
+
+.compact-changelog-item.expanded .compact-item-toggle i {
+    transform: rotate(180deg);
+}
+
+.changelog {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.changelog h3 {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.changelog-content {
+    white-space: pre-line;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: var(--light-text);
+    font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 16px;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .mod-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .version-nav {
+        flex-direction: column;
+    }
+}
+        """)
+        
+    # Add Font Awesome for icons
+    with open(os.path.join(CSS_DIR, 'fontawesome.css'), 'w', encoding='utf-8') as f:
+        f.write("""
+/* Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) */
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:block;src:url(../webfonts/fa-solid-900.woff2) format("woff2"),url(../webfonts/fa-solid-900.ttf) format("truetype")}.fa,.fas{font-family:"Font Awesome 6 Free";font-weight:900}
+        """)
+        
+    # Create webfonts directory
+    ensure_directory(os.path.join(DOCS_DIR, 'webfonts'))
+    
+    # Add Inter font
+    with open(os.path.join(CSS_DIR, 'inter.css'), 'w', encoding='utf-8') as f:
+        f.write("""
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        """)
+
+def create_js():
+    """Create JavaScript files for the GitHub Pages site"""
+    ensure_directory(JS_DIR)
+    
+    # Main JS file
+    with open(os.path.join(JS_DIR, 'main.js'), 'w', encoding='utf-8') as f:
+        f.write("""
+document.addEventListener('DOMContentLoaded', function() {
+    // Add fuzzy search functionality
+    const searchInput = document.getElementById('mod-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            const modCards = document.querySelectorAll('.mod-card');
+            
+            if (searchTerm === '') {
+                // Show all cards if search is empty
+                modCards.forEach(card => {
+                    card.style.display = '';
+                });
+            } else {
+                modCards.forEach(card => {
+                    // Search in title
+                    const title = card.querySelector('.mod-title');
+                    // Search in description
+                    const description = card.querySelector('.mod-description');
+                    // Search in authors
+                    const authors = card.querySelector('.mod-info-item:nth-child(2)');
+                    // Search in categories
+                    const categories = card.querySelector('.mod-categories');
+                    
+                    // Combine all searchable text
+                    let searchableText = '';
+                    if (title) searchableText += title.textContent.toLowerCase() + ' ';
+                    if (description) searchableText += description.textContent.toLowerCase() + ' ';
+                    if (authors) searchableText += authors.textContent.toLowerCase() + ' ';
+                    if (categories) searchableText += categories.textContent.toLowerCase() + ' ';
+                    
+                    // Also search in data attributes for jar names etc.
+                    const dataCategories = card.getAttribute('data-categories');
+                    if (dataCategories) searchableText += dataCategories.toLowerCase() + ' ';
+                    
+                    // Split search term into words for more flexible matching
+                    const searchWords = searchTerm.split(/\s+/);
+                    
+                    // Card is visible if ALL search words are found in the searchable text
+                    const visible = searchWords.every(word => searchableText.includes(word));
+                    
+                    card.style.display = visible ? '' : 'none';
+                });
+            }
+            
+            // Show/hide sections based on visible cards
+            document.querySelectorAll('.mod-section').forEach(section => {
+                const visibleCards = Array.from(section.querySelectorAll('.mod-card')).filter(card => 
+                    card.style.display !== 'none'
+                );
+                
+                section.style.display = visibleCards.length === 0 ? 'none' : '';
+            });
+        });
+    }
+    
+    // Add category filter functionality
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+            e.preventDefault();
+            const category = this.dataset.category;
+            const modCards = document.querySelectorAll('.mod-card');
+            
+            if (category === 'all') {
+                modCards.forEach(card => card.style.display = '');
+                
+                // Show all sections
+                document.querySelectorAll('.mod-section').forEach(section => {
+                    section.style.display = '';
+                });
+                
+                return;
+            }
+            
+            modCards.forEach(card => {
+                const categories = card.dataset.categories ? card.dataset.categories.split(',') : [];
+                if (categories.includes(category)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update section visibility based on whether they have visible cards
+            document.querySelectorAll('.mod-section').forEach(section => {
+                const visibleCards = section.querySelectorAll('.mod-card[style=""]').length;
+                if (visibleCards === 0) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = '';
+                }
+            });
+            
+            // Update active filter
+            document.querySelectorAll('.category-filter').forEach(f => {
+                f.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+    
+    // Copy buttons functionality
+    document.querySelectorAll('.mod-btn.copy').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const textToCopy = this.dataset.copy;
+            if (textToCopy) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Change button text temporarily
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                });
+            }
+        });
+    });
+    
+    // We've removed the find mod functionality as requested
+    
+    // We're removing the expandable functionality since all cards are expanded by default
+    
+    // Add click handlers for compact changelog items
+    document.querySelectorAll('.compact-item-header.clickable').forEach(header => {
+        header.addEventListener('click', function() {
+            const item = this.closest('.compact-changelog-item');
+            if (item) {
+                item.classList.toggle('expanded');
+            }
+        });
+    });
+});
+        """)
+
+def generate_index_page(public_modpacks):
+    """Generate the main index page listing all public modpacks"""
+    ensure_directory(DOCS_DIR)
+    
+    with open(os.path.join(DOCS_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+        f.write(f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Modpacks</title>
+    <link rel="stylesheet" href="css/inter.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fontawesome.css">
+</head>
+<body>
+    <header>
+        <h1>Minecraft Modpacks</h1>
+        <p>A collection of curated modpacks for Minecraft</p>
+    </header>
+    
+    <div class="container">
+        <h2>Available Modpacks</h2>
+        <p>Browse our collection of {len(public_modpacks)} public modpacks:</p>
+        
+        <div class="mod-grid">
+""")
+        
+        for modpack in public_modpacks:
+            name = modpack.get('name', 'Unnamed Modpack')
+            description = modpack.get('description', 'No description available.')
+            versions = modpack.get('versions', [])
+            latest_version = modpack.get('versions', [{}])[-1]
+            version_number = latest_version.get('version', 'Unknown')
+            mod_count = len(latest_version.get('mods', []))
+            
+            # Get last updated date
+            last_updated = latest_version.get('date', 'Unknown')
+            if last_updated == 'Unknown' and 'date' in modpack:
+                last_updated = modpack.get('date', 'Unknown')
+            
+            # Calculate added/removed/updated counts
+            changelog = latest_version.get('changelog', {})
+            # Handle both string and dictionary changelog formats
+            if isinstance(changelog, str):
+                added_count = 0
+                removed_count = 0
+                updated_count = 0
+            else:
+                added_count = len(changelog.get('added', []))
+                removed_count = len(changelog.get('removed', []))
+                updated_count = len(changelog.get('updated', []))
+            
+            # Use pre-calculated stats if available
+            if 'added_mods' in latest_version and isinstance(latest_version['added_mods'], list):
+                added_count = len(latest_version['added_mods'])
+            if 'removed_mods' in latest_version and isinstance(latest_version['removed_mods'], list):
+                removed_count = len(latest_version['removed_mods'])
+            if 'updated_mods' in latest_version and isinstance(latest_version['updated_mods'], list):
+                updated_count = len(latest_version['updated_mods'])
+            
+            slug = slugify(name)
+            f.write(f"""
+            <div class="project-card">
+                <h3>{name}</h3>
+                <div class="stats-container">
+                    <div class="stat-card added">
+                        <span class="stat-number">{added_count}</span>
+                        <span class="stat-label">Added Mods</span>
+                    </div>
+                    <div class="stat-card removed">
+                        <span class="stat-number">{removed_count}</span>
+                        <span class="stat-label">Removed Mods</span>
+                    </div>
+                    <div class="stat-card updated">
+                        <span class="stat-number">{updated_count}</span>
+                        <span class="stat-label">Updated Mods</span>
+                    </div>
+                </div>
+                <p>{description}</p>
+                <div class="mod-info">
+                    <p class="mod-info-item"><span class="mod-info-label">Latest Version:</span> {version_number}</p>
+                    <p class="mod-info-item"><span class="mod-info-label">Total Mods:</span> {mod_count}</p>
+                    <p class="mod-info-item"><span class="mod-info-label">Last Updated:</span> {last_updated}</p>
+                </div>
+                <div class="mod-actions">
+                    <a href="projects/{slug}/index.html" class="mod-btn primary"><i class="fas fa-eye"></i> View Details</a>
+                </div>
+            </div>
+""")
+        
+        f.write("""
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>Generated by Minecraft Modpack Manager</p>
+        <p>Last updated: """ + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + """</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
+""")
+
+def generate_project_page(modpack):
+    """Generate a page for a specific modpack with its latest version"""
+    name = modpack.get('name', 'Unnamed Modpack')
+    slug = slugify(name)
+    project_dir = os.path.join(PROJECTS_DIR, slug)
+    versions_dir = os.path.join(project_dir, 'versions')
+    
+    ensure_directory(project_dir)
+    ensure_directory(versions_dir)
+    
+    # Get the latest version
+    versions = modpack.get('versions', [])
+    if not versions:
+        return
+    
+    latest_version = versions[-1]
+    version_number = latest_version.get('version', 'N/A')
+    
+    # Generate the main project page (showing latest version)
+    with open(os.path.join(project_dir, 'index.html'), 'w', encoding='utf-8') as f:
+        f.write(generate_version_html(modpack, latest_version, True))
+    
+    # Generate pages for each version
+    for version in versions:
+        version_number = version.get('version', 'N/A')
+        version_slug = f"v{version_number}"
+        
+        with open(os.path.join(versions_dir, f"{version_slug}.html"), 'w', encoding='utf-8') as f:
+            f.write(generate_version_html(modpack, version, False))
+
+def generate_version_html(modpack, version, is_latest):
+    """Generate HTML content for a specific version of a modpack"""
+    name = modpack.get('name', 'Unnamed Modpack')
+    description = modpack.get('description', 'No description available.')
+    slug = slugify(name)
+    version_number = version.get('version', 'N/A')
+    mods = version.get('mods', [])
+    
+    # Handle different changelog formats
+    changelog = version.get('changelog', '')
+    general_comment = ''
+    mod_comments = {}
+    
+    # Check if changelog is a string or a dict
+    if isinstance(changelog, dict):
+        general_comment = changelog.get('general', '')
+        mod_comments = changelog.get('mods', {})
+    elif isinstance(changelog, str):
+        general_comment = changelog
+    
+    # Also check for changelog_comment field which is used in some versions
+    if not general_comment and 'changelog_comment' in version:
+        general_comment = version.get('changelog_comment', '')
+        
+    # Check for mod_comments field which might be separate
+    if not mod_comments and 'mod_comments' in version:
+        mod_comments = version.get('mod_comments', {})
+    
+    # Get all versions for navigation
+    versions = modpack.get('versions', [])
+    
+    # Get the full list of mods from the current version
+    all_mods = version.get('mods', [])
+    
+    # Get stats for this version
+    added_mods = []
+    removed_mods = []
+    updated_mods = []
+    
+    # Check if we have pre-calculated stats
+    if 'added_mods' in version and isinstance(version['added_mods'], list):
+        added_mods = version['added_mods']
+    if 'removed_mods' in version and isinstance(version['removed_mods'], list):
+        removed_mods = version['removed_mods']
+    if 'updated_mods' in version and isinstance(version['updated_mods'], list):
+        updated_mods = version['updated_mods']
+    
+    # Start building HTML
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{name} - Version {version_number}</title>
+    <link rel="stylesheet" href="{('../' * (0 if is_latest else 2))}../../css/inter.css">
+    <link rel="stylesheet" href="{('../' * (0 if is_latest else 2))}../../css/style.css">
+    <link rel="stylesheet" href="{('../' * (0 if is_latest else 2))}../../css/fontawesome.css">
+</head>
+<body>
+    <header>
+        <h1>{name}</h1>
+        <p>{description}</p>
+        <p><a href="{('../' * (0 if is_latest else 2))}../../index.html">&laquo; Back to All Modpacks</a></p>
+    </header>
+    
+    <div class="container">
+        <h2>[{version_number}] {name}{' (Latest)' if is_latest else ''}</h2>
+        
+        <div class="version-nav">
+"""
+    
+    # Add version navigation
+    for v in versions:
+        v_number = v.get('version', 'N/A')
+        v_slug = f"v{v_number}"
+        is_current = v == version
+        
+        if is_current:
+            html += f"""
+            <span class="version-button current">Version {v_number}</span>
+"""
+        else:
+            if is_latest:
+                href = f"versions/{v_slug}.html"
+            else:
+                href = f"{v_slug}.html"
+            
+            html += f"""
+            <a href="{href}" class="version-button">Version {v_number}</a>
+"""
+    
+    # Add stats section
+    html += f"""
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card added">
+                <span class="stat-number">{len(added_mods)}</span>
+                <span class="stat-label">Added Mods</span>
+            </div>
+            <div class="stat-card removed">
+                <span class="stat-number">{len(removed_mods)}</span>
+                <span class="stat-label">Removed Mods</span>
+            </div>
+            <div class="stat-card updated">
+                <span class="stat-number">{len(updated_mods)}</span>
+                <span class="stat-label">Updated Mods</span>
+            </div>
+        </div>
+"""
+    
+    # Add notes/changelog section
+    html += """
+        <div class="notes-section">
+            <h3>Changelog</h3>
+"""
+    
+    # Add changelog comment if available
+    changelog_comment = version.get('changelog_comment', '')
+    if changelog_comment:
+        # Convert markdown to HTML
+        formatted_comment = markdown_to_html(changelog_comment)
+        html += f"""
+            <div class="changelog-description">{formatted_comment}</div>
+"""
+    
+    # We're removing the large changelog text as requested
+    
+    # Add mod-specific changelog comments if available
+    if mod_comments:
+        html += """
+            <div class="changelog-cards">
+"""
+        
+        # First display mods with comments
+        has_commented_mods = False
+        for key, comment in mod_comments.items():
+            if comment and comment.strip():
+                has_commented_mods = True
+                # Parse the key to get the change type and mod name
+                change_type = "updated"
+                mod_name = key
+                
+                if ':' in key:
+                    parts = key.split(':', 1)
+                    change_type = parts[0].lower().strip()
+                    mod_name = parts[1].strip()
+                
+                # Map change types to CSS classes
+                css_class = "updated"
+                if "add" in change_type.lower():
+                    css_class = "added"
+                elif "remov" in change_type.lower() or "delet" in change_type.lower():
+                    css_class = "removed"
+                
+                html += f"""
+                <div class="changelog-card {css_class}">
+                    <div class="changelog-card-header">
+                        <div class="changelog-card-title">{mod_name}</div>
+                        <span class="mod-badge {css_class}">{change_type.capitalize()}</span>
+                    </div>
+                    <div class="changelog-card-content">{markdown_to_html(comment.strip())}</div>
+                </div>
+"""
+        
+        if not has_commented_mods:
+            html += """
+                <p class="no-comments">No detailed mod change comments available for this version.</p>
+"""
+        
+        # Then list mods without comments in a compact format
+        compact_mods = {}
+        for key in mod_comments.keys():
+            comment = mod_comments[key]
+            if not comment or not comment.strip():
+                change_type = "updated"
+                mod_name = key
+                
+                if ':' in key:
+                    parts = key.split(':', 1)
+                    change_type = parts[0].lower().strip()
+                    mod_name = parts[1].strip()
+                
+                if change_type not in compact_mods:
+                    compact_mods[change_type] = []
+                
+                compact_mods[change_type].append(mod_name)
+        
+        if compact_mods:
+            html += """
+                <div class="compact-changelog">
+                    <h4>Changed Mods</h4>
+                    <div class="compact-changelog-grid">
+"""
+            
+            for change_type, mods in compact_mods.items():
+                # Map change types to CSS classes
+                css_class = "updated"
+                if "add" in change_type.lower():
+                    css_class = "added"
+                elif "remov" in change_type.lower() or "delet" in change_type.lower():
+                    css_class = "removed"
+                
+                html += f"""
+                        <div class="compact-changelog-section">
+                            <h5 class="compact-changelog-title {css_class}">{change_type.capitalize()}</h5>
+                            <ul class="compact-changelog-list">
+"""
+                
+                for mod in mods:
+                    # Find mod details from the full mod list
+                    mod_details = None
+                    mod_version = 'N/A'
+                    authors = 'Unknown'
+                    url = ''
+                    
+                    # Look for the mod in the full mod list
+                    for full_mod in all_mods:
+                        if isinstance(full_mod, dict) and full_mod.get('name', '').lower() == mod.lower():
+                            mod_details = full_mod
+                            mod_version = mod_details.get('version', 'N/A')
+                            mod_authors = mod_details.get('authors', [])
+                            if not isinstance(mod_authors, list):
+                                mod_authors = [str(mod_authors)] if mod_authors else []
+                            authors = ', '.join(mod_authors) if mod_authors else 'Unknown'
+                            url = mod_details.get('url', '')
+                            break
+                    
+                    html += f"""
+                                <li class="compact-changelog-item">
+                                    <div class="compact-item-header clickable">
+                                        <span class="compact-item-text">{mod}</span>
+                                        <span class="compact-item-toggle"><i class="fas fa-chevron-down"></i></span>
+                                    </div>
+                                    <div class="compact-item-details">
+                                        <div class="mod-info">
+                                            <p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>
+                                            <p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors}</p>
+                                        </div>
+"""
+                    
+                    # Add warning if no URL
+                    if not url:
+                        html += """
+                                        <div class="mod-warning">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <span>No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</span>
+                                        </div>
+"""
+                    
+                    # Add actions
+                    html += """
+                                        <div class="mod-actions">
+"""
+                    
+                    if url:
+                        html += f"""
+                                            <a href="{url}" target="_blank" class="mod-btn primary"><i class="fas fa-external-link-alt"></i> View Mod</a>
+"""
+                    
+                    html += """
+                                            <button class="mod-btn copy" data-copy=""" + mod + """><i class="fas fa-copy"></i> Copy</button>
+                                        </div>
+                                    </div>
+                                </li>
+"""
+                
+                html += """
+                            </ul>
+                        </div>
+"""
+            
+            html += """
+                    </div>
+                </div>
+"""
+        
+        html += """
+            </div>
+"""
+    else:
+        html += """
+            <p class="no-comments">No mod-specific changelog information available for this version.</p>
+"""
+    
+    html += """
+        </div>
+"""
+    
+    # Add search input
+    html += """
+        <div class="search-container">
+            <input type="text" id="mod-search" placeholder="Search mods..." class="search-input">
+        </div>
+"""
+    
+    # Add Changelog section if we have mod comments
+    html += """
+        <div class="mod-section" id="mod-changelog">
+            <div class="changelog">
+"""
+    
+    # Add all mods from the current version
+    for mod in all_mods:
+        if isinstance(mod, dict):
+            name = mod.get('name', 'Unknown')
+            mod_version = mod.get('version', 'N/A')
+            description = mod.get('description', 'No description available.')
+            url = mod.get('url', '')
+            categories = mod.get('categories', [])
+            authors = mod.get('authors', [])
+        else:
+            # If mod is a string, use it as the name
+            name = str(mod)
+            mod_version = 'N/A'
+            description = 'No description available.'
+            url = ''
+            categories = []
+            authors = []
+            
+        categories_str = ','.join(categories) if categories else ''
+        if not isinstance(authors, list):
+            authors = [str(authors)] if authors else []
+        authors_str = ', '.join(authors) if authors else 'Unknown'
+        
+        html += f"""
+        <div class="mod-card expanded" data-categories="{categories_str}">
+            <div class="mod-header">
+                <div class="mod-title">{name}</div>
+            </div>
+            <div class="mod-details">
+                <div class="mod-info">
+                    <p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>
+                    <p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors_str}</p>
+                </div>
+"""
+        
+        # Add warning if no URL
+        if not url:
+            html += """
+            <div class="mod-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</span>
+            </div>
+"""
+        
+        # Add actions
+        html += """
+            <div class="mod-actions">
+"""
+        
+        if url:
+            html += f"""
+                <a href="{url}" target="_blank" class="mod-btn primary"><i class="fas fa-external-link-alt"></i> View Mod</a>
+"""
+        
+        html += """
+                <button class="mod-btn copy" data-copy=""" + name + """><i class="fas fa-copy"></i> Copy</button>
+            </div>
+"""
+        
+        # Add categories
+        if categories:
+            html += """
+            <div class="mod-categories">
+"""
+            for category in categories:
+                html += f"""
+                <span class="mod-category">{category}</span>
+"""
+            html += """
+            </div>
+"""
+        
+        html += """
+            </div>
+        </div>
+"""
+    
+    html += """
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>Generated by Minecraft Modpack Manager</p>
+        <p>Last updated: """ + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + """</p>
+    </footer>
+    
+    <script src=""" + f'"{("../" * (0 if is_latest else 2))}../../js/main.js"' + """></script>
+</body>
+</html>
+"""
+    
+    return html
+
+def generate_github_pages():
+    """Main function to generate GitHub Pages for all public modpacks"""
+    # Create required directories
+    ensure_directory(DOCS_DIR)
+    ensure_directory(PROJECTS_DIR)
+    ensure_directory(CSS_DIR)
+    ensure_directory(JS_DIR)
+    ensure_directory(ASSETS_DIR)
+    
+    # Create CSS and JS files
+    create_css()
+    create_js()
+    
+    # Get all modpacks
+    modpack_files = list_modpacks()
+    public_modpacks = []
+    
+    # Filter for public modpacks
+    for filename in modpack_files:
+        modpack = load_modpack(filename)
+        if modpack.get('public', False):
+            public_modpacks.append(modpack)
+    
+    # Generate the index page
+    generate_index_page(public_modpacks)
+    
+    # Generate individual project pages
+    for modpack in public_modpacks:
+        generate_project_page(modpack)
+    
+    return len(public_modpacks)
+
+if __name__ == '__main__':
+    count = generate_github_pages()
+    print(f"Generated GitHub Pages for {count} public modpacks.")
