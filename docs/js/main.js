@@ -2,17 +2,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Add fuzzy search functionality
     const searchInput = document.getElementById('mod-search');
+    const searchClear = document.getElementById('search-clear');
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase().trim();
             const modCards = document.querySelectorAll('.mod-card');
             
+            // Show/hide clear button
             if (searchTerm === '') {
+                searchClear.classList.remove('visible');
                 // Show all cards if search is empty
                 modCards.forEach(card => {
                     card.style.display = '';
                 });
             } else {
+                searchClear.classList.add('visible');
                 modCards.forEach(card => {
                     // Search in title
                     const title = card.querySelector('.mod-title');
@@ -53,6 +57,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 section.style.display = visibleCards.length === 0 ? 'none' : '';
             });
         });
+        
+        // Add clear button functionality
+        if (searchClear) {
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
+            });
+        }
     }
     
     // Add category filter functionality

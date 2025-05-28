@@ -199,6 +199,8 @@ header p {
     border-radius: 12px;
     padding: 2px 12px;
     margin-right: 6px;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
     margin-bottom: 2px;
     font-size: 0.93em;
     font-weight: 500;
@@ -682,17 +684,25 @@ h2 {
     margin-bottom: 1.5rem;
 }
 
-.search-input {
+.search-wrapper {
+    position: relative;
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-.search-input:focus {
+.search-container input {
+    width: 100%;
+    padding: 12px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.search-container input:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 1px 3px rgba(74, 118, 168, 0.25);
@@ -1034,17 +1044,21 @@ def create_js():
 document.addEventListener('DOMContentLoaded', function() {
     // Add fuzzy search functionality
     const searchInput = document.getElementById('mod-search');
+    const searchClear = document.getElementById('search-clear');
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase().trim();
             const modCards = document.querySelectorAll('.mod-card');
             
+            // Show/hide clear button
             if (searchTerm === '') {
+                searchClear.classList.remove('visible');
                 // Show all cards if search is empty
                 modCards.forEach(card => {
                     card.style.display = '';
                 });
             } else {
+                searchClear.classList.add('visible');
                 modCards.forEach(card => {
                     // Search in title
                     const title = card.querySelector('.mod-title');
@@ -1085,6 +1099,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 section.style.display = visibleCards.length === 0 ? 'none' : '';
             });
         });
+        
+        // Add clear button functionality
+        if (searchClear) {
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
+            });
+        }
     }
     
     // Add category filter functionality
@@ -1710,7 +1733,11 @@ def generate_version_html(modpack, version, is_latest):
     <section id="mods">
         <h2>Mod List</h2>
         <div class="search-container">
-            <input type="text" id="mod-search" placeholder="Search mods..." />
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="mod-search" placeholder="Search mods..." />
+                <div class="search-clear" id="search-clear"><i class="fas fa-times"></i></div>
+            </div>
         </div>
         <div class="mod-grid">
 """
@@ -1805,12 +1832,7 @@ def generate_version_html(modpack, version, is_latest):
                     <p class="mod-info-item"><span class="mod-info-label">Description:</span> {mod_description}</p>
 """
         
-        # Add categories if available
-        if all_categories:
-            category_pills = ' '.join([f'<span class="category-pill">{cat}</span>' for cat in all_categories])
-            html += f"""
-                    <p class="mod-info-item"><span class="mod-info-label">Categories:</span> {category_pills}</p>
-"""
+        # Categories will be moved to the footer
             
         html += """
                 </div>
@@ -1840,16 +1862,18 @@ def generate_version_html(modpack, version, is_latest):
             </div>
 """
         
-        # Add categories
-        if categories:
+        # Add categories to the footer
+        if all_categories:
             html += """
-            <div class="mod-categories">
+            <div class="mod-footer">
+                <div class="mod-categories">
 """
-            for category in categories:
+            for category in all_categories:
                 html += f"""
-                <span class="mod-category">{category}</span>
+                <span class="category-pill">{category}</span>
 """
             html += """
+                </div>
             </div>
 """
         
