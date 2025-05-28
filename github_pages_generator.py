@@ -532,20 +532,26 @@ h2 {
 }
 
 .mod-info {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     flex: 1;
+    font-size: 0.85rem;
 }
 
 .mod-info-item {
-    margin-bottom: 12px;
-    line-height: 1.5;
-    padding-left: 10px;
-    border-left: 3px solid var(--border-color);
+    margin-bottom: 8px;
+    line-height: 1.4;
+    padding-left: 8px;
+    border-left: 2px solid var(--border-color);
 }
 
 .mod-info-label {
     font-weight: 600;
     color: var(--accent-color);
+    font-size: 0.8rem;
+}
+
+.mod-info-value {
+    font-size: 0.8rem;
 }
 
 .category-pill {
@@ -776,17 +782,17 @@ h2 {
 
 .changelog-card {
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     overflow: hidden;
     transition: all 0.2s;
-    border-left: 4px solid var(--updated-color);
-    margin-bottom: 1rem;
+    border-left: 3px solid var(--updated-color);
+    margin-bottom: 0.75rem;
 }
 
 .changelog-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
 }
 
 .changelog-card.added {
@@ -805,22 +811,27 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
     background-color: rgba(0, 0, 0, 0.02);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .changelog-card-title {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .changelog-card-content {
-    padding: 1rem 1.25rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: var(--text-color);
     margin-top: 0.5rem;
+}
+
+.changelog-card-mod-details {
+    padding: 0 0.75rem 0.75rem;
+    font-size: 0.85rem;
 }
 
 /* Markdown styling */
@@ -1514,14 +1525,14 @@ def generate_version_html(modpack, version, is_latest):
         all_display_categories = sorted(list(set(c for c in categories_list + tags_list if c and isinstance(c, str)))) # Filter out empty/None and ensure strings
 
         mod_html_details += '<div class="mod-info">'
-        mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>'
-        mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors_str}</p>'
+        mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Version:</span> <span class="mod-info-value">{mod_version}</span></p>'
+        mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Authors:</span> <span class="mod-info-value">{authors_str}</span></p>'
         if filename:
-            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Filename:</span> {filename}</p>'
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Filename:</span> <span class="mod-info-value">{filename}</span></p>'
         if url:
-            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">URL:</span> <a href="{url}" target="_blank">{url}</a></p>'
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">URL:</span> <a href="{url}" target="_blank" class="mod-info-value">{url}</a></p>'
         else:
-            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">URL:</span> <em>Not available</em></p>'
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">URL:</span> <em class="mod-info-value">Not available</em></p>'
         
         if mod_description_text and mod_description_text != 'No description available.':
             # Ensure description is string before passing to markdown_to_html

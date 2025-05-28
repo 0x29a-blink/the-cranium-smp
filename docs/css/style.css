@@ -463,20 +463,26 @@ h2 {
 }
 
 .mod-info {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     flex: 1;
+    font-size: 0.85rem;
 }
 
 .mod-info-item {
-    margin-bottom: 12px;
-    line-height: 1.5;
-    padding-left: 10px;
-    border-left: 3px solid var(--border-color);
+    margin-bottom: 8px;
+    line-height: 1.4;
+    padding-left: 8px;
+    border-left: 2px solid var(--border-color);
 }
 
 .mod-info-label {
     font-weight: 600;
     color: var(--accent-color);
+    font-size: 0.8rem;
+}
+
+.mod-info-value {
+    font-size: 0.8rem;
 }
 
 .category-pill {
@@ -707,17 +713,17 @@ h2 {
 
 .changelog-card {
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     overflow: hidden;
     transition: all 0.2s;
-    border-left: 4px solid var(--updated-color);
-    margin-bottom: 1rem;
+    border-left: 3px solid var(--updated-color);
+    margin-bottom: 0.75rem;
 }
 
 .changelog-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
 }
 
 .changelog-card.added {
@@ -736,22 +742,27 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
     background-color: rgba(0, 0, 0, 0.02);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .changelog-card-title {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .changelog-card-content {
-    padding: 1rem 1.25rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: var(--text-color);
     margin-top: 0.5rem;
+}
+
+.changelog-card-mod-details {
+    padding: 0 0.75rem 0.75rem;
+    font-size: 0.85rem;
 }
 
 /* Markdown styling */
