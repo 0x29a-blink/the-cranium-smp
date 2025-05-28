@@ -59,17 +59,13 @@ def create_css():
     with open(os.path.join(CSS_DIR, 'fontawesome.css'), 'w', encoding='utf-8') as f:
         f.write("""
 /* Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com */
-@font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:block;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.eot);src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff) format("woff"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.ttf) format("truetype"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.svg#fontawesome) format("svg")}
-.fa,.fas{font-family:"Font Awesome 5 Free";font-weight:900}
-
-.fa-check:before{content:"\f00c"}
-.fa-copy:before{content:"\f0c5"}
-.fa-exclamation-triangle:before{content:"\f071"}
-.fa-external-link-alt:before{content:"\f35d"}
-.fa-eye:before{content:"\f06e"}
+@font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:block;src:url(../webfonts/fa-solid-900.woff2) format("woff2"),url(../webfonts/fa-solid-900.ttf) format("truetype")}.fa,.fas{font-family:"Font Awesome 5 Free";font-weight:900}
         """)
     
-    # Main CSS file
+    # Ensure webfonts directory exists
+    ensure_directory(os.path.join(DOCS_DIR, 'webfonts'))
+    
+    # Write main CSS file
     with open(os.path.join(CSS_DIR, 'style.css'), 'w', encoding='utf-8') as f:
         f.write("""
 :root {
@@ -86,6 +82,7 @@ def create_css():
     --updated-color: #3b82f6;
     --card-bg: #fff;
     --card-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    --card-hover-shadow: 0 4px 16px rgba(0,0,0,0.18);
 }
 
 body {
@@ -102,6 +99,27 @@ body {
     padding: 2rem 1rem;
 }
 
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+header p {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* GRID-ONLY LAYOUT - Main layout system */
 .mod-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -109,14 +127,19 @@ body {
     margin: 2rem 0 3rem 0;
 }
 
+/* Card styling - consistent across all pages */
 .mod-card {
     background: var(--card-bg);
-    border-radius: 12px;
+    border-radius: 14px;
     box-shadow: var(--card-shadow);
     border: 1px solid var(--border-color);
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
     display: flex;
     flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.15s;
+    position: static;
+    z-index: 1;
+    margin-bottom: 2.5rem;
     height: auto;
     overflow: visible;
 }
@@ -140,6 +163,14 @@ body {
     color: var(--primary-color);
     margin-bottom: 0.2rem;
     letter-spacing: 0.01em;
+}
+
+.mod-details {
+    display: block;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
 }
 
 .mod-info {
@@ -1149,199 +1180,6 @@ def generate_index_page(public_modpacks):
     <link rel="stylesheet" href="css/inter.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fontawesome.css">
-    body .mod-info {{{{
-        padding: 20px 24px !important;
-        background: #f8f9fa !important;
-        border-radius: 8px !important;
-        margin-bottom: 16px !important;
-        box-sizing: border-box !important;
-    }}}}
-    .mod-info-item {{{{
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 12px;
-        font-size: 1rem;
-        line-height: 1.5;
-        width: 100%;
-        word-break: break-word;
-    }}}}
-    .mod-info-label {{{{
-        min-width: 96px;
-        font-weight: 600;
-        color: #444;
-        margin-right: 8px;
-        display: inline-block;
-    }}}}
-    .category-pill {{{{
-        display: inline-block;
-        background: #e3e7ef;
-        color: #3a4667;
-        border-radius: 12px;
-        padding: 2px 12px;
-        margin-right: 6px;
-        margin-bottom: 2px;
-        font-size: 0.93em;
-        font-weight: 500;
-        letter-spacing: 0.02em;
-    }}}}
-    body .mod-actions {{{{
-                display: flex !important;
-                gap: 12px !important;
-                margin-top: 16px !important;
-                flex-wrap: wrap !important;
-                padding: 12px 24px 20px 24px !important;
-                border-top: 1px solid #eee !important;
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-            }}}}
-    .mod-btn {{{{
-        padding: 8px 20px;
-        border: none;
-        border-radius: 6px;
-        background: #e5e8ee;
-        color: #333;
-        font-weight: 500;
-        cursor: pointer;
-        margin-bottom: 0;
-        transition: background 0.2s;
-        box-sizing: border-box;
-        max-width: 100%;
-        white-space: nowrap;
-    }}}}
-    .mod-btn.primary {{{{
-        background: #3a4667;
-        color: #fff;
-    }}}}
-    .mod-btn:active, .mod-btn:focus {{{{
-        outline: 2px solid #7a8ed6;
-    }}}}
-    body .mod-list-grid, body .mod-list {{{{
-                display: grid !important;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-                gap: 60px 36px !important;
-                margin-top: 24px !important;
-                margin-bottom: 48px !important;
-            }}}}
-    div.mod-card {{{{
-                background: #fff !important;
-                border-radius: 12px !important;
-                box-shadow: 0 2px 8px rgba(60,70,120,0.08) !important;
-                padding: 0 0 1rem 0 !important;
-                margin: 0 0 48px 0 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                min-width: 0 !important;
-                max-width: 100% !important;
-                overflow: hidden !important;
-            }}}}
-    .mod-details {{{{
-        padding: 0 24px 12px 24px;
-        flex: 1 1 auto;
-    }}}}
-    .mod-header {{{{
-        padding: 18px 24px 0 24px !important;
-    }}}}
-    
-    /* Ultra-specific rules to fix persistent styling issues */
-    div.mod-list > div.mod-card, div.mod-list-grid > div.mod-card {{{{
-        margin-bottom: 75px !important;
-        clear: both !important;
-        position: relative !important;
-        border: 1px solid #eaeaea !important;
-    }}}}
-    
-    .mod-details .mod-actions, .changelog-card-mod-details .mod-actions {{{{
-        margin: 20px 0 !important;
-        padding: 15px 20px !important;
-        background: #f9f9f9 !important;
-        border-top: 1px solid #eee !important;
-    }}}}
-    
-    .mod-actions a.mod-btn, .mod-actions button.mod-btn {{{{
-        margin: 5px !important;
-        padding: 8px 20px !important;
-        min-width: 100px !important;
-    }}}}
-    
-    /* Fix for specific card structure issues */
-    div.mod-details {{{{
-        padding-bottom: 0 !important;
-    }}}}
-    
-    /* COMPLETELY REPLACE grid with flex-based layout */
-    #mods .mod-grid {{{{
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: flex-start !important;
-        align-items: flex-start !important;
-        gap: 40px !important; /* Large gap to prevent any chance of overlap */
-        margin: 30px 0 100px 0 !important; /* Extra bottom margin */
-        width: 100% !important;
-        position: relative !important;
-    }}}}
-    
-    /* Fix each card with absolute dimensions */
-    #mods .mod-grid .mod-card {{{{
-        flex: 0 0 calc(33.333% - 30px) !important; /* Fixed width with gap consideration */
-        display: block !important; /* Simple block display */
-        margin-bottom: 60px !important; /* HUGE margin to prevent overlap */
-        padding: 0 !important;
-        border: 2px solid #e0e0e0 !important;
-        border-radius: 8px !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
-        position: relative !important;
-        background: white !important;
-        overflow: hidden !important;
-        max-width: 400px !important;
-        min-height: 200px !important;
-    }}}}
-    
-    /* Make cards stack on smaller screens */
-    @media (max-width: 1200px) {{{{
-        #mods .mod-grid .mod-card {{{{
-            flex: 0 0 calc(50% - 20px) !important;
-        }}}}
-    }}}}
-    
-    @media (max-width: 768px) {{{{
-        #mods .mod-grid .mod-card {{{{
-            flex: 0 0 100% !important;
-        }}}}
-    }}}}
-    
-    /* Ensure card titles are visible */
-    #mods .mod-card .mod-title {{{{
-        font-weight: bold !important;
-        padding: 10px 0 !important;
-        font-size: 1.1em !important;
-        margin: 0 !important;
-    }}}}
-    
-    /* Properly structure the details section */
-    #mods .mod-card .mod-details {{{{
-        flex: 1 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        padding: 0 20px 10px 20px !important;
-        overflow: visible !important;
-    }}}}
-    
-    /* Fix mod header spacing */
-    #mods .mod-card .mod-header {{{{
-        padding: 15px 20px 5px 20px !important;
-        border-bottom: 1px solid #f0f0f0 !important;
-        background: #fcfcfc !important;
-        margin: 0 0 10px 0 !important;
-        border-radius: 8px 8px 0 0 !important;
-    }}}}
-    
-    /* Fix mod-info section */
-    #mods .mod-card .mod-info {{{{
-        margin: 0 0 15px 0 !important;
-        padding: 0 !important;
-        background: transparent !important;
-    }}}}
-    </style>
 </head>
 <body>
     <header>
