@@ -234,17 +234,20 @@ h2 {
 /* Mod cards */
 .mod-card {
     background-color: var(--card-bg);
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: var(--card-shadow);
-    padding: 1.25rem;
-    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    transition: all 0.3s;
+    border: 1px solid var(--border-color);
+    height: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    padding: 1.25rem;
 }
 
 .mod-card:hover {
     box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
 }
 
 /* Compact mod cards */
@@ -264,8 +267,10 @@ h2 {
 }
 
 .mod-card .mod-details {
-    padding: 1rem;
     display: block;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .mod-expand-btn {
@@ -352,7 +357,8 @@ h2 {
 }
 
 .mod-info {
-    margin-bottom: 12px;
+    margin-bottom: 1rem;
+    flex: 1;
 }
 
 .mod-info-item {
@@ -439,6 +445,43 @@ h2 {
     font-weight: 500;
 }
 
+.version-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    background-color: var(--light-gray);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.version-button {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border-radius: 6px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.version-button:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.version-button.current {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(74, 118, 168, 0.25);
+}
+
 .search-container {
     margin-bottom: 1.5rem;
 }
@@ -499,6 +542,24 @@ h2 {
 }
 
 /* Changelog cards */
+.mod-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+    .mod-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mod-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .changelog-cards {
     display: flex;
     flex-direction: column;
@@ -548,9 +609,10 @@ h2 {
 }
 
 .changelog-card-content {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     font-size: 0.9rem;
     color: var(--text-color);
+    margin-top: 0.5rem;
 }
 
 /* Markdown styling */
@@ -704,11 +766,13 @@ h2 {
 
 .compact-item-details {
     padding: 0.8rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: none;
     display: none;
     background-color: white;
     border-radius: 0 0 4px 4px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .compact-changelog-item.expanded .compact-item-details {
@@ -1381,6 +1445,9 @@ def generate_version_html(modpack, version, is_latest):
             authors = [str(authors)] if authors else []
         authors_str = ', '.join(authors) if authors else 'Unknown'
         
+        # Get filename from mod if available
+        filename = mod.get('filename', '') if isinstance(mod, dict) else ''
+        
         html += f"""
         <div class="mod-card expanded" data-categories="{categories_str}">
             <div class="mod-header">
@@ -1390,6 +1457,20 @@ def generate_version_html(modpack, version, is_latest):
                 <div class="mod-info">
                     <p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>
                     <p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors_str}</p>
+"""                    
+        # Add filename if available
+        if filename:
+            html += f"""
+                    <p class="mod-info-item"><span class="mod-info-label">Filename:</span> {filename}</p>
+"""
+            
+        # Add description if available
+        if description and description != 'No description available.':
+            html += f"""
+                    <p class="mod-info-item"><span class="mod-info-label">Description:</span> {description}</p>
+"""
+            
+        html += """
                 </div>
 """
         

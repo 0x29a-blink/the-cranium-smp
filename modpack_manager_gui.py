@@ -65,6 +65,9 @@ def fetch_mod_details(mod, curseforge_api_key):
     url = mod.get('url', '')
     desc = ''
     categories = []
+    icon_url = ''
+    tags = []
+    updated_fields = {}
     
     if 'curseforge.com' in url:
         # Try to extract project slug or id from URL
@@ -82,13 +85,11 @@ def fetch_mod_details(mod, curseforge_api_key):
                     if data['data']:
                         mod_info = data['data'][0]
                         desc = mod_info.get('summary', '')
-                        mod['iconUrl'] = mod_info.get('logo', {}).get('url', '')
-                        
+                        icon_url = mod_info.get('logo', {}).get('url', '')
                         # Extract categories
                         if 'categories' in mod_info:
                             categories = [cat.get('name', '') for cat in mod_info['categories']]
-                            mod['categories'] = categories
-                            
+                        
                 # fallback: try by project id if available
             elif parts[-1].isdigit():
                 project_id = parts[-1]
@@ -99,15 +100,13 @@ def fetch_mod_details(mod, curseforge_api_key):
                     data = resp.json()
                     mod_info = data['data']
                     desc = mod_info.get('summary', '')
-                    mod['iconUrl'] = mod_info.get('logo', {}).get('url', '')
-                    
+                    icon_url = mod_info.get('logo', {}).get('url', '')
                     # Extract categories
                     if 'categories' in mod_info:
                         categories = [cat.get('name', '') for cat in mod_info['categories']]
-                        mod['categories'] = categories
         except Exception as e:
-            desc = ''
             print(f"Error fetching CurseForge data: {e}")
+            return {}
     elif 'modrinth.com' in url:
         # Example: https://modrinth.com/mod/jei
         try:
@@ -119,21 +118,17 @@ def fetch_mod_details(mod, curseforge_api_key):
                 if resp.status_code == 200:
                     data = resp.json()
                     desc = data.get('description', '')
-                    mod['iconUrl'] = data.get('icon_url', '')
-                    
+                    icon_url = data.get('icon_url', '')
                     # Extract categories and tags
                     if 'categories' in data:
                         categories = data.get('categories', [])
-                        mod['categories'] = categories
-                    
                     if 'tags' in data:
                         tags = data.get('tags', [])
-                        mod['tags'] = tags
                         # Add tags to categories for unified filtering
                         categories.extend(tags)
         except Exception as e:
-            desc = ''
             print(f"Error fetching Modrinth data: {e}")
+            return {}
     elif 'github.com' in url:
         # Example: https://github.com/author/repo
         try:
@@ -145,23 +140,24 @@ def fetch_mod_details(mod, curseforge_api_key):
                 if resp.status_code == 200:
                     data = resp.json()
                     desc = data.get('description', '')
-                    
                     # Extract topics as categories
                     if 'topics' in data:
-                        topics = data.get('topics', [])
-                        mod['categories'] = topics
-                        categories = topics
+                        categories = data.get('topics', [])
         except Exception as e:
-            desc = ''
             print(f"Error fetching GitHub data: {e}")
+            return {}
     # else: leave desc blank
     
-    # Store unique categories
+    # Prepare updated fields
     if categories:
-        mod['categories'] = list(set(categories))
-    
-    mod['description'] = desc
-    return desc
+        updated_fields['categories'] = list(set(categories))
+    if desc:
+        updated_fields['description'] = desc
+    if icon_url:
+        updated_fields['iconUrl'] = icon_url
+    if tags:
+        updated_fields['tags'] = tags
+    return updated_fields
 
 class CreateModpackDialog(QDialog):
     def __init__(self, parent=None):
@@ -654,7 +650,12 @@ class ModsTableDialog(QDialog):
                 
                 filename = str(mod.get('filename', '')) if mod.get('filename') else ''
                 url = str(mod.get('url', '')) if mod.get('url') else ''
-                description = str(mod.get('description', '')) if mod.get('description') else ''
+                # Ensure description is always a string for display
+                raw_desc = mod.get('description', '')
+                if isinstance(raw_desc, dict):
+                    description = str(raw_desc.get('description', ''))
+                else:
+                    description = str(raw_desc) if raw_desc else ''
                 
                 # Set table items
                 self.table.setItem(row, 0, QTableWidgetItem(name))
@@ -683,49 +684,67 @@ class ModsTableDialog(QDialog):
         if confirm != QMessageBox.Yes:
             return
             
-        # Show the progress bar
-        if hasattr(self, 'progress_bar'):
-            self.progress_bar.setVisible(True)
-            self.progress_bar.setValue(0)
-            self.progress_bar.setFormat("Fetching API data: %p%")
-        
-        from modpack_utils import fetch_mod_details
-        total_mods = len(self.all_mods)
+        # Gather all mods in all versions
+        total_mods = 0
+        for version in getattr(self, 'versions', []):
+            total_mods += len(version.get('mods', []))
+        mod_idx = 0
         progress = QProgressDialog("Fetching mod details from external APIs...", "Cancel", 0, total_mods, self)
         progress.setWindowTitle("API Data")
         progress.setWindowModality(Qt.WindowModal)
-        
-        for i, mod in enumerate(self.all_mods):
-            if progress.wasCanceled():
-                break
-                
-            progress.setValue(i)
-            if hasattr(self, 'progress_bar'):
-                progress_percent = int((i / total_mods) * 100)
-                self.progress_bar.setValue(progress_percent)
-                self.progress_bar.setFormat(f"Fetching API data: %p% ({i}/{total_mods})")
-                
-            # Only update if we have a URL
+
+        # Update all mods in all versions
+        for version in getattr(self, 'versions', []):
+            for mod in version.get('mods', []):
+                if progress.wasCanceled():
+                    if hasattr(self, 'progress_bar'):
+                        self.progress_bar.setValue(100)
+                        self.progress_bar.setFormat("API data fetch canceled")
+                        QTimer.singleShot(1000, lambda: self.progress_bar.setVisible(False))
+                    return
+                if mod.get('url'):
+                    try:
+                        updated_mod = fetch_mod_details(mod, self.api_key)
+                        for key in ('description', 'iconUrl', 'categories', 'tags'):
+                            if key in updated_mod:
+                                val = updated_mod[key]
+                                if key == 'description' and isinstance(val, dict):
+                                    mod[key] = str(val.get('description', ''))
+                                else:
+                                    mod[key] = val
+                    except Exception as e:
+                        print(f"Error fetching data for {mod.get('name')}: {e}")
+                mod_idx += 1
+                progress.setValue(mod_idx)
+                if hasattr(self, 'progress_bar'):
+                    progress_percent = int((mod_idx / total_mods) * 100) if total_mods else 0
+                    self.progress_bar.setValue(progress_percent)
+                    self.progress_bar.setFormat(f"Fetching API data: %p% ({mod_idx}/{total_mods})")
+
+        # Also update self.all_mods for UI consistency
+        for mod in getattr(self, 'all_mods', []):
             if mod.get('url'):
                 try:
                     updated_mod = fetch_mod_details(mod, self.api_key)
-                    # Update the mod in place
-                    mod.update(updated_mod)
+                    for key in ('description', 'iconUrl', 'categories', 'tags'):
+                        if key in updated_mod:
+                            val = updated_mod[key]
+                            if key == 'description' and isinstance(val, dict):
+                                mod[key] = str(val.get('description', ''))
+                            else:
+                                mod[key] = val
                 except Exception as e:
                     print(f"Error fetching data for {mod.get('name')}: {e}")
-            
-        progress.setValue(total_mods)
+
+        # Finalize progress bar and UI
         if hasattr(self, 'progress_bar'):
             self.progress_bar.setValue(100)
             self.progress_bar.setFormat("API data fetch complete")
-            # Hide the progress bar after a delay
             QTimer.singleShot(1000, lambda: self.progress_bar.setVisible(False))
-            
+        progress.setValue(total_mods)
         # Refresh the table
         self.filter_mods(self.search_input.text() if hasattr(self, 'search_input') else '')
-        
         QMessageBox.information(self, "API Data", f"Successfully fetched API data for {total_mods} mods.")
-
     def save_changes(self):
         if self.editable:
             self.modpack_data['name'] = self.name_edit.text().strip()
@@ -1109,6 +1128,20 @@ class ModsTableDialog(QDialog):
         from datetime import datetime
         version_num = get_next_version_number(self.modpack_data)
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # Fetch and update details for all mods in the new version
+        for mod in new_mods:
+            if mod.get('url'):
+                try:
+                    updated_mod = fetch_mod_details(mod, self.api_key)
+                    for key in ('description', 'iconUrl', 'categories', 'tags'):
+                        if key in updated_mod:
+                            val = updated_mod[key]
+                            if key == 'description' and isinstance(val, dict):
+                                mod[key] = str(val.get('description', ''))
+                            else:
+                                mod[key] = val
+                except Exception as e:
+                    print(f"Error fetching data for {mod.get('name')}: {e}")
         version_entry = {
             'version': version_num,
             'timestamp': timestamp,
