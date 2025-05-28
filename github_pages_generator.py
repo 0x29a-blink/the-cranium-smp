@@ -81,27 +81,164 @@ def create_css():
     --border-color: #dee2e6;
     --hover-color: #e9ecef;
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    
-    /* Status colors */
-    --added-color: #28a745;   /* Green for newly added */
-    --removed-color: #dc3545; /* Red for removed */
-    --updated-color: #3b82f6; /* Blue for updated */
-    
-    /* Card colors */
-    --card-bg: #ffffff;
-    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --added-color: #28a745;
+    --removed-color: #dc3545;
+    --updated-color: #3b82f6;
+    --card-bg: #fff;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
 body {
     font-family: var(--font-family);
-    line-height: 1.6;
+    background: var(--background-color);
     color: var(--text-color);
-    background-color: var(--background-color);
     margin: 0;
     padding: 0;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.mod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem 2rem;
+    margin: 2rem 0 3rem 0;
+}
+
+.mod-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+}
+
+.mod-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+}
+
+.mod-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.mod-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.01em;
+}
+
+.mod-info {
+    margin-bottom: 0.7rem;
+    flex: 1;
+}
+
+.mod-info-item {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.mod-info-label {
+    font-weight: 600;
+    color: #3a4667;
+    min-width: 90px;
+    display: inline-block;
+}
+
+.category-pill {
+    display: inline-block;
+    background: #e3e7ef;
+    color: #3a4667;
+    border-radius: 12px;
+    padding: 2px 12px;
+    margin-right: 6px;
+    margin-bottom: 2px;
+    font-size: 0.93em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.mod-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+}
+
+.mod-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #e5e8ee;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 0;
+    transition: background 0.2s;
+    box-sizing: border-box;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.mod-btn.primary {
+    background: #3a4667;
+    color: #fff;
+}
+
+.mod-btn:active, .mod-btn:focus {
+    outline: 2px solid #7a8ed6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .mod-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.2rem;
+    }
+    .mod-card {
+        padding: 1.1rem 1.1rem 1rem 1.1rem;
+    }
+}
+@media (max-width: 600px) {
+    .mod-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .mod-card {
+        padding: 0.8rem 0.7rem 0.7rem 0.7rem;
+    }
+}
+
+/* Minecraft theme accent: pixel border on hover */
+.mod-card:hover {
+    box-shadow: 0 6px 24px rgba(60,70,120,0.18), 0 0 0 2px #8bc34a;
+    border-color: #8bc34a;
+}
+
+/* Add a subtle Minecraft blocky effect to the card corners */
+.mod-card {
+    border-radius: 10px 18px 10px 18px/18px 10px 18px 10px;
+}
+
+/* End modern Minecraft mod card grid styling */
 header {
     background-color: var(--primary-color);
     color: white;
@@ -156,7 +293,7 @@ h2 {
 /* Grid layout for cards */
 .mod-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
     margin-bottom: 2rem;
@@ -239,7 +376,7 @@ h2 {
     overflow: hidden;
     transition: all 0.3s;
     border: 1px solid var(--border-color);
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
@@ -272,6 +409,7 @@ h2 {
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: visible;
 }
 
 .mod-expand-btn {
@@ -587,18 +725,6 @@ h2 {
     }
 }
 
-@media (max-width: 1200px) {
-    .mod-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .mod-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .changelog-cards {
     display: flex;
     flex-direction: column;
@@ -866,22 +992,6 @@ h2 {
     }
 }
         """)
-        
-    # Add Font Awesome for icons
-    with open(os.path.join(CSS_DIR, 'fontawesome.css'), 'w', encoding='utf-8') as f:
-        f.write("""
-/* Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) */
-@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:block;src:url(../webfonts/fa-solid-900.woff2) format("woff2"),url(../webfonts/fa-solid-900.ttf) format("truetype")}.fa,.fas{font-family:"Font Awesome 6 Free";font-weight:900}
-        """)
-        
-    # Create webfonts directory
-    ensure_directory(os.path.join(DOCS_DIR, 'webfonts'))
-    
-    # Add Inter font
-    with open(os.path.join(CSS_DIR, 'inter.css'), 'w', encoding='utf-8') as f:
-        f.write("""
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        """)
 
 def create_js():
     """Create JavaScript files for the GitHub Pages site"""
@@ -1039,6 +1149,199 @@ def generate_index_page(public_modpacks):
     <link rel="stylesheet" href="css/inter.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fontawesome.css">
+    body .mod-info {{{{
+        padding: 20px 24px !important;
+        background: #f8f9fa !important;
+        border-radius: 8px !important;
+        margin-bottom: 16px !important;
+        box-sizing: border-box !important;
+    }}}}
+    .mod-info-item {{{{
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        font-size: 1rem;
+        line-height: 1.5;
+        width: 100%;
+        word-break: break-word;
+    }}}}
+    .mod-info-label {{{{
+        min-width: 96px;
+        font-weight: 600;
+        color: #444;
+        margin-right: 8px;
+        display: inline-block;
+    }}}}
+    .category-pill {{{{
+        display: inline-block;
+        background: #e3e7ef;
+        color: #3a4667;
+        border-radius: 12px;
+        padding: 2px 12px;
+        margin-right: 6px;
+        margin-bottom: 2px;
+        font-size: 0.93em;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+    }}}}
+    body .mod-actions {{{{
+                display: flex !important;
+                gap: 12px !important;
+                margin-top: 16px !important;
+                flex-wrap: wrap !important;
+                padding: 12px 24px 20px 24px !important;
+                border-top: 1px solid #eee !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }}}}
+    .mod-btn {{{{
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        background: #e5e8ee;
+        color: #333;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0;
+        transition: background 0.2s;
+        box-sizing: border-box;
+        max-width: 100%;
+        white-space: nowrap;
+    }}}}
+    .mod-btn.primary {{{{
+        background: #3a4667;
+        color: #fff;
+    }}}}
+    .mod-btn:active, .mod-btn:focus {{{{
+        outline: 2px solid #7a8ed6;
+    }}}}
+    body .mod-list-grid, body .mod-list {{{{
+                display: grid !important;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                gap: 60px 36px !important;
+                margin-top: 24px !important;
+                margin-bottom: 48px !important;
+            }}}}
+    div.mod-card {{{{
+                background: #fff !important;
+                border-radius: 12px !important;
+                box-shadow: 0 2px 8px rgba(60,70,120,0.08) !important;
+                padding: 0 0 1rem 0 !important;
+                margin: 0 0 48px 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }}}}
+    .mod-details {{{{
+        padding: 0 24px 12px 24px;
+        flex: 1 1 auto;
+    }}}}
+    .mod-header {{{{
+        padding: 18px 24px 0 24px !important;
+    }}}}
+    
+    /* Ultra-specific rules to fix persistent styling issues */
+    div.mod-list > div.mod-card, div.mod-list-grid > div.mod-card {{{{
+        margin-bottom: 75px !important;
+        clear: both !important;
+        position: relative !important;
+        border: 1px solid #eaeaea !important;
+    }}}}
+    
+    .mod-details .mod-actions, .changelog-card-mod-details .mod-actions {{{{
+        margin: 20px 0 !important;
+        padding: 15px 20px !important;
+        background: #f9f9f9 !important;
+        border-top: 1px solid #eee !important;
+    }}}}
+    
+    .mod-actions a.mod-btn, .mod-actions button.mod-btn {{{{
+        margin: 5px !important;
+        padding: 8px 20px !important;
+        min-width: 100px !important;
+    }}}}
+    
+    /* Fix for specific card structure issues */
+    div.mod-details {{{{
+        padding-bottom: 0 !important;
+    }}}}
+    
+    /* COMPLETELY REPLACE grid with flex-based layout */
+    #mods .mod-grid {{{{
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        gap: 40px !important; /* Large gap to prevent any chance of overlap */
+        margin: 30px 0 100px 0 !important; /* Extra bottom margin */
+        width: 100% !important;
+        position: relative !important;
+    }}}}
+    
+    /* Fix each card with absolute dimensions */
+    #mods .mod-grid .mod-card {{{{
+        flex: 0 0 calc(33.333% - 30px) !important; /* Fixed width with gap consideration */
+        display: block !important; /* Simple block display */
+        margin-bottom: 60px !important; /* HUGE margin to prevent overlap */
+        padding: 0 !important;
+        border: 2px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+        position: relative !important;
+        background: white !important;
+        overflow: hidden !important;
+        max-width: 400px !important;
+        min-height: 200px !important;
+    }}}}
+    
+    /* Make cards stack on smaller screens */
+    @media (max-width: 1200px) {{{{
+        #mods .mod-grid .mod-card {{{{
+            flex: 0 0 calc(50% - 20px) !important;
+        }}}}
+    }}}}
+    
+    @media (max-width: 768px) {{{{
+        #mods .mod-grid .mod-card {{{{
+            flex: 0 0 100% !important;
+        }}}}
+    }}}}
+    
+    /* Ensure card titles are visible */
+    #mods .mod-card .mod-title {{{{
+        font-weight: bold !important;
+        padding: 10px 0 !important;
+        font-size: 1.1em !important;
+        margin: 0 !important;
+    }}}}
+    
+    /* Properly structure the details section */
+    #mods .mod-card .mod-details {{{{
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 0 20px 10px 20px !important;
+        overflow: visible !important;
+    }}}}
+    
+    /* Fix mod header spacing */
+    #mods .mod-card .mod-header {{{{
+        padding: 15px 20px 5px 20px !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        background: #fcfcfc !important;
+        margin: 0 0 10px 0 !important;
+        border-radius: 8px 8px 0 0 !important;
+    }}}}
+    
+    /* Fix mod-info section */
+    #mods .mod-card .mod-info {{{{
+        margin: 0 0 15px 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }}}}
+    </style>
 </head>
 <body>
     <header>
@@ -1271,6 +1574,137 @@ def generate_version_html(modpack, version, is_latest):
         </div>
 """
     
+    # Helper function to generate full HTML details for a mod
+    def _get_full_mod_details_html(mod_name_to_find, current_version_mods_list, version_added_mods_list, version_removed_mods_list, version_updated_mods_list):
+        mod_html_details = ""
+        mod_info_found = None
+        search_name_lower = mod_name_to_find.lower()
+
+        # Priority 1: Current version's mods (includes active, added, updated)
+        for m_obj in current_version_mods_list:
+            if isinstance(m_obj, dict) and m_obj.get('name', '').lower() == search_name_lower:
+                mod_info_found = m_obj
+                break
+        
+        # Priority 2: If not in current (e.g. it was a removed mod), check version_removed_mods_list
+        if not mod_info_found:
+            for m_obj in version_removed_mods_list:
+                if isinstance(m_obj, dict) and m_obj.get('name', '').lower() == search_name_lower:
+                    mod_info_found = m_obj
+                    break
+
+        # Priority 3 & 4: As a further fallback, check added and updated lists explicitly.
+        # This might be redundant if current_version_mods_list is comprehensive for active mods 
+        # and version_removed_mods_list for removed ones, but covers other potential edge cases.
+        if not mod_info_found:
+            for m_obj in version_added_mods_list:
+                if isinstance(m_obj, dict) and m_obj.get('name', '').lower() == search_name_lower:
+                    mod_info_found = m_obj
+                    break
+        if not mod_info_found:
+            for m_obj in version_updated_mods_list:
+                if isinstance(m_obj, dict) and m_obj.get('name', '').lower() == search_name_lower:
+                    mod_info_found = m_obj
+                    break
+        
+        if not mod_info_found:
+            mod_html_details += f'<div class="mod-info"><p class="mod-info-item"><em>Comprehensive details for &quot;{mod_name_to_find}&quot; could not be located in this version context.</em></p></div>'
+            escaped_mod_name = mod_name_to_find.replace('"', '&quot;')
+            mod_html_details += '<div class="mod-actions">'
+            mod_html_details += f'<button class="mod-btn copy" data-copy=\"{escaped_mod_name}\"><i class="fas fa-copy"></i> Copy Name</button>'
+            mod_html_details += '</div>'
+            return mod_html_details
+
+        name = mod_info_found.get('name', 'Unknown')
+        mod_version = mod_info_found.get('version', 'N/A')
+        description_obj = mod_info_found.get('description', 'No description available.')
+        url = mod_info_found.get('url', '')
+        authors_list = mod_info_found.get('authors', [])
+        filename = mod_info_found.get('filename', '')
+
+        if not isinstance(authors_list, list):
+            authors_list = [str(authors_list)] if authors_list else []
+        authors_str = ', '.join(authors_list) if authors_list else 'Unknown'
+
+        mod_description_text = ''
+        icon_url_val = '' # Not used in this context currently, but parsed for completeness
+        categories_list = mod_info_found.get('categories', [])[:] # Use a copy
+        tags_list = mod_info_found.get('tags', [])[:] # Use a copy
+
+        if isinstance(description_obj, dict):
+            mod_description_text = description_obj.get('description', '')
+            icon_url_val = description_obj.get('iconUrl', '') # Parsed but not used in this specific HTML output
+            categories_list.extend(description_obj.get('categories', []))
+            tags_list.extend(description_obj.get('tags', []))
+        else:
+            mod_description_text = description_obj if description_obj else ''
+        
+        # Ensure categories and tags are from the mod object itself if not in description_obj
+        if 'iconUrl' in mod_info_found and not icon_url_val:
+            icon_url_val = mod_info_found.get('iconUrl', '')
+        # Check if 'categories' key exists and its value is a list before extending
+        if 'categories' in mod_info_found and isinstance(mod_info_found['categories'], list):
+            categories_list.extend(mod_info_found.get('categories', []))
+        # Check if 'tags' key exists and its value is a list before extending
+        if 'tags' in mod_info_found and isinstance(mod_info_found['tags'], list):
+            tags_list.extend(mod_info_found.get('tags', []))
+
+        all_display_categories = sorted(list(set(c for c in categories_list + tags_list if c and isinstance(c, str)))) # Filter out empty/None and ensure strings
+
+        mod_html_details += '<div class="mod-info">'
+        mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>'
+        mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors_str}</p>'
+        if filename:
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Filename:</span> {filename}</p>'
+        if url:
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">URL:</span> <a href="{url}" target="_blank">{url}</a></p>'
+        else:
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">URL:</span> <em>Not available</em></p>'
+        
+        if mod_description_text and mod_description_text != 'No description available.':
+            # Ensure description is string before passing to markdown_to_html
+            desc_to_render = str(mod_description_text) if not isinstance(mod_description_text, str) else mod_description_text
+            # Convert markdown to HTML but remove any wrapping <p> tags that might cause nesting issues
+            html_desc = markdown_to_html(desc_to_render)
+            # Remove outer <p></p> if present and add our own container
+            if html_desc.startswith('<p>') and html_desc.endswith('</p>'):
+                html_desc = html_desc[3:-4]  # Strip the outer <p></p>
+            mod_html_details += f'<p class="mod-info-item mod-description-text"><span class="mod-info-label">Description:</span> {html_desc}</p>'
+        
+        if all_display_categories:
+            category_pills = ' '.join([f'<span class="category-pill">{cat}</span>' for cat in all_display_categories])
+            mod_html_details += f'<p class="mod-info-item"><span class="mod-info-label">Categories:</span> {category_pills}</p>'
+        mod_html_details += '</div>' # Close mod-info
+
+        if not url:
+            mod_html_details += """
+                            <div class="mod-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</span>
+                            </div>
+"""
+        mod_html_details += '<div class="mod-actions">'
+        if url:
+            mod_html_details += f'<a href="{url}" target="_blank" class="mod-btn primary"><i class="fas fa-external-link-alt"></i> View Mod</a>'
+        
+        escaped_mod_name = name.replace('"', '&quot;')
+        mod_html_details += f'<button class="mod-btn copy" data-copy=\"{escaped_mod_name}\"><i class="fas fa-copy"></i> Copy Name</button>'
+        mod_html_details += '</div>' # Close mod-actions
+        return mod_html_details
+
+    # Helper function to generate list item HTML for compact changelog
+    # Defined here to be within generate_version_html's scope, accessible by the logic below.
+    def _generate_li_content_for_compact_changelog(mod_name_str, current_version_mods_list, version_added_mods_list, version_removed_mods_list, version_updated_mods_list):
+        li_html_content = f"""
+                        <div class="compact-item-header clickable">
+                            <span class="compact-item-text">{mod_name_str}</span>
+                            <span class="compact-item-toggle"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="compact-item-details">
+                            {_get_full_mod_details_html(mod_name_str, current_version_mods_list, version_added_mods_list, version_removed_mods_list, version_updated_mods_list)}
+                        </div>"""
+        return li_html_content
+
     # Add notes/changelog section
     html += """
         <div class="notes-section">
@@ -1322,6 +1756,9 @@ def generate_version_html(modpack, version, is_latest):
                         <span class="mod-badge {css_class}">{change_type.capitalize()}</span>
                     </div>
                     <div class="changelog-card-content">{markdown_to_html(comment.strip())}</div>
+                    <div class="changelog-card-mod-details">
+                        {_get_full_mod_details_html(mod_name, all_mods, added_mods, removed_mods, updated_mods)}
+                    </div>
                 </div>
 """
         
@@ -1349,58 +1786,7 @@ def generate_version_html(modpack, version, is_latest):
                 
                 compact_mods[change_type].append(mod_name)
         
-    # Helper function to generate list item HTML for compact changelog
-    # Defined here to be within generate_version_html's scope, accessible by the logic below.
-    def _generate_li_content_for_compact_changelog(mod_name_str, all_mods_list_param):
-        li_html_content = ""
-        mod_details = None
-        mod_version = 'N/A'
-        authors = 'Unknown'
-        url = ''
 
-        for full_mod_obj in all_mods_list_param:
-            if isinstance(full_mod_obj, dict) and full_mod_obj.get('name', '').lower() == mod_name_str.lower():
-                mod_details = full_mod_obj
-                mod_version = mod_details.get('version', 'N/A')
-                mod_authors_list = mod_details.get('authors', [])
-                if not isinstance(mod_authors_list, list):
-                    mod_authors_list = [str(mod_authors_list)] if mod_authors_list else []
-                authors = ', '.join(mod_authors_list) if mod_authors_list else 'Unknown'
-                url = mod_details.get('url', '')
-                break
-        
-        li_html_content += f"""
-                        <div class="compact-item-header clickable">
-                            <span class="compact-item-text">{mod_name_str}</span>
-                            <span class="compact-item-toggle"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="compact-item-details">
-                            <div class="mod-info">
-                                <p class="mod-info-item"><span class="mod-info-label">Version:</span> {mod_version}</p>
-                                <p class="mod-info-item"><span class="mod-info-label">Authors:</span> {authors}</p>
-                            </div>
-"""
-        if not url:
-            li_html_content += """
-                            <div class="mod-warning">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <span>No mod link available. Check Modrinth/CurseForge or verify in Prism Launcher.</span>
-                            </div>
-"""
-        li_html_content += """
-                            <div class="mod-actions">
-"""
-        if url:
-            li_html_content += f"""
-                                <a href="{url}" target="_blank" class="mod-btn primary"><i class="fas fa-external-link-alt"></i> View Mod</a>
-"""
-        # Ensure data-copy attribute is properly quoted if mod_name_str contains spaces or special characters
-        escaped_mod_name = mod_name_str.replace('"', '&quot;') # Basic escaping for quotes
-        li_html_content += f"""
-                                <button class="mod-btn copy" data-copy=\"{escaped_mod_name}\"><i class="fas fa-copy"></i> Copy</button>
-                            </div>
-                        </div>"""
-        return li_html_content
 
     # Compact changelog section using added_mods, removed_mods, updated_mods
     if added_mods or removed_mods or updated_mods:
@@ -1419,7 +1805,7 @@ def generate_version_html(modpack, version, is_latest):
                 mod_name_str = mod_obj.get('name', 'Unknown Mod') if isinstance(mod_obj, dict) else str(mod_obj) # Extract name string
                 html += f"""
                                 <li class="compact-changelog-item">
-                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods)}
+                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods, added_mods, removed_mods, updated_mods)}
                                 </li>
 """
             html += """
@@ -1437,7 +1823,7 @@ def generate_version_html(modpack, version, is_latest):
                 mod_name_str = mod_obj.get('name', 'Unknown Mod') if isinstance(mod_obj, dict) else str(mod_obj) # Extract name string
                 html += f"""
                                 <li class="compact-changelog-item">
-                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods)}
+                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods, added_mods, removed_mods, updated_mods)}
                                 </li>
 """
             html += """
@@ -1455,7 +1841,7 @@ def generate_version_html(modpack, version, is_latest):
                 mod_name_str = mod_obj.get('name', 'Unknown Mod') if isinstance(mod_obj, dict) else str(mod_obj) # Extract name string
                 html += f"""
                                 <li class="compact-changelog-item">
-                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods)}
+                                    {_generate_li_content_for_compact_changelog(mod_name_str, all_mods, added_mods, removed_mods, updated_mods)}
                                 </li>
 """
             html += """
