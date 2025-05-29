@@ -20,7 +20,7 @@
 
 1. Clone the repository (if not already done):
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/0x29a-blink/the-cranium-smp.git
    cd the-cranium-smp
    ```
 
