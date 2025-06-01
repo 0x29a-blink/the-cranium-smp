@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                            <a href="CraniumAeternum.mrpack" class="btn btn-success download-btn">
+                            <a href="#" class="btn btn-success download-btn" onclick="downloadModpack()">
                                 <i class="bi bi-download"></i> Download Modpack
                             </a>
                             <div class="mt-2 small text-light">
@@ -185,6 +185,17 @@
         </div>
     </div>
     
+    <script>
+        function downloadModpack() {
+            const link = document.createElement('a');
+            link.href = '../CraniumAeternum.mrpack'; // Path to your .mrpack file relative to the docs folder
+            link.download = 'CraniumAeternum.mrpack'; // Suggested filename for download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+
     <!-- Gallery Modal Template -->
     <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
