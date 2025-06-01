@@ -96,8 +96,8 @@ function updateModpackInfo(data) {
     const descriptionElement = document.getElementById('modpack-description');
     const downloadBtnElement = document.querySelector('.download-btn');
     
-    if (titleElement) titleElement.textContent = data.name || 'Cranium Aeternum';
-    if (versionElement) versionElement.textContent = data.version || '1.0.0';
+    if (titleElement) titleElement.textContent = data.name || 'The Cranium: Aeternum';
+    if (versionElement) versionElement.textContent = data.version || '1.0.4';
     if (mcVersionElement) mcVersionElement.textContent = data.dependencies?.minecraft || '1.20.1';
     if (forgeVersionElement) forgeVersionElement.textContent = data.dependencies?.forge || '47.4.1';
     if (descriptionElement) descriptionElement.textContent = data.description || 'A comprehensive modpack for Minecraft.';
@@ -109,7 +109,7 @@ function updateModpackInfo(data) {
     }
     
     // Update page title
-    document.title = `${data.name || 'Cranium Aeternum'} - Modpack Details`;
+    document.title = `${data.name || 'The Cranium: Aeternum'} - Modpack Details`;
     
     // Add author information if available
     if (data.author) {

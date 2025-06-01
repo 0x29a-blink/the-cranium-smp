@@ -84,14 +84,14 @@ function updateModpackInfo(data) {
     const forgeVersionElement = document.getElementById('forge-version');
     const modCountElement = document.getElementById('mod-count');
     
-    if (titleElement) titleElement.textContent = data.name || 'Cranium Aeternum';
-    if (versionElement) versionElement.textContent = data.version || '1.0.0';
+    if (titleElement) titleElement.textContent = data.name || 'The Cranium: Aeternum';
+    if (versionElement) versionElement.textContent = data.version || '1.0.4';
     if (mcVersionElement) mcVersionElement.textContent = data.dependencies?.minecraft || '1.20.1';
     if (forgeVersionElement) forgeVersionElement.textContent = data.dependencies?.forge || '47.4.1';
     if (modCountElement) modCountElement.textContent = data.mods?.length || 0;
     
     // Update page title
-    document.title = `${data.name || 'Cranium Aeternum'} - Modpack Details`;
+    document.title = `${data.name || 'The Cranium: Aeternum'} - Modpack Details`;
 }
 
 // Display mod cards with enhanced information

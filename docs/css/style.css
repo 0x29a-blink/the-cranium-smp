@@ -39,6 +39,13 @@ body {
     border-radius: 8px;
 }
 
+.modpack-card .card-img-top {
+    object-fit: cover;
+    object-position: left;
+    width: calc(100% + 2px); /* Increase width to push 1px off the right edge */
+    margin-left: -1px; /* Adjust margin to center the visible part if needed, or just push it left */
+}
+
 .download-btn {
     font-weight: bold;
     padding: 10px 20px;
@@ -161,4 +168,8 @@ footer {
 .modpack-creator-badge .role {
     font-size: 0.75rem;
     color: #6c757d;
+}
+
+.no-underline {
+    text-decoration: none;
 }
