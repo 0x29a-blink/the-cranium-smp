@@ -239,7 +239,7 @@ function formatCompatibility(mod) {
         return '<span class="badge bg-warning">Server Only</span>';
     } else if ((clientSide === 'required' || clientSide === 'optional') && 
                (serverSide === 'required' || serverSide === 'optional')) {
-        return '<span class="badge bg-success">Client & Server</span>';
+        return '<span class="badge bg-success">Cli & Srv</span>';
     } else {
         return '<span class="badge bg-secondary">Unknown</span>';
     }
@@ -454,7 +454,7 @@ function updateCompatibilityChart(mods) {
                 <div class="card bg-success text-white">
                     <div class="card-body">
                         <h3>${both}</h3>
-                        <p class="mb-0">Client & Server</p>
+                        <p class="mb-0">Cli & Srv</p>
                     </div>
                 </div>
             </div>
