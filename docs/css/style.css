@@ -1,0 +1,164 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.badge {
+    margin-right: 5px;
+}
+
+.mod-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.mod-card {
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.mod-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.download-btn {
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.modpack-header {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modpack-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modpack-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.display-4 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+header {
+    margin-bottom: 3rem;
+}
+
+footer {
+    margin-top: 3rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.breadcrumb {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.card-header {
+    border-bottom: none;
+    font-weight: 500;
+}
+
+.mod-list {
+    border-radius: 0.5rem;
+}
+
+/* Team Section Styles */
+.modpack-creators-section {
+    padding: 20px 0;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.modpack-creators-section h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #343a40;
+}
+
+.modpack-creators {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modpack-creator-badge {
+    background-color: #ffffff;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.modpack-creator-badge:hover {
+    transform: translateY(-3px);
+}
+
+.modpack-creator-badge .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid #007bff;
+}
+
+.modpack-creator-badge .creator-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.modpack-creator-badge .name {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 2px;
+}
+
+.modpack-creator-badge .role {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
